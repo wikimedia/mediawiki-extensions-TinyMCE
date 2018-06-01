@@ -1,0 +1,188 @@
+{
+	"@Note": "When updating this file please also update TinyMCE.php with the same changes.",
+	"name": "TinyMCE",
+	"version": "0.2",
+	"author": [
+		"Ephox",
+		"Hallo Welt",
+		"Duncan Crane",
+		"Yaron Koren"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:TinyMCE",
+	"descriptionmsg": "tinymce-desc",
+	"license-name": "GPL-2.0+",
+	"type": "hook",
+	"callback": "TinyMCEHooks::registerExtension",
+	"requires": {
+		"MediaWiki": ">= 1.27.0"
+	},
+	"MessagesDirs": {
+		"TinyMCE": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"TinyMCEMagic": "TinyMCE.i18n.magic.php"
+	},
+	"AutoloadClasses": {
+		"TinyMCEHooks": "TinyMCE.hooks.php",
+		"TinyMCEAction": "TinyMCEAction.php",
+		"TinyMCEUploadForm": "upload/TinyMCEUploadForm.php",
+		"TinyMCEUploadSourceField": "upload/TinyMCEUploadSourceField.php",
+		"TinyMCEUploadWindow": "upload/TinyMCEUploadWindow.php"
+	},
+	"ResourceModules": {
+		"ext.tinymce": {
+			"scripts": "MW_tinymce.js",
+			"styles": "MW_tinymce.css",
+			"dependencies": [
+				"ext.tinymce.core",
+				"ext.tinymce.fancybox"
+			],
+			"messages": [
+				"tinymce-upload",
+				"tinymce-upload-title",
+				"tinymce-upload-title-general",
+				"tinymce-upload-title-image",
+				"tinymce-upload-type-label",
+				"tinymce-upload-type-label-file",
+				"tinymce-upload-type-label-url",
+				"tinymce-upload-type-label-wiki",
+				"tinymce-upload-type-tooltip",
+				"tinymce-upload-source-label",
+				"tinymce-upload-source-tooltip",
+				"tinymce-upload-destination-label",
+				"tinymce-upload-destination-tooltip",
+				"tinymce-upload-title-label",
+				"tinymce-upload-title-tooltip",
+				"tinymce-upload-summary-label",
+				"tinymce-upload-summary-tooltip",
+				"tinymce-upload-link-label",
+				"tinymce-upload-link-tooltip",
+				"tinymce-upload-alttext-label",
+				"tinymce-upload-alttext-tooltip",
+				"tinymce-upload-dimensions-label",
+				"tinymce-upload-dimensions-tooltip",
+				"tinymce-upload-dimensions-constrain-text",
+				"tinymce-upload-dimensions-width-label",
+				"tinymce-upload-dimensions-height-label",
+				"tinymce-upload-vertalign-label",
+				"tinymce-upload-vertalign-tooltip",
+				"tinymce-upload-vertalign-middle-text",
+				"tinymce-upload-vertalign-top-text",
+				"tinymce-upload-vertalign-bottom-text",
+				"tinymce-upload-vertalign-baseline-text",
+				"tinymce-upload-vertalign-sub-text",
+				"tinymce-upload-vertalign-super-text",
+				"tinymce-upload-vertalign-texttop-text",
+				"tinymce-upload-vertalign-textbottom-text",
+				"tinymce-upload-horizontalalign-label",
+				"tinymce-upload-horizontalalign-tooltip",
+				"tinymce-upload-horizontalalign-left-text",
+				"tinymce-upload-horizontalalign-centre-text",
+				"tinymce-upload-horizontalalign-right-text",
+				"tinymce-upload-horizontalalign-none-text",
+				"tinymce-upload-format-label",
+				"tinymce-upload-format-tooltip",
+				"tinymce-upload-format-thumb-text",
+				"tinymce-upload-format-border-text",
+				"tinymce-upload-format-frame-text",
+				"tinymce-upload-format-frameless-text",
+				"tinymce-upload-alert-uploads-not-enabled",
+				"tinymce-upload-alert-uploads-not-allowed",
+				"tinymce-upload-alert-error-uploading-to-wiki",
+				"tinymce-upload-alert-file-type-not-allowed",
+				"tinymce-upload-alert-unknown-error-uploading",
+				"tinymce-upload-alert-error-uploading",
+				"tinymce-upload-alert-warnings-encountered",
+				"tinymce-upload-alert-destination-filename-not-allowed",
+				"tinymce-upload-alert-destination-filename-already-exists",
+				"tinymce-upload-alert-duplicate-file",
+				"tinymce-upload-alert-other-warning",
+				"tinymce-upload-alert-correct-and-try-again",
+				"tinymce-upload-alert-destination-filename-needed",
+				"tinymce-upload-alert-source-or-destination-undefined",
+				"tinymce-upload-confirm-file-already-exists",
+				"tinymce-upload-confirm-file-not-on-wiki",
+				"tinymce-upload-confirm-ignore-warnings",
+				"tinymce-upload-menu-item-text",
+				"tinymce-wikicode-alert-image-not-found-on-wiki",
+				"tinymce-wikicode-alert-image-request-invalid",
+				"tinymce-wikicode-alert-image-request-unknown-error",
+				"tinymce-wikicode-alert-infinte-loop",
+				"tinymce-openlink",
+				"tinymce-wikimagic",
+				"tinymce-wikimagic-title",
+				"tinymce-browsercontextmenu",
+				"tinymce-browsercontextmenu-title",
+				"tinymce-wikisourcecode",
+				"tinymce-wikisourcecode-title",
+				"tinymce-link-title",
+				"tinymce-link-title-label",
+				"tinymce-link-url-page-label",
+				"tinymce-link-display-text-label",
+				"tinymce-link-link-list-label",
+				"tinymce-link-link-list-none",
+				"tinymce-link-target-none",
+				"tinymce-link-target-new-window",
+				"tinymce-link-target-label",
+				"tinymce-link-rel-label",
+				"tinymce-link-type-label",
+				"tinymce-link-page-not-found",
+				"tinymce-link-want-to-link-email",
+				"tinymce-link-want-to-link-external",
+				"tinymce-link-link-button-tooltip",
+				"tinymce-link-link-remove-button-tooltip",
+				"tinymce-link-open-link",
+				"tinymce-link-context-menu",
+				"tinymce-link",
+				"tinymce-insert-linebreak"
+			]
+		},
+		"ext.tinymce.core": {
+			"scripts": "tinymce/tinymce.js"
+		},
+		"ext.tinymce.fancybox": {
+			"scripts": "fancybox/jquery.fancybox.js",
+			"styles": "fancybox/jquery.fancybox.css",
+			"dependencies": "ext.tinymce.browser"
+		},
+		"ext.tinymce.browser": {
+			"scripts": "jquery.browser.js"
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "TinyMCE"
+	},
+	"Hooks": {
+		"MakeGlobalVariablesScript": "TinyMCEHooks::setGlobalJSVariables",
+		"MagicWordwgVariableIDs": "TinyMCEHooks::addMagicWordVariableIDs",
+		"ParserBeforeTidy": "TinyMCEHooks::handleMagicWords",
+		"SkinTemplateNavigation": "TinyMCEAction::displayTab",
+		"SkinEditSectionLinks": "TinyMCEHooks::addEditSectionLink",
+		"LinkEnd": "TinyMCEHooks::changeRedLink",
+		"AlternateEdit": "TinyMCEHooks::determineIfTinyMCEIsEnabled",
+		"EditPageBeforeEditToolbar": "TinyMCEHooks::removeDefaultToolbar",
+		"EditPage::showEditForm:initial": "TinyMCEHooks::addToEditPage",
+		"WikiEditorDisable": "TinyMCEHooks::disableWikiEditor",
+		"GetPreferences": "TinyMCEHooks::addPreference",
+		"PageForms::addRLModules": "TinyMCEHooks::addRLModules"
+	},
+	"Actions": {
+		"tinymceedit": "TinyMCEAction"
+	},
+	"SpecialPages": {
+		"TinyMCEUploadWindow": "TinyMCEUploadWindow"
+	},
+	"DefaultUserOptions": {
+		"tinymce-use": 1
+	},
+	"config": {
+		"TinyMCEMacros": [],
+		"TinyMCEEnabled": false,
+		"TinyMCEDisabledNamespaces": [ 8, 10 ],
+		"TinyMCEUnhandledStrings": []
+	},
+	"manifest_version": 1
+}
