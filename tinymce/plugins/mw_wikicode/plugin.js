@@ -2327,6 +2327,7 @@ var MwWikiCode = function() {
 		return text;
 	}
 
+
 	/**
 	 *
 	 * @param {String} text
@@ -3139,7 +3140,7 @@ var MwWikiCode = function() {
 		} else if (e.target.className == 'mceNonEditableOverlay' ) {
 			if (e.target.parentNode.parentNode.className.indexOf("wikimagic") > -1) {
 				tinyMCE.activeEditor.execCommand('mceWikimagic');
-			} else if (e.target.parentNode.parentNode.className.indexOf("mw-internal-link") > -1
+			} else if (e.target.parentNode.parentNode.className.indexOf("mw-internal-link") > -1 
 				|| e.target.parentNode.parentNode.className.indexOf("mw-external-link") > -1) {
 				tinyMCE.activeEditor.execCommand('mceLink');
 			}
@@ -3271,7 +3272,7 @@ var MwWikiCode = function() {
 				alert(mw.msg( 'tinymce-browsercontextmenu' ));
 			}
 		});
-
+	  
 		// setup MW TinyMCE macros
 		// these are defined in localSettings.php
 		var macros = _ed.getParam("tinyMCEMacros");
@@ -3311,15 +3312,15 @@ var MwWikiCode = function() {
 				}
 			});
 		}
-		// set up minimise on blur for PageForms
-		var minimizeOnBlur = $(editor.getElement()).hasClass( 'mceMinimizeOnBlur' );
+		// setup minimising menubar when field not selected in pageforms
+		var minimizeOnBlur = $(_ed.getElement()).hasClass( 'mceMinimizeOnBlur' );
 		if ( minimizeOnBlur ) {
-			editor.on('focus', function(e) {
+			_ed.on('focus', function(e) {
 				var mcePane = $("textarea#" + e.target.id).prev();
 				mcePane.find(".mce-toolbar-grp").css("height", "");
 				mcePane.find(".mce-toolbar-grp .mce-flow-layout").show("medium");
 			});
-			editor.on('blur', function(e) {
+			_ed.on('blur', function(e) {
 				var mcePane = $("textarea#" + e.target.id).prev();
 				// Keep a little sliver of the toolbar so that users see it.
 				mcePane.find(".mce-toolbar-grp").css("height", "10px");
