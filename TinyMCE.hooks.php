@@ -19,6 +19,15 @@ class TinyMCEHooks {
 		define( 'TINYMCE_VERSION', '0.2' );
 
 		$GLOBALS['wgTinyMCEIP'] = dirname( __DIR__ ) . '/../';
+
+		// We have to have this hook called here, instead of in
+		// extension.json, because it's conditional.
+		if ( class_exists( 'MediaWiki\Linker\LinkRenderer' ) ) {
+			// MW 1.28+
+			$GLOBALS['wgHooks']['HtmlPageLinkRendererEnd'][] = 'TinyMCEHooks::changeRedLink';
+		} else {
+			$GLOBALS['wgHooks']['LinkEnd'][] = 'TinyMCEHooks::changeRedLinkOld';
+		}
 	}
 
 	/**
@@ -274,7 +283,7 @@ class TinyMCEHooks {
 
 	/**
 	 * Sets broken/red links to point to TinyMCE edit page, if they
-	 * haven't been customized already.
+	 * haven't been customized already - for MW < 1.28.
 	 *
 	 * @param Linker $linker
 	 * @param Title $target
@@ -284,9 +293,51 @@ class TinyMCEHooks {
 	 * @param bool &$ret
 	 * @return true
 	 */
-	static function changeRedLink( $linker, $target, $options, $text, &$attribs, &$ret ) {
+	static function changeRedLinkOld( $linker, $target, $options, $text, &$attribs, &$ret ) {
 		// If it's not a broken (red) link, exit.
 		if ( !in_array( 'broken', $options, true ) ) {
+			return true;
+		}
+		// If the link is to a special page, exit.
+		if ( $target->getNamespace() == NS_SPECIAL ) {
+			return true;
+		}
+
+		// This link may have been modified already by Page Forms or
+		// some other extension - if so, leave it as it is.
+		if ( strpos( $attribs['href'], 'action=edit&' ) === false ) {
+			return true;
+		}
+
+		global $wgOut;
+		if ( !TinyMCEHooks::enableTinyMCE( $target, $wgOut->getContext() ) ) {
+			return true;
+		}
+
+		$attribs['href'] = $target->getLinkURL( array( 'action' => 'tinymceedit', 'redlink' => '1' ) );
+
+		return true;
+	}
+
+	/**
+	 * Called by the HtmlPageLinkRendererEnd hook.
+	 *
+	 * The $target argument is listed in the documentation as being of type
+	 * LinkTarget, but in practice it seems to sometimes be of type Title
+	 * and sometimes of type TitleValue. So we just leave out a type
+	 * declaration for that argument in the declaration.
+	 *
+	 * @param LinkRenderer $linkRenderer
+	 * @param Title $target
+	 * @param bool $isKnown
+	 * @param string &$text
+	 * @param array &$attribs
+	 * @param bool &$ret
+	 * @return true
+	 */
+	static function changeRedLink( MediaWiki\Linker\LinkRenderer $linkRenderer, $target, $isKnown, &$text, &$attribs, &$ret ) {
+		// If it's not a broken (red) link, exit.
+		if ( $isKnown ) {
 			return true;
 		}
 		// If the link is to a special page, exit.

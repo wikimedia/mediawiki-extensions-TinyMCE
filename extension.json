@@ -161,7 +161,6 @@
 		"ParserBeforeTidy": "TinyMCEHooks::handleMagicWords",
 		"SkinTemplateNavigation": "TinyMCEAction::displayTab",
 		"SkinEditSectionLinks": "TinyMCEHooks::addEditSectionLink",
-		"LinkEnd": "TinyMCEHooks::changeRedLink",
 		"AlternateEdit": "TinyMCEHooks::determineIfTinyMCEIsEnabled",
 		"EditPageBeforeEditToolbar": "TinyMCEHooks::removeDefaultToolbar",
 		"EditPage::showEditForm:initial": "TinyMCEHooks::addToEditPage",

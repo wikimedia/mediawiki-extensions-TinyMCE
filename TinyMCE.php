@@ -71,7 +71,13 @@ $GLOBALS['wgHooks']['MagicWordwgVariableIDs'][] = 'TinyMCEHooks::addMagicWordVar
 $GLOBALS['wgHooks']['ParserBeforeTidy'][] = 'TinyMCEHooks::handleMagicWords';
 $GLOBALS['wgHooks']['SkinTemplateNavigation'][] = 'TinyMCEAction::displayTab';
 $GLOBALS['wgHooks']['SkinEditSectionLinks'][] = 'TinyMCEHooks::addEditSectionLink';
-$GLOBALS['wgHooks']['LinkEnd'][] = 'TinyMCEHooks::changeRedLink';
+if ( class_exists( 'MediaWiki\Linker\LinkRenderer' ) ) {
+	// MW 1.28+
+	$GLOBALS['wgHooks']['HtmlPageLinkRendererEnd'][] = 'TinyMCEHooks::changeRedLink';
+} else {
+	// MW < 1.28
+	$GLOBALS['wgHooks']['LinkEnd'][] = 'TinyMCEHooks::changeRedLinkOld';
+}
 $GLOBALS['wgHooks']['EditPageBeforeEditToolbar'][] = 'TinyMCEHooks::removeDefaultToolbar';
 $GLOBALS['wgHooks']['AlternateEdit'][] = 'TinyMCEHooks::determineIfTinyMCEIsEnabled';
 $GLOBALS['wgHooks']['EditPage::showEditForm:initial'][] = 'TinyMCEHooks::addToEditPage';
