@@ -3154,7 +3154,6 @@ var MwWikiCode = function() {
 		_wikiApi = mw.config.get( 'wgScriptPath' ) + '/api.php',
 		_title = mw.config.get( "wgCanonicalNamespace" ) + ':' + mw.config.get( "wgTitle" );
 		_specialTagsList = _ed.getParam("wiki_tags_list");
-		_specialTagsList += _ed.getParam("additional_wiki_tags");
 		_useNrnlCharacter = ed.getParam("wiki_non_rendering_newline_character");
 		_slb = '<span class="single_linebreak" title="single linebreak" contenteditable="false"><mwspan>' + _useNrnlCharacter + '</mwspan></span>';
 
@@ -3269,7 +3268,11 @@ var MwWikiCode = function() {
 			context: 'insert',
 			onclick: function(e) {
 				_ed.focus();
-				alert(mw.msg( 'tinymce-browsercontextmenu' ));
+				_ed.windowManager.confirm(mw.msg( 'tinymce-browsercontextmenu' ), function(state) {
+					if (state) {
+						_ed.off('contextmenu');
+					}				
+				});
 			}
 		});
 	  

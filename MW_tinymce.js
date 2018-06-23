@@ -4,6 +4,7 @@ var extensionAssetsPath = mw.config.get( 'wgExtensionAssetsPath' );
 var tinyMCEMacros = mw.config.get( 'wgTinyMCEMacros' );
 var tinyMCETagList = mw.config.get( 'wgTinyMCETagList' );
 var tinyMCELanguage = mw.config.get( 'wgTinyMCELanguage' );
+var tinyMCEDirectionality= mw.config.get( 'wgTinyMCEDirectionality' );
 var tinyMCELangURL = null;
 if ( tinyMCELanguage !== 'en' ) {
 	tinyMCELangURL = extensionAssetsPath + '/TinyMCE/tinymce/langs/' +
@@ -32,7 +33,6 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 		invalid_elements: 'tbody',
 		wiki_non_rendering_newline_character: '&para;', // set to false if you don't use non-rendering single new lines in wiki
 		wiki_tags_list: tinyMCETagList, 
-		additional_wiki_tags: '|ol|ul|li|h1|h2|h3|h4|h5|h6|ta|div',
 		browser_spellcheck: true,
 		wikimagic_context_toolbar: true,
 		browsercontextmenu_context_toolbar: true,
@@ -52,7 +52,7 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 		height: 400,
 		statusbar: false,
 		// the default text direction for the editor
-		directionality: mw.config.get( 'wgTinyMCEDirectionality' ),
+		directionality: wgTinyMCEDirectionality,
 		// default language
 		//language: 'en',
 		language_url: tinyMCELangURL,
