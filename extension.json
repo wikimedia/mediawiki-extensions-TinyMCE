@@ -179,6 +179,7 @@
 	},
 	"config": {
 		"TinyMCEMacros": [],
+		"TinyMCEPreservedTags": [],
 		"TinyMCEEnabled": false,
 		"TinyMCEDisabledNamespaces": [ 8, 10 ],
 		"TinyMCEUnhandledStrings": []

@@ -145,7 +145,7 @@ class TinyMCEHooks {
 	}
 
 	static function setGlobalJSVariables( &$vars, $out ) {
-		global $wgTinyMCEEnabled, $wgTinyMCEMacros, $wgTinyMCEConservedHtmlTags;
+		global $wgTinyMCEEnabled, $wgTinyMCEMacros, $wgTinyMCEPreservedTags;
 		global $wgParser, $wgCheckFileExtensions, $wgStrictFileExtensions;
 		global $wgFileExtensions, $wgFileBlacklist;
 		global $wgEnableUploads;
@@ -170,8 +170,8 @@ class TinyMCEHooks {
 		);
 
 		$tinyMCETagList = $specialTags . implode( '|', $defaultTags );
-		if ($wgTinyMCEConservedHtmlTags ) {
-			$tinyMCETagList = $tinyMCETagList . '|' . implode( '|', $wgTinyMCEConservedHtmlTags);
+		if ( $wgTinyMCEPreservedTags  ) {
+			$tinyMCETagList = $tinyMCETagList . '|' . implode( '|', $wgTinyMCEPreservedTags );
 		}
 
 		$vars['wgTinyMCETagList'] = $tinyMCETagList;
