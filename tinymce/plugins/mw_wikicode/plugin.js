@@ -1016,23 +1016,8 @@ var MwWikiCode = function() {
 		tableparser.addNodeFilter('td', function(nodes, name) {
 			function processText(text, block) {
 				if ((text == "<@@br_emptyline@@>") || (text == "<@@1nl@@>") ) return "<@@br_emptyline@@>"; // cell is empty
-				text = text.replace(/<@@br_emptyline_first@@>/gmi, "<@@br_emptyline@@>");
-				var lines = text.split("<@@br_emptyline@@>");
-
-				// Walk through text line by line adjusting
-				// emptylines appropriately
-				for (var i = 0; i < lines.length; i++) {
-					//set emptyLine if line is empty
-					emptyLine = lines[i].match(/^(\s|&nbsp;)*$/);
-					if (!(emptyLine) && ((block > 0) || (i > 0 )) && (i < lines.length - 1 )) {
-						lines[i] = lines[i] + '<@@br_emptyline@@>';
-					} else if ((emptyLine) && (block == 0) && (i == 1 )) {
-						lines[i] = lines[i] + '<@@br_emptyline@@>';
-					} else if ((emptyLine) && (i == 0 )) {
-						lines[i] = lines[i] + '<@@br_emptyline@@>' + '<@@br_emptyline@@>';
-					}
-				}
-				return lines.join("<@@br_emptyline@@>");
+				text = text.replace(/^<@@br_emptyline_first@@>/gmi, "<@@br_emptyline@@><@@br_emptyline@@>"); // in tables empty line first is two empty lines
+				return text;
 			}
 			for (var i = 0; i < nodes.length; i++) {
 				var child = nodes[i].firstChild;
@@ -1052,7 +1037,6 @@ var MwWikiCode = function() {
 		text = text.replace(/(&[^\s]*?;)/gmi, function($0) {
 			return tinymce.DOM.decode($0);
 		});
-
 		//restore the new lines
 		text = text.replace(/@@TNL@@/gm, '\n');
 		//cleanup colgroup, col, thead, tfoot and tbody tags. Caution: Must be placed before th cleanup because of
@@ -1078,7 +1062,7 @@ var MwWikiCode = function() {
 		text = text.replace(/\|\}<@@tnl@@><@@br_emptyline@@>/gmi, "|}<@@tnl@@>"); // after table
 		text = text.replace(/\|\}<@@tnl@@><@@nl@@>/gmi, "|}<@@tnl@@>"); // after table
 		text = text.replace(/\{\{!\}\}\}<@@tnl@@><@@br_emptyline@@>/gmi, "{{!}}}<@@tnl@@>"); // after table
-		text = text.replace(/<@@tnl@@><@@tnl@@>/gmi, "<@@tnl@@>");//between tables
+		text = text.replace(/<@@tnl@@><@@tnl@@>/gmi, "<@@tnl@@>");//between tables+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		text = text.replace(/\n?<caption([^>]*)>/gmi, "<@@tnl@@>" + pipeText + "+$1");
 		text = text.replace(/\n?<\/caption([^>]*)>/gmi, "");
@@ -1090,7 +1074,6 @@ var MwWikiCode = function() {
 		text = text.replace(/\n?<\/th([^>]*)>/gmi, "");
 
 		text = text.replace(/\n?<td([^>]*)>/gmi, "<@@tnl@@>" + pipeText + "$1" + pipeText);
-
 		// remove extra new lines in tables
 		text = text.replace(/<@@br_emptyline@@><\/td([^>]*)>/gmi, "");
 		text = text.replace(/<@@tnl@@><\/td([^>]*)>/gmi, "");
@@ -1289,13 +1272,18 @@ var MwWikiCode = function() {
 				if (emptyLine) { // process empty lines
 					// If not already in a paragraph (block of blank lines).  Process first empty line differently
 					if (!inParagraph) {
-						if ((lines[i-1].match(/(<td>)(\s|&nbsp;)*$/))
-							|| (lines[i-1].match(/(<\/table>)(\s|&nbsp;)*$/))
+						if ((lines[i-1].match(/(<td)(\s|&nbsp;)*$/))
+							|| (lines[i-1].match(/(<\/table)(\s|&nbsp;)*$/))
 							) {
 							// if first line of data in a table cell
 							//do nothing
 						} else {
-							lines[i] = lines[i] + '<br class="mw_emptyline_first"/>';
+							//if this is last line in cell then two blanks else first empty line
+							if ( !lastLine && (lines[i + 1].match(/(^<td)/i)) || (lines[i + 1].match(/(^<\/td><td)/i))) {	
+								lines[i] = lines[i] + '<br class="mw_emptyline"/><br class="mw_emptyline"/>';
+							} else {
+								lines[i] = lines[i] + '<br class="mw_emptyline_first"/>';
+							}
 						}
 						inParagraph = true;
 					} else {
@@ -1312,7 +1300,7 @@ var MwWikiCode = function() {
 							lines[i] = '<br class="mw_emptyline"/>' + lines[i];
 					}
 					inParagraph = false;
-					if ((lines[i].match(/(^\<td\>)/i)) || (lines[i].match(/(^\<\/td\>\<td\>)/i))) {	
+					if ((lines[i].match(/(^<td)/i)) || (lines[i].match(/(^<\/td><td)/i))) {	
 					// if first line of data in a table cell
 						if (!(lines[i+1].match(/(^\<\/td)/i))) { 
 						// and if not a single line
