@@ -1681,6 +1681,11 @@ var MwWikiCode = function() {
 			}
 			return '<br' + decodeURI(attributes) + '>';
 		});
+		// Global replace - unfortunately the standard use of "/g"
+		// doesn't work here for some reason, so instead we do this.
+		while ( text.indexOf('<@@br_emptyline@@>') != -1 ) {
+			text = text.replace(/<@@br_emptyline@@>(.*?)</, '<blockquote>$1</blockquote><');
+		}
 
 		return text;
 	}
@@ -1785,7 +1790,7 @@ var MwWikiCode = function() {
 					if (text.search(/(<blockquote[^>]*?>\s*(<ul>|<ol>))|(<blockquote[^>]*?>\s*<blockquote[^>]*?>)/) === nextPos) {
 						text = text.replace(/<blockquote[^>]*?>/, "");
 					} else {
-						text = text.replace(/\n?<blockquote[^>]*?>/mi, "" + listTag + " ");
+						text = text.replace(/\n?<blockquote[^>]*?>/mi, "<@@bnl@@>" + listTag + " ");
 					}
 					break;
 				case '</ul'	:
