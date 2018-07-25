@@ -1684,6 +1684,7 @@ var MwWikiCode = function() {
 		// Global replace - unfortunately the standard use of "/g"
 		// doesn't work here for some reason, so instead we do this.
 		while ( text.indexOf('<@@br_emptyline@@>') != -1 ) {
+			text = text.replace(/<@@br_emptyline@@>$/, '');
 			text = text.replace(/<@@br_emptyline@@>(.*?)</, '<blockquote>$1</blockquote><');
 		}
 
