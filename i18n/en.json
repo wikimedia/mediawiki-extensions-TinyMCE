@@ -109,7 +109,7 @@
 	"tinymce-upload-alert-destination-filename-not-allowed": "The destination filename is not allowed",
 	"tinymce-upload-alert-destination-filename-already-exists": "The destination filename already exists",
 	"tinymce-upload-alert-duplicate-file": "The file is a duplicate of $1",
-	"tinymce-upload-alert-other-warning": "You have received the warning $1", 
+	"tinymce-upload-alert-other-warning": "You have received the warning $1",
 	"tinymce-upload-alert-correct-and-try-again": "Please correct the errors and try again",
 	"tinymce-upload-alert-destination-filename-needed": "I'm sorry, you have to provide a destination file name. If the one generated is OK then press Submit again or else change it",
 	"tinymce-upload-alert-source-or-destination-undefined": "I'm sorry, you there's a problem with either the source or destination being undefined.  Please check and try again",
