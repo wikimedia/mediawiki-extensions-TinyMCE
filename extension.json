@@ -22,7 +22,8 @@
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"TinyMCEMagic": "TinyMCE.i18n.magic.php"
+		"TinyMCEMagic": "TinyMCE.i18n.magic.php",
+		"TinyMCEAlias": "TinyMCE.i18n.alias.php"
 	},
 	"AutoloadClasses": {
 		"TinyMCEHooks": "TinyMCE.hooks.php",
