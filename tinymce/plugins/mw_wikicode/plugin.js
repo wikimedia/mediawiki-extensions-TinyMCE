@@ -1104,35 +1104,7 @@ var MwWikiCode = function() {
 					listTags = listTags + '<dl><dt>';
 					break;
 				case ':' :
-					listTags = listTags + '<blockquote>';
-					break;
-			}
-		}
-		return listTags;
-	}
-
-	/**
-	 * Converts MW list markers to HTML list end tags
-	 *
-	 * @param {String} lastList
-	 * @param {String} cur
-	 * @returns {String}
-	 */
-	function _closeList2html(lastList, cur) {
-		var listTags = '';
-		for (var k = lastList.length; k > cur.length; k--) {
-			switch (lastList.charAt(k - 1)) {
-				case '*' :
-					listTags = listTags + '</li></ul>';
-					break;
-				case '#' :
-					listTags = listTags + '</li></ol>';
-					break;
-				case ';' :
-					listTags = listTags + '</dt></dl>';
-					break;
-				case ':' :
-					listTags = listTags + '</blockquote>';
+					listTags = listTags + '<dl><dd>';
 					break;
 			}
 		}
@@ -1157,26 +1129,28 @@ var MwWikiCode = function() {
 					listTags = '</li><li>';
 					break;
 				case ';' :
-					listTags = listTags + '</dt><dt>';
+					listTags = /*listTags + */'</dt><dt>';
 					break;
 				case ':' :
-					listTags = '</blockquote><blockquote>';
+					listTags = '</dd><dd>';
 					break;
 			}
 		} else {
-			switch (lastTag) {
-				case '*' :
-					listTags = listTags + '</li></ul>';
-					break;
-				case '#' :
-					listTags = listTags + '</li></ol>';
-					break;
-				case ';' :
-					listTags = listTags + '</dt></dl>';
-					break;
-				case ':' :
-					listTags = listTags + '</blockquote>';
-					break;
+			if (( curTag !== ';') && (curTag !== ':')) {
+				switch (lastTag) {
+					case '*' :
+						listTags = listTags + '</li></ul>';
+						break;
+					case '#' :
+						listTags = listTags + '</li></ol>';
+						break;
+					case ';' :
+						listTags = listTags + '</dt>';
+						break;
+					case ':' :
+						listTags = listTags + '</dd>';
+						break;
+				}
 			}
 			switch (curTag) {
 				case '*' :
@@ -1186,16 +1160,56 @@ var MwWikiCode = function() {
 					listTags = listTags + '<ol><li>';
 					break;
 				case ';' :
-					listTags = listTags + '<dl><dt>';
+					listTags = listTags + '<dt>';
 					break;
 				case ':' :
-					listTags = listTags + '<blockquote>';
+ 					if ( lastTag == ';' ) {
+						listTags = listTags + '<dd>';
+					} else if (( lastTag == '#' ) || ( lastTag == '#' )) {
+						listTags = listTags + '<dl><dd>';
+					}
 					break;
 			}
 		}
 		return listTags;
 	}
 
+	/**
+	 * Converts MW list markers to HTML list end tags
+	 *
+	 * @param {String} lastList
+	 * @param {String} cur
+	 * @returns {String}
+	 */
+	function _closeList2html(lastList, cur) {
+		var listTags = '',
+			lastTag;
+		for (var k = lastList.length; k > cur.length; k--) {
+			lastTag = lastList.charAt(lastList.length - 1);
+			switch (lastList.charAt(k - 1)) {
+				case '*' : 
+					listTags = listTags + '</li></ul>';
+					break;
+				case '#' :
+					listTags = listTags + '</li></ol>';
+					break;
+				case ';' :
+					listTags = listTags + '</dd></dl>';
+					break;
+				case ':' :
+					listTags = listTags + '</dd></dl>';
+					}
+					break;
+			}
+		return listTags;
+	}
+
+	/**
+	 * Converts MW lists and empty lines to HTML
+	 *
+	 * @param {String} text
+	 * @returns {String}
+	 */
 	function _listsAndEmptyLines2html(text) {
 		var
 			//lastlist is set to the wikicode for the list item excluding its text content
@@ -1230,8 +1244,9 @@ var MwWikiCode = function() {
 				lines[i] = lines[i].replace(/^(\*|#|:|;)*\s*(.*?)$/gmi, "$2");
 				if (line[0].match(/^(\*|#)+:$/) ) {
 					// If the line starts with something like '*:' or '#:', it's not
-					// really a list item.
-					lines[i] = "<br />" + lines[i];
+					// then its probably a definition description within a list.
+//					lines[i] = "<br />" + lines[i];
+					lines[i] = _continueList2html(lastList, line[0]) + lines[i];
 				} else if (line[0].indexOf(':') === 0) {
 					// If the line belongs to a definition list starting with a ':' and
 					// follows the last line of a sub, omit <li> at start of line.
@@ -1539,15 +1554,10 @@ var MwWikiCode = function() {
 		
 		//normalize line endings to \n
 		text = text.replace(/\r\n/gi, '\n');
-
-		// br preprocessing
+		// br preprocessing - these should be preserved in wiki code
 		text = text.replace(/<br(.*?)\/?>/gi, function(match, p1, offset, string) {
 			p1 = p1.trim();
-			if ( p1 == '' ) {
-				return '<br />';
-			} else {
-				return '<br data-attributes="' + encodeURI(p1) + '" />'; // @todo: Use JSON.stringify
-			}
+			return '<br data-attributes="' + encodeURI(p1) + '" />'; // @todo: Use JSON.stringify
 		});
 
 		// process style (bold, italic, rule, div styles
@@ -1583,9 +1593,10 @@ var MwWikiCode = function() {
 		}
 		// this reverts the line above. otherwise undo/redo will not work
 		text = text.replace(/<div><br [^>]*mw_lastline[^>]*><\/div>/gmi, '');
-		text = text.replace(/<br data-attributes="" \/>/gmi, '<br/>');
+// DC TODO don't think next three lines are relevant here
+/*		text = text.replace(/<br data-attributes="" \/>/gmi, '<br />');
 		text = text.replace(/<br data-attributes="[^>]*data-mce-bogus[^>]*" \/>/gmi, '');
-		text = text.replace(/<br [^>]*data-mce-bogus="1"[^>]*>/gmi, '');
+		text = text.replace(/<br [^>]*data-mce-bogus="1"[^>]*>/gmi, '');*/
 
 		// wrap the text in an object to send it to event listeners
 		textObject = {text: text};
@@ -1596,8 +1607,9 @@ var MwWikiCode = function() {
 		return text;
 	}
 
-	function _htmlFindList(text) {
-		return text.search(/(<ul|<ol|<li( |>)|<\/?dl|<\/?dt|<blockquote[^>]*?>|<\/li( |>)|<\/ul|<\/ol|<\/blockquote|<p( |>)|<\/p( |>)|<h[1-6]|<hr|<br)/);
+	function _htmlFindBlock(text) {
+//		return text.search(/(<ul|<ol|<li( |>)|<\/?dl|<\/?dt|<\/?dd|<blockquote[^>]*?>|<\/li( |>)|<\/ul|<\/ol|<\/blockquote|<p( |>)|<\/p( |>)|<h[1-6]|<hr|<br)/);
+		return text.search(/(<\/?ul|<\/?ol|<\/?li( |>)|<\/?dl|<\/?dt|<\/?dd|<\/?blockquote[^>]*?>|<\/?p( |>)|<\/?h[1-6]|<hr)/);
 	}
 
 	function _textStyles2wiki (text) {
@@ -1608,19 +1620,27 @@ var MwWikiCode = function() {
 		//underline needs no conversion
 		text = text.replace(/<strike>(.*?)<\/strike>/gi, "<s>$1</s>");
 		//sub and sup need no conversion
-		
 		text = text.replace(/\n?<p style="([^"]*?)">(.*?)<\/p>/gmi, "\n<div style='$1'>$2</div><@@nl@@>");
 		text = text.replace(/\n?<p style="text-align:\s?left;?">(.*?)<\/p>/gmi, "<@@nl@@><div style='text-align: left'>$1</div><@@nl@@>");
 		text = text.replace(/\n?<p style="text-align:\s?right;?">(.*?)<\/p>/gmi, "<@@nl@@><div style='text-align: right'>$1</div><@@nl@@>");
 		text = text.replace(/\n?<p style="text-align:\s?center;?">(.*?)<\/p>/gmi, "<@@nl@@><div style='text-align: center'>$1</div><@@nl@@>");
 		text = text.replace(/\n?<p style="text-align:\s?justify;?">(.*?)<\/p>/gmi, "<@@nl@@><div style='text-align: justify'>$1</div><@@nl@@>");
-		text = text.replace(/\n?<p style=('|")padding-left: 30px;('|")>([\S\s]*?)<\/p>/gmi, "<blockquote>$3</blockquote>");
-		text = text.replace(/\n?<p style=('|")padding-left: 60px;('|")>([\S\s]*?)<\/p>/gmi, "<blockquote><blockquote>$3</blockquote>");
-		text = text.replace(/\n?<p style=('|")padding-left: 90px;('|")>([\S\s]*?)<\/p>/gmi, "<blockquote><blockquote><blockquote>$3</blockquote>");
+		
+		text = text.replace(/\n?<p class=('|")mw_paragraph('|") style=('|")padding-left: 30px;('|") data-mce-style=('|")padding-left: 30px;('|")>([\S\s]*?)<\/p>/gmi, "<blockquote>$7</blockquote>");
+		text = text.replace(/\n?<p class=('|")mw_paragraph('|") style=('|")padding-left: 60px;('|") data-mce-style=('|")padding-left: 60px;('|")>([\S\s]*?)<\/p>/gmi, "<blockquote><blockquote>$7</blockquote>");
+		text = text.replace(/\n?<p class=('|")mw_paragraph('|") style=('|")padding-left: 90px;('|") data-mce-style=('|")padding-left: 90px;('|")>([\S\s]*?)<\/p>/gmi, "<blockquote><blockquote><blockquote>$7</blockquote>");
 
-		text = text.replace(/\n?<div style=('|")padding-left: 30px;('|")>([\S\s]*?)<\/div>/gmi, "<blockquote>$3</blockquote>");
-		text = text.replace(/\n?<div style=('|")padding-left: 60px;('|")>([\S\s]*?)<\/div>/gmi, "<blockquote><blockquote>$3</blockquote>");
-		text = text.replace(/\n?<div style=('|")padding-left: 90px;('|")>([\S\s]*?)<\/div>/gmi, "<blockquote><blockquote><blockquote>$3</blockquote>");
+		text = text.replace(/\n?<div style=('|")padding-left: 30px;('|") data-mce-style=('|")padding-left: 30px;('|")>([\S\s]*?)<\/div>/gmi, "<blockquote>$5</blockquote>");
+		text = text.replace(/\n?<div style=('|")padding-left: 60px;('|") data-mce-style=('|")padding-left: 60px;('|")>([\S\s]*?)<\/div>/gmi, "<blockquote><blockquote>$5</blockquote>");
+		text = text.replace(/\n?<div style=('|")padding-left: 90px;('|") data-mce-style=('|")padding-left: 90px;('|")>([\S\s]*?)<\/div>/gmi, "<blockquote><blockquote><blockquote>$5</blockquote>");
+
+/*		text = text.replace(/\n?<p class=('|")mw_paragraph('|") style=('|")padding-left: 20px;('|") data-mce-style=('|")padding-left: 20px;('|")>([\S\s]*?)<\/p>/gmi, "<@@nl@@>:$7")
+		text = text.replace(/\n?<p class=('|")mw_paragraph('|") style=('|")padding-left: 40px;('|") data-mce-style=('|")padding-left: 40px;('|")>([\S\s]*?)<\/p>/gmi, "<@@nl@@>::$7");
+		text = text.replace(/\n?<p class=('|")mw_paragraph('|") style=('|")padding-left: 60px;('|") data-mce-style=('|")padding-left: 60px;('|")>([\S\s]*?)<\/p>/gmi, "<@@nl@@>:::$7");
+
+		text = text.replace(/\n?<div style=('|")padding-left: 20px;('|") data-mce-style=('|")padding-left: 20px;('|")>([\S\s]*?)<\/div>/gmi, "<@@nl@@>:$5");
+		text = text.replace(/\n?<div style=('|")padding-left: 40px;('|") data-mce-style=('|")padding-left: 40px;('|")>([\S\s]*?)<\/div>/gmi, "<@@nl@@>::$5");
+		text = text.replace(/\n?<div style=('|")padding-left: 60px;('|") data-mce-style=('|")padding-left: 60px;('|")>([\S\s]*?)<\/div>/gmi, "<@@nl@@>:::$5");*/
 
 		return text
 	}
@@ -1631,7 +1651,6 @@ var MwWikiCode = function() {
 			replaceText, 
 			currentPos, 
 			nextPos;
-
 		//Remove \nl as they are not part of html formatting
 		text = text.replace(/\n/gi, "");
 		//Process Enter Key (<p>) and Shift-Enter key (<br>)formatting
@@ -1661,9 +1680,9 @@ var MwWikiCode = function() {
 		regex = '<@@br_emptyline_first@@><@@br_emptyline@@><(' + _specialTagsList + ')';
 		findText = new RegExp(regex, 'gmi');
 		text = text.replace(findText, '<br><$1');
-		regex = '<@@br_emptyline_first@@><(' + _specialTagsList + ')';
-		findText = new RegExp(regex, 'gmi');
-		text = text.replace(findText, '<br><$1');
+//		regex = '<@@br_emptyline_first@@><(' + _specialTagsList + ')';
+//		findText = new RegExp(regex, 'gmi');
+//		text = text.replace(findText, '<br><$1');
 		regex = '<p><\\/p><(' + _specialTagsList + ')';
 		findText = new RegExp(regex, 'gmi');
 		text = text.replace(findText, '<$1');
@@ -1676,27 +1695,23 @@ var MwWikiCode = function() {
 
 		text = text.replace(/<br.*?>/gi, function(match, offset, string) {
 			var attributes = $(match).attr('data-attributes');
-			if (typeof attributes === 'undefined' || attributes == "") {
-				return '<@@br_emptyline@@>';
+			if (typeof attributes === 'undefined') {
+				attributes = '';
 			}
-			return '<br' + decodeURI(attributes) + '>';
+			return '<br' + decodeURI(attributes) + ' />';
 		});
-		// Global replace - unfortunately the standard use of "/g"
-		// doesn't work here for some reason, so instead we do this.
-		while ( text.indexOf('<@@br_emptyline@@>') != -1 ) {
-			text = text.replace(/<@@br_emptyline@@>$/, '');
-			text = text.replace(/<@@br_emptyline@@>(.*?)</, '<blockquote>$1</blockquote><');
-		}
-
 		return text;
 	}
 
 	function _blocks2wiki (text) {
-		var listTag, currentPos, nextPos, oldText, message;
+		var listTag = '',
+			currentPos, 
+			nextPos, 
+			oldText, 
+			message;
 
-		listTag = '';
 		// careful in the upcoming code: .*? does not match newline, however, [\s\S] does.
-		nextPos = _htmlFindList(text);
+		nextPos = _htmlFindBlock(text);
 		while (nextPos !== -1) {
 			oldText = text;
 			switch (text.substr(nextPos, 2).toLowerCase()) {
@@ -1762,7 +1777,11 @@ var MwWikiCode = function() {
 					break;
 				case '<dt' :
 					listTag = listTag + ';';
-					text = text.replace(/<dt[^>]*?>/, "<@@bnl@@>" + listTag + " ");
+					text = text.replace(/<dt[^>]*?>/, "<@@bnl@@>" + listTag);
+					break;
+				case '<dd' :
+					listTag = listTag + ':';
+					text = text.replace(/<dd[^>]*?>/, "<@@bnl@@>" + listTag + " ");
 					break;
 				case '<li' :
 					if (text.search(/<li[^>]*?>\s*(<ul[^>]*?>|<ol[^>]*?>)/) === nextPos) {
@@ -1771,27 +1790,15 @@ var MwWikiCode = function() {
 						text = text.replace(/\n?<li[^>]*?>/mi, "<@@bnl@@>" + listTag + " ");
 					}
 					break;
-				case '<br' :
-				//TODO check this now works as simple <br>s were preserved in preserveNewLines4wiki function
-				//shouldn't get here now I think
-					if (listTag.length > 0) {
-						text = text.replace(/<br .*?\/>/, "<@@nl@@>" + listTag + ": ");
-					} else {
-						if (text.search(/<br class="single_linebreak">/) === nextPos) {
-							text = text.replace(/<br .*?>/, "<@@1nl@@>");
-						} else {
-							text = text.replace(/<br .*?\/>/, "<@@nl@@>");
-						}
-					}
-					break;
 			}
 			switch (text.substr(nextPos, 4)) {
+//DC TODO We no longer use blockquote for definition lists, we use <dd> instead so probably could simplify this
 				case '<blo' :
 					listTag = listTag + ':';
 					if (text.search(/(<blockquote[^>]*?>\s*(<ul>|<ol>))|(<blockquote[^>]*?>\s*<blockquote[^>]*?>)/) === nextPos) {
 						text = text.replace(/<blockquote[^>]*?>/, "");
 					} else {
-						text = text.replace(/\n?<blockquote[^>]*?>/mi, "<@@bnl@@>" + listTag + " ");
+						text = text.replace(/\n?<blockquote[^>]*?>/mi, "" + listTag + " ");
 					}
 					break;
 				case '</ul'	:
@@ -1812,21 +1819,20 @@ var MwWikiCode = function() {
 					}
 					break;
 				case '</dl' :
-					listTag = listTag.substr(0, listTag.length - 1);
-					//prevent newline after last blockquote
-					if (listTag.length > 0) {
-						text = text.replace(/<\/dl>/, "");
-					} else {
-						text = text.replace(/<\/dl>/, "");
-					}
+					text = text.replace(/<\/dl>/, "");
 					break;
 				case '</dt' :
 					listTag = listTag.substr(0, listTag.length - 1);
 					text = text.replace(/<\/dt>/, "");
 					break;
+				case '</dd' :
+					listTag = listTag.substr(0, listTag.length - 1);
+					text = text.replace(/<\/dd>/, "");
+					break;
 				case '</li' :
 					text = text.replace(/\n?<\/li>/mi, "");
 					break;
+//DC TODO We no longer use blockquote for definitin lists, we use <dd> instead so probably could simplify this
 				case '</bl' :
 					listTag = listTag.substr(0, listTag.length - 1);
 					if (text.search(/<\/blockquote>\s*<blockquote[^>]*?>/) === nextPos) {
@@ -1846,7 +1852,7 @@ var MwWikiCode = function() {
 					break;
 			}
 
-			nextPos = _htmlFindList(text);
+			nextPos = _htmlFindBlock(text);
 			// this is a rather expensive function in order to prevent system crashes.
 			// if the text has not changed, text.search will find the same tag over and over again
 			// Todo: Identify infinite loops and prevent
@@ -1884,18 +1890,18 @@ var MwWikiCode = function() {
 		// Important: do not use m flag, since this makes $ react to any line ending instead of text ending
 		text = text.replace(/((<p( [^>]*?)?>(\s|&nbsp;|<br\s?\/>)*?<\/p>)|<br\s?\/>|\s)*$/gi, "");
 		text = text.replace(/<br [^>]*mw_lastline[^>]*>/gmi, '');
-		text = text.replace(/<br data-attributes="" ?\/?>/gmi, '<br/>');
+		text = text.replace(/<br data-attributes="" ?\/?>/gmi, '<br />');
 		text = text.replace(/<br data-attributes="[^>]*data-mce-bogus[^>]*" ?\/?>/gmi, '');
-		text = text.replace(/<br data-attributes="[^>]*data-attributes[^>]*" ?\/?>/gmi, '<br/>');
+		text = text.replace(/<br data-attributes="[^>]*data-attributes[^>]*" ?\/?>/gmi, '<br />');
 		text = text.replace(/<br [^>]*data-mce-bogus="1"[^>]*>/gmi, '');
 		text = text.replace(/<br [^>]*data-mce-fragment="1"[^>]*>/gmi, '');
 		//DC clean up single new lines from _onGetContent
 		text = text.replace(/ ?<span[^>]*class="single_linebreak" title="single linebreak"[^>]*>(&nbsp;|.|&para;)<\/span> ?/g, "<@@nl@@>");
 		//DC replace all new line codes as all valid ones now have place holders
 		text = text.replace(/\n*/gi, '');
-		text = text.replace(/<br \/><br \/>/gmi, "\n");
-		text = text.replace(/<br \/>/gmi, "");
-		text = text.replace(/<@@1nl@@>/gmi, "<br>");
+//		text = text.replace(/<br \/><br \/>/gmi, "\n");
+//		text = text.replace(/<br \/>/gmi, "");
+		text = text.replace(/<@@1nl@@>/gmi, "<br />");
 		text = text.replace(/<@@2nl@@>/gmi, "\n\n");
 		text = text.replace(/<@@nl@@>/gmi, "\n");
 		return text;
