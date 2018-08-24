@@ -74,7 +74,7 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 		// check if files of with given extension are allowed to be uploaded
 		function checkFileExtensionIsAllowed(extension) {
 			var checkFileExtensions = (mw.config.get( 'wgCheckFileExtensions' )),
-				strictFileExtensons = (mw.config.get( 'wgStrictFileExtensions' )),
+				strictFileExtensions = (mw.config.get( 'wgStrictFileExtensions' )),
 				allowedsFileExtensions = (mw.config.get( 'wgFileExtensions' )),
 				disallowedsFileExtensions = (mw.config.get( 'wgFileBlacklist' )),
 				extensionAllowed;
@@ -89,7 +89,7 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 
 			extensionAllowed = true;
 			if (checkFileExtensions) {
-				if (strictFileExtensons) {
+				if (strictFileExtensions) {
 					extensionAllowed = false;
 					for (fileExtension in allowedsFileExtensions) {
 						if (allowedsFileExtensions[fileExtension].toLowerCase() == extension.toLowerCase()) {

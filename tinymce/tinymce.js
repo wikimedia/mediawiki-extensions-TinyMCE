@@ -31588,7 +31588,7 @@ define(
           }
         }
 
-        function compilePsuedoFilter(name) {
+        function compilePseudoFilter(name) {
           var notSelectors;
 
           if (name) {
@@ -31632,7 +31632,7 @@ define(
           add(compileIdFilter(parts[2]));
           add(compileClassesFilter(parts[3]));
           add(compileAttrFilter(parts[4], parts[5], parts[6]));
-          add(compilePsuedoFilter(parts[7]));
+          add(compilePseudoFilter(parts[7]));
 
           // Mark the filter with pseudo for performance
           filters.pseudo = !!parts[7];
