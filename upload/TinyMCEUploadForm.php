@@ -24,7 +24,7 @@ class TinyMCEUploadForm extends HTMLForm {
 	protected $mSessionKey;
 	protected $mHideIgnoreWarning;
 	protected $mDestWarningAck;
-	
+
 	protected $mSourceIds;
 
 	## DC for TinyMCE
@@ -313,7 +313,6 @@ class TinyMCEUploadForm extends HTMLForm {
 	 */
 	protected function getDescriptionSection() {
 ## DC for TinyMCE
-		$cols = intval( $this->getUser()->getOption( 'cols' ) );
 		if ( $this->getUser()->getOption( 'editwidth' ) ) {
 			$this->getOutput()->addInlineStyle( '#mw-htmlform-description { width: 100%; }' );
 		}
@@ -338,8 +337,6 @@ class TinyMCEUploadForm extends HTMLForm {
 				'label-message' => $this->mForReUpload
 					? 'filereuploadsummary'
 					: 'fileuploadsummary',
-				'cols' => ($cols*3/4)+1,
-				'rows' => 4,
 			),
 /*
 			'EditTools' => array(
@@ -395,7 +392,6 @@ class TinyMCEUploadForm extends HTMLForm {
 	 * @return array Descriptor array
 	 */
 	protected function getDisplayParamsSection() {
-		$cols = intval( $this->getUser()->getOption( 'cols' ) );
 		if ( $this->getUser()->getOption( 'editwidth' ) ) {
 			$this->getOutput()->addInlineStyle( '#mw-htmlform-description { width: 100%; }' );
 		}
