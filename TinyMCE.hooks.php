@@ -16,7 +16,7 @@ class TinyMCEHooks {
 			return 1;
 		}
 
-		define( 'TINYMCE_VERSION', '0.2' );
+		define( 'TINYMCE_VERSION', '0.3' );
 
 		$GLOBALS['wgTinyMCEIP'] = dirname( __DIR__ ) . '/../';
 
