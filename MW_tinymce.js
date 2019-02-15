@@ -153,7 +153,7 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 		input.setAttribute('type', 'file');
 		input.onchange = function() {
 			var file = this.files[0];
-      
+
 			var reader = new FileReader();
 			reader.onload = function (e) {
 				var fileContent = file;
@@ -163,10 +163,13 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 			};
 			reader.readAsDataURL(file);
 		};
-    
+
 		input.click();
 	}
     });
 };
 
 mwTinyMCEInit( '#wpTextbox1' );
+
+// Let others know we're done here
+$( document ).trigger( 'TinyMCELoaded' );
