@@ -4,7 +4,7 @@ var extensionAssetsPath = mw.config.get( 'wgExtensionAssetsPath' );
 var tinyMCEMacros = mw.config.get( 'wgTinyMCEMacros' );
 var tinyMCETagList = mw.config.get( 'wgTinyMCETagList' );
 var tinyMCELanguage = mw.config.get( 'wgTinyMCELanguage' );
-var tinyMCEDirectionality= mw.config.get( 'wgTinyMCEDirectionality' );
+var tinyMCEDirectionality = mw.config.get( 'wgTinyMCEDirectionality' );
 var tinyMCELangURL = null;
 if ( tinyMCELanguage !== 'en' ) {
 	tinyMCELangURL = extensionAssetsPath + '/TinyMCE/tinymce/langs/' +
@@ -52,7 +52,7 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 		height: 400,
 		statusbar: false,
 		// the default text direction for the editor
-		directionality: wgTinyMCEDirectionality,
+		directionality: tinyMCEDirectionality,
 		// default language
 		//language: 'en',
 		language_url: tinyMCELangURL,
