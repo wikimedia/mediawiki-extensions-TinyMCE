@@ -14,7 +14,7 @@ var mw_skin = mw.config.get( 'skin' );
 var mw_skin_css = '/load.php?debug=false&lang=en-gb&modules=mediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.sectionAnchor%7Cmediawiki.skinning.interface%7Cskins.' + mw_skin + '.styles&only=styles&skin=' + mw_skin ;
 
 window.mwTinyMCEInit = function( tinyMCESelector ) {
-	window.tinymce.init({ 
+	window.tinymce.init({
 //		selector: '.tinymce',
 		selector: tinyMCESelector,
 		branding: false,
@@ -24,7 +24,7 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 		tinyMCEMacros: tinyMCEMacros,
 		automatic_uploads: true,
 		paste_data_images: true,
-		content_css: 
+		content_css:
 			[extensionAssetsPath + '/TinyMCE/MW_tinymce.css',
 			scriptPath + mw_skin_css],
 		theme_url: extensionAssetsPath + '/TinyMCE/tinymce/themes/modern/theme.js',
@@ -32,7 +32,7 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 		paste_word_valid_elements: 'b,strong,i,em,h1,h2,h3,h4,h5,table,thead,tfoot,tr,th,td,ol,ul,li,a,sub,sup,strike,br,del,div,p',
 		invalid_elements: 'tbody',
 		wiki_non_rendering_newline_character: '&para;', // set to false if you don't use non-rendering single new lines in wiki
-		wiki_tags_list: tinyMCETagList, 
+		wiki_tags_list: tinyMCETagList,
 		browser_spellcheck: true,
 		wikimagic_context_toolbar: true,
 		browsercontextmenu_context_toolbar: true,
@@ -71,22 +71,22 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 		keep_styles: true,
 		// save plugin
 		save_enablewhendirty: true,
-		//Allow style tags in body and unordered lists in spans (inline)
+		// Allow style tags in body and unordered lists in spans (inline)
 		valid_children: "+span[ul]",
-		//set the id of the body tag in iframe to bodyContent, so styles do
-		//apply in a correct manner. This may be dangerous.
+		// Set the ID of the body tag in iframe to bodyContent, so styles do
+		// apply in a correct manner. This may be dangerous.
 		body_id: 'bodyContent',
-		//Allowable file typr for file picker
-		file_picker_types: 'file image media', 
-		//Enable/disable options in upload popup
+		// Allowable file types for file picker
+		file_picker_types: 'file image media',
+		// Enable/disable options in upload popup
 		image_description: true,
 		image_title: true,
 		image_dimensions: true,
 		image_advtab: true,
 		image_class_list: [
-    		{title: mw.msg("tinymce-upload-type-label-file"), value: 'File'},
-    		{title: mw.msg("tinymce-upload-type-label-url"), value: 'URL'},
-    		{title: mw.msg("tinymce-upload-type-label-wiki"), value: 'Wiki'}
+			{title: mw.msg("tinymce-upload-type-label-file"), value: 'File'},
+			{title: mw.msg("tinymce-upload-type-label-url"), value: 'URL'},
+			{title: mw.msg("tinymce-upload-type-label-wiki"), value: 'Wiki'}
 		],
 		external_plugins: {
 			'anchor': extensionAssetsPath + '/TinyMCE/tinymce/plugins/anchor/plugin.js',
@@ -129,44 +129,43 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 				{title: "Align Middle", selector: "td", styles: {verticalalign: "middle"}},
 				{title: "Align Bottom", selector: "td", styles: {verticalalign: "bottom"}}
 			]},
-				{title: "Pre", block: "pre", classes: "bs_pre_from_space" },
-				{title: "Paragraph", block: "p" }
+			{title: "Pre", block: "pre", classes: "bs_pre_from_space" },
+			{title: "Paragraph", block: "p" }
 		],
 		images_upload_credentials: true,
 		autoresize_max_height: 400,
 		setup: function(editor) {
+		},
+		init_instance_callback: function (instance) {
+			// For some reason, in some installations this only works as an inline function,
+			// instead of a named function defined elsewhere.
+			var minimizeOnBlur = $("textarea#" + instance.id).hasClass( 'mceMinimizeOnBlur' );
+			if ( minimizeOnBlur ) {
+				var mcePane = $("textarea#" + instance.id).prev();
+				// Keep a little sliver of the toolbar so that users see it.
+				mcePane.find(".mce-toolbar-grp").css("height", "10px");
+				mcePane.find(".mce-toolbar-grp .mce-flow-layout").hide("medium");
+			}
+		},
+		file_picker_callback: function(cb, value, meta) {
+			var input = document.createElement('input');
+			input.setAttribute('type', 'file');
+			input.onchange = function() {
+				var file = this.files[0];
 
-	},
-	init_instance_callback: function (instance) {
-		// For some reason, in some installations this only works as an inline function,
-		// instead of a named function defined elsewhere.
-		var minimizeOnBlur = $("textarea#" + instance.id).hasClass( 'mceMinimizeOnBlur' );
-		if ( minimizeOnBlur ) {
-			var mcePane = $("textarea#" + instance.id).prev();
-			// Keep a little sliver of the toolbar so that users see it.
-			mcePane.find(".mce-toolbar-grp").css("height", "10px");
-			mcePane.find(".mce-toolbar-grp .mce-flow-layout").hide("medium");
-		}
-	},
-	file_picker_callback: function(cb, value, meta) {
-		var input = document.createElement('input');
-		input.setAttribute('type', 'file');
-		input.onchange = function() {
-			var file = this.files[0];
-
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				var fileContent = file;
-				// call the callback and populate the src field with the file name
-				// and srccontent field with the content of the file
-				cb(e.target.result, { srccontent: fileContent, src: file.name });
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					var fileContent = file;
+					// call the callback and populate the src field with the file name
+					// and srccontent field with the content of the file
+					cb(e.target.result, { srccontent: fileContent, src: file.name });
+				};
+				reader.readAsDataURL(file);
 			};
-			reader.readAsDataURL(file);
-		};
 
-		input.click();
-	}
-    });
+			input.click();
+		}
+	});
 };
 
 mwTinyMCEInit( '#wpTextbox1' );
