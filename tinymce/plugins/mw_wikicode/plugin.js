@@ -1671,9 +1671,9 @@ var MwWikiCode = function() {
 		text = text.replace(/<br><\/p>/gmi, '</p>');
 		text = text.replace(/<br class="mw_emptyline_first"[^>]*>/gmi, "<@@br_emptyline_first@@>");
 		//then replace Enter keypress followed by 'div's (eg table, lists etc, with a single empty line
-		text = text.replace(/<p class="mw_paragraph">(.*?)<\/p><div>/gmi, '$1<@@br_emptyline@@><div>');
+		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<\/p><div>/gmi, '$1<@@br_emptyline@@><div>');
 		// replace thes same if not nested in 'div's
-		text = text.replace(/<p class="mw_paragraph">(.*?)<\/p>(<table|<ul|<ol|<h)/gmi, '$1<@@br_emptyline@@>$2');
+		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<\/p>(<table|<ul|<ol|<h)/gmi, '$1<@@br_emptyline@@>$2');
 		//then replace Enter keypress with wiki paragraph eg three new lines
 		text = text.replace(/<p class="mw_paragraph">(.*?)<\/p>/gmi, '$1<@@br_emptyline_first@@><@@br_emptyline@@>');
 		//then replace Enter keypress followed by specialTags (eg <h, <source,  etc, with a single empty line
