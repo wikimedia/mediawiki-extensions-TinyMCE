@@ -1378,7 +1378,7 @@ var MwWikiCode = function() {
 		// horizontal rules
 		text = text.replace(/^\n?----\n?/gmi, "\n<hr>\n");
 		// div styles
-		// @todo check this, might be unneccessary
+		// @todo check this, might be unnecessary
 		text = text.replace(/<div style='text-align:left'>(.*?)<\/div>/gmi, "<div align='left'>$1</div>");
 		text = text.replace(/<div style='text-align:right'>(.*?)<\/div>/gmi, "<div align='right'>$1</div>");
 		text = text.replace(/<div style='text-align:center'>(.*?)<\/div>/gmi, "<div align='center'>$1</div>");
@@ -1587,7 +1587,7 @@ var MwWikiCode = function() {
 			text = textObject.text;
 		}
 		else {
-			//<p> is neccessary to fix Ticket#2010111510000021. do not use <p>
+			//<p> is necessary to fix Ticket#2010111510000021. do not use <p>
 			//in the complementary line in html2wiki
 			text = text + '<div><br class="mw_lastline" /></div>';
 		}
