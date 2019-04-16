@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\MediaWikiServices;
+
 /**
  * Static functions called by various outside hooks, as well as by
  * extension.json.
@@ -249,7 +252,13 @@ class TinyMCEHooks {
 	 * 'NOTINYMCE' magic word in a page
 	 */
 	static function handleMagicWords( &$parser, &$text ) {
-		$magicWord = MagicWord::get( 'MAG_NOTINYMCE' );
+		if ( class_exists( MagicWordFactory::class ) ) {
+			// MW 1.32+
+			$factory = MediaWikiServices::getInstance()->getMagicWordFactory();
+			$magicWord = $factory->get( 'MAG_NOTINYMCE' );
+		} else {
+			$magicWord = MagicWord::get( 'MAG_NOTINYMCE' );
+		}
 		if ( $magicWord->matchAndRemove( $text ) ) {
 			$parser->mOutput->setProperty( 'notinymce', 'y' );
 		}
