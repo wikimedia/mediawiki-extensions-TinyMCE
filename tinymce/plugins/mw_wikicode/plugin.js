@@ -113,7 +113,8 @@ var MwWikiCode = function() {
 		_useNrnlCharacter,
 		_slb,
 		_wikiApi,
-		_title;
+		_title,
+		_inTemplate;
 
 	var me = this;
 
@@ -761,7 +762,6 @@ var MwWikiCode = function() {
 		if (typeof embedded == 'undefined') {
 			embedded = false;
 		}
-
 		// images or links in tables may contain | in their attributes, esp. in mw-data-*. These
 		// need to be properly escaped in order not to interfere with table syntax
 		while (text.match(/(\<[^\>]*?)(\|)([^\>]*?\>)/g)) {
@@ -858,7 +858,7 @@ var MwWikiCode = function() {
 					inTr = true;
 				}
 			} else if ( ( line = lines[i].match(/^\|(.*)/gi) ) && inTable) {
-				cells = line[0].substr(1, line[0].length).split(/(\|\|)/);
+				cells = line[0].substr(1, line[0].length).split("||");
 				var curLine = '';
 
 				for (var k = 0; k < cells.length; k++) {
@@ -1005,7 +1005,7 @@ var MwWikiCode = function() {
 		//var editingTextarea = $(tinymce.activeEditor.getElement());
 		var editingTextarea = $(e.target.targetElm);
 		var pipeText;
-		if ( editingTextarea.hasClass('mcePartOfTemplate') ) {
+		if ( _inTemplate ) {
 			pipeText = '{{!}}';
 		} else {
 			pipeText = '|';
@@ -1073,7 +1073,13 @@ var MwWikiCode = function() {
 		text = text.replace(/\n?<th([^>]*)>/gmi, "<@@tnl@@>!$1" + pipeText);
 		text = text.replace(/\n?<\/th([^>]*)>/gmi, "");
 
-		text = text.replace(/\n?<td([^>]*)>/gmi, "<@@tnl@@>" + pipeText + "$1" + pipeText);
+		text = text.replace(/\n?<td([^>]*)>/gmi, function (match, $1) {
+			if ($1) {
+				return "<@@tnl@@>" + pipeText + $1 + pipeText;
+			} else {
+				return "<@@tnl@@>" + pipeText;
+			}
+		});
 		// remove extra new lines in tables
 		text = text.replace(/<@@br_emptyline@@><\/td([^>]*)>/gmi, "");
 		text = text.replace(/<@@tnl@@><\/td([^>]*)>/gmi, "");
@@ -1236,7 +1242,6 @@ var MwWikiCode = function() {
 			// Var line is only set if it is part of a wiki list
 			line = lines[i].match(/^(\*|#(?!REDIRECT)|:|;)+/);
 			lastLine = (i == lines.length - 1);
-
 			//Process lines
 			if (line && line !== '') { //Process lines that are members of wiki lists.
 				// reset the empty line count to zero as this line isn't empty
@@ -1291,13 +1296,15 @@ var MwWikiCode = function() {
 							|| (lines[i-1].match(/(<\/table)(\s|&nbsp;)*$/))
 							) {
 							// if first line of data in a table cell
-							//do nothing
+							// do nothing
 						} else {
-							//if this is last line in cell then two blanks else first empty line
-							if ( !lastLine && (lines[i + 1].match(/(^<td)/i)) || (lines[i + 1].match(/(^<\/td><td)/i))) {	
-								lines[i] = lines[i] + '<br class="mw_emptyline"/><br class="mw_emptyline"/>';
-							} else {
-								lines[i] = lines[i] + '<br class="mw_emptyline_first"/>';
+							// if this is last line in cell, then two blanks, else first empty line
+							if (!lastLine) {
+								if ((lines[i + 1].match(/(^<td)/i)) || (lines[i + 1].match(/(^<\/td><td)/i))) {
+									lines[i] = lines[i] + '<br class="mw_emptyline"/><br class="mw_emptyline"/>';
+								} else {
+									lines[i] = lines[i] + '<br class="mw_emptyline_first"/>';
+								}
 							}
 						}
 						inParagraph = true;
@@ -1305,23 +1312,23 @@ var MwWikiCode = function() {
 						// this is already in a paragraph
 						lines[i] = lines[i] + '<br class="mw_emptyline"/>';
 					}
-				} else { 
+				} else {
 				// not an empty line
-					if (!inParagraph && lines[i].match(/(^\<@@@TAG)/i) && i>0 ) { 
+					if (!inParagraph && lines[i].match(/(^\<@@@TAG)/i) && i>0 ) {
 					// if the line starts with <@@@TAG then precede it with a blank line
 							lines[i] = '<br class="mw_emptyline"/>' + lines[i];
-					} else if (!inParagraph && lines[i].match(/(^\<@@@CMT)/i) && i>0 ) { 
+					} else if (!inParagraph && lines[i].match(/(^\<@@@CMT)/i) && i>0 ) {
 					// if the line starts with <@@@CMT then precede it with a blank line
 							lines[i] = '<br class="mw_emptyline"/>' + lines[i];
 					}
 					inParagraph = false;
-					if ((lines[i].match(/(^<td)/i)) || (lines[i].match(/(^<\/td><td)/i))) {	
+					if ((lines[i].match(/(^<td)/i)) || (lines[i].match(/(^<\/td><td)/i))) {
 					// if first line of data in a table cell
-						if (!(lines[i+1].match(/(^\<\/td)/i))) { 
+						if (!(lines[i+1].match(/(^\<\/td)/i))) {
 						// and if not a single line
-							if (!(lines[i+1].match(/^(\s|&nbsp;)*$/))) { 
+							if (!(lines[i+1].match(/^(\s|&nbsp;)*$/))) {
 							// and if not an empty line after
-								if (!(lines[i+1].match(/(^\<table)/))) { 
+								if (!(lines[i+1].match(/(^\<table)/))) {
 								// and if not a table after
 									lines[i] = lines[i] + '<br class="mw_emptyline"/>';
 								}
@@ -1329,8 +1336,8 @@ var MwWikiCode = function() {
 						}
 					}
 				}
-				//Test if the previous line was in a list if so close the list
-				//and place closing </div> before this line
+				// Test if the previous line was in a list - if so, close the list
+				// and place closing </div> before this line.
 				if (lastList.length > 0) {
 					lines[i - 1] = lines[i - 1] + _closeList2html(lastList, '') + '</div>';
 					lastList = '';
@@ -1364,13 +1371,13 @@ var MwWikiCode = function() {
 //		return lineStart + "<h" + level.length + ">" + content + "</h" + level.length + ">";
 		return lineStart + "<div><h" + level.length + ">" + content + "</h" + level.length + "></div>\n";
 	}
-	
+
 	/**
 	 *
 	 * @param {String} text
 	 * @returns {String}
 	 */
-	function _styles2html(text) {	
+	function _styles2html(text) {
 		// bold and italics
 		// the ^' fixes a problem with combined bold and italic markup
 		text = text.replace(/'''([^'\n][^\n]*?)'''([^']?)/gmi, '<strong>$1</strong>$2');
@@ -1385,13 +1392,13 @@ var MwWikiCode = function() {
 		text = text.replace(/<div style='text-align:justify'>(.*?)<\/div>/gmi, "<div align='justify'>$1</div>");
 		return text;
 	}
-	
+
 	/**
 	 *
 	 * @param {String} text
 	 * @returns {String}
 	 */
-	function _spans2html(text) {	
+	function _spans2html(text) {
 		// cleanup old entity markers
 		while (text.match(/<span class="mw_htmlentity">.+?<\/span>/gmi)) {
 			text = text.replace(/(<span class="mw_htmlentity">)(.+?)(<\/span>)/gmi, '$2');
@@ -1516,10 +1523,8 @@ var MwWikiCode = function() {
 		$(document).trigger('TinyMCEBeforeWikiToHtml', [textObject]);
 		// get the text back
 		text = tinymce.util.Tools.trim(textObject.text);
-
 		// substitute {{!}} for | if text is part of template
-		var editingTextarea = $(e.target.targetElm);
-		if ( editingTextarea.hasClass('mcePartOfTemplate') ) {
+		if ( _inTemplate ) {
 			// If the table is part of a template parameter, {{!}} should
 			// be used instead of |, so do this substitution first.
 			text = text.replace(/{{!}}/gmi, "|");
@@ -1671,8 +1676,10 @@ var MwWikiCode = function() {
 		text = text.replace(/<br><\/p>/gmi, '</p>');
 		text = text.replace(/<br class="mw_emptyline_first"[^>]*>/gmi, "<@@br_emptyline_first@@>");
 		//then replace Enter keypress followed by 'div's (eg table, lists etc, with a single empty line
+//		text = text.replace(/<p class="mw_paragraph">(.*?)<\/p><div>/gmi, '$1<@@br_emptyline@@><div>');
 		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<\/p><div>/gmi, '$1<@@br_emptyline@@><div>');
 		// replace thes same if not nested in 'div's
+//		text = text.replace(/<p class="mw_paragraph">(.*?)<\/p>(<table|<ul|<ol|<h)/gmi, '$1<@@br_emptyline@@>$2');
 		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<\/p>(<table|<ul|<ol|<h)/gmi, '$1<@@br_emptyline@@>$2');
 		//then replace Enter keypress with wiki paragraph eg three new lines
 		text = text.replace(/<p class="mw_paragraph">(.*?)<\/p>/gmi, '$1<@@br_emptyline_first@@><@@br_emptyline@@>');
@@ -3158,6 +3165,11 @@ var MwWikiCode = function() {
 		_specialTagsList = _ed.getParam("wiki_tags_list");
 		_useNrnlCharacter = ed.getParam("wiki_non_rendering_newline_character");
 		_slb = '<span class="single_linebreak" title="single linebreak" contenteditable="false"><mwspan>' + _useNrnlCharacter + '</mwspan></span>';
+		if ( $(_ed.targetElm).hasClass('mcePartOfTemplate') ) {
+			_inTemplate = true;
+		} else {
+			_inTemplate = false;
+		}
 
 		ed.on('beforeSetContent', _onBeforeSetContent);
 		ed.on('getContent', _onGetContent);

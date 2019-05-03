@@ -12,5 +12,6 @@
 		"fix": [
 			"minus-x fix ."
 		]
-	}
+	},
+	"license": "GPL-2.0-or-later"
 }
