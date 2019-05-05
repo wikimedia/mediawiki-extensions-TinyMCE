@@ -363,12 +363,19 @@ class TinyMCEHooks {
 			return true;
 		}
 
+		if ( $target instanceof Title ) {
+			$title = $target;
+		} else {
+			// TitleValue object in MW >= 1.34?
+			$title = Title::newFromLinkTarget( $target );
+		}
+
 		global $wgOut;
-		if ( !TinyMCEHooks::enableTinyMCE( $target, $wgOut->getContext() ) ) {
+		if ( !TinyMCEHooks::enableTinyMCE( $title, $wgOut->getContext() ) ) {
 			return true;
 		}
 
-		$attribs['href'] = $target->getLinkURL( array( 'action' => 'tinymceedit', 'redlink' => '1' ) );
+		$attribs['href'] = $title->getLinkURL( array( 'action' => 'tinymceedit', 'redlink' => '1' ) );
 
 		return true;
 	}
