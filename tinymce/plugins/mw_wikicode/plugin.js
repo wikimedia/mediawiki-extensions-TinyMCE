@@ -1920,7 +1920,15 @@ var MwWikiCode = function() {
 	 * @returns {String}
 	 */
 	function _html2wiki(e) {
-		var text = e.content;
+		var text = e.content,
+			pipeText;
+
+		if ( _inTemplate ) {
+			pipeText = '{{!}}';
+		} else {
+			pipeText = '|';
+		}
+
 		// save some work, if the text is empty
 		
 		if (text === '') {
@@ -1934,6 +1942,9 @@ var MwWikiCode = function() {
 		$(document).trigger('TinyMCEBeforeHtmlToWiki', [textObject]);
 		// get the text back
 		text = textObject.text;
+
+		// replace stray '|' with "{{!}}" if in template
+		text = text.replace(/\|/gmi, pipeText);
 
 		// normalize UTF8 spaces as of TinyMCE 3.4.9
 		text = text.replace(/\u00a0/gi, '');
