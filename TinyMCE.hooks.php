@@ -422,7 +422,7 @@ class TinyMCEHooks {
 
 		// If there's a 'notinymce' property for this page in the
 		// page_props table, regardless of the value, disable TinyMCE.
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$res = $dbr->select( 'page_props',
 			array(
 				'pp_value'
