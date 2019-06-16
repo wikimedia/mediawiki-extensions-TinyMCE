@@ -247,6 +247,11 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 				}
 			} else if (sourceType == 'Wiki') {	//Pre process display file already uploaded to wiki
 				srcURL = alternateSrcCtrl.value();
+
+				// strip off any prefixes like 'File:'
+				while (srcURL.match(/\:/gmi)) {
+					srcURL = srcURL.replace(/.*?\:(.*$)/, '$1');
+				}
 			}
 
 			destCtrl.value(srcURL); // initially set the valueof the dest field to be the same as the src field
