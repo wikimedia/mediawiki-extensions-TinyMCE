@@ -295,7 +295,7 @@ define("tinymce/pasteplugin/SmartPaste", [
 			uploadData.append("action", "upload");
 			uploadData.append("filename", fileName);
 			uploadData.append("text", fileSummary);
-			uploadData.append("token", mw.user.tokens.get( 'editToken' ) );
+			uploadData.append("token", mw.user.tokens.get( 'csrfToken' ) );
 			uploadData.append("ignorewarnings", ignoreWarnings );
 			if (fileType == 'File') uploadData.append("file", fileToUpload);
 			if (fileType == 'URL') uploadData.append("url", fileToUpload);
