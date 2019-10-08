@@ -1705,7 +1705,7 @@ var MwWikiCode = function() {
 			if (typeof attributes === 'undefined') {
 				attributes = '';
 			}
-			return '<br' + decodeURI(attributes) + ' />';
+			return '<br ' + decodeURI(attributes) + ' />';
 		});
 		return text;
 	}
@@ -1930,7 +1930,7 @@ var MwWikiCode = function() {
 		}
 
 		// save some work, if the text is empty
-		
+
 		if (text === '') {
 			return text;
 		}
@@ -2912,15 +2912,17 @@ var MwWikiCode = function() {
 					//This is necessary to avoid the bswikicode parser from breaking the markup
 					var href = data.href.replace(/(^.*?\[|\].*?$|\r\n|\r|\n)/gm, ''); //first layer of '[...]' //external-, file- and mailto- links
 					href = href.replace(/(^.*?\[|\].*?$|\r\n|\r|\n)/gm, ''); //potential second layer of '[[...]]' //internal and interwiki links
-					var aLink = decodeURIComponent(href).replace("_"," ");
+
+					var aLink = decodeURIComponent(href).replace(" ","_");
 					var aLabel = decodeURI(data.text).replace("_"," ");
 					var wikitext = "";
-					
+
 					if (data["class"] == "link internal mw-internal-link mceNonEditable") { 
+						aLink = aLink.replace("_"," ");
 						if (aLabel) {
 							wikitext = "[[" + aLink + "|" + aLabel + "]]";
 						} else {
-							wikitext = "[[" + aLink + "]]";			
+							wikitext = "[[" + aLink + "]]";
 						}
 					} else if (data["class"] == "link external mw-external-link mceNonEditable") {
 						if (aLabel) {
