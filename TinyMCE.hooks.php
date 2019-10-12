@@ -169,7 +169,7 @@ class TinyMCEHooks {
 		}
 
 		$defaultTags = array(
-			"includeonly", "onlyinclude", "noinclude" //Definitively MediaWiki core
+			"includeonly", "onlyinclude", "noinclude", "pre", "nowiki" //Definitively MediaWiki core
 		);
 
 		$tinyMCETagList = $specialTags . implode( '|', $defaultTags );

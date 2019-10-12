@@ -1670,9 +1670,9 @@ var MwWikiCode = function() {
 		//then replace blank lines first followed by blank line at end of paragraph with blank line first
 		//text = text.replace(/<br class="mw_emptyline_first"><br class="mw_emptyline"><\/p>/gmi, '<@@br_emptyline_first@@></p>');
 		//then replace blank lines first at end of paragraph with blank line
-		//text = text.replace(/<br class="mw_emptyline_first"><\/p>/gmi, '<@@br_emptyline@@></p>');
-		text = text.replace(/<br class="mw_emptyline_first"><\/p>/gmi, '</p>');
-		text = text.replace(/<br class="mw_emptyline"><\/p>/gmi, '</p>');
+		text = text.replace(/<br class="mw_emptyline_first"><\/p>/gmi, '<@@br_emptyline@@></p>');
+		//text = text.replace(/<br class="mw_emptyline_first"><\/p>/gmi, '</p>');
+		//text = text.replace(/<br class="mw_emptyline"><\/p>/gmi, '</p>');
 		text = text.replace(/<br><\/p>/gmi, '</p>');
 		text = text.replace(/<br class="mw_emptyline_first"[^>]*>/gmi, "<@@br_emptyline_first@@>");
 		//then replace Enter keypress followed by 'div's (eg table, lists etc, with a single empty line
