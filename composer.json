@@ -1,5 +1,5 @@
 {
-	"name": "mediawiki/TinyMCE",
+	"name": "mediawiki/tinymce",
 	"description": "A MediaWiki extension that provides wysiwyg editing for wiki pages and PageForms.",
 	"type": "mediawiki-extension",
 	"keywords": [
