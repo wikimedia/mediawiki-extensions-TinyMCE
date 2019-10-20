@@ -1,4 +1,25 @@
 {
+	"name": "mediawiki/TinyMCE",
+	"description": "A MediaWiki extension that provides wysiwyg editing for wiki pages and PageForms.",
+	"type": "mediawiki-extension",
+	"keywords": [
+		"MediaWiki"
+	],
+	"homepage": "https://www.mediawiki.org/wiki/Extension:TinyMCE",
+	"authors": [
+			{
+				"name": "Ephox Corporation"
+			},
+			{
+				"name": "Hallo Welt! GmbH"
+			},
+			{
+				"name": "Duncan Crane"
+			},
+			{
+				"name": "Yaron Koren"
+			}
+	],
 	"require-dev": {
 		"jakub-onderka/php-parallel-lint": "1.0.0",
 		"jakub-onderka/php-console-highlighter": "0.3.2",
