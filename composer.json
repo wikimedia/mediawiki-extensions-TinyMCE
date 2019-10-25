@@ -7,18 +7,18 @@
 	],
 	"homepage": "https://www.mediawiki.org/wiki/Extension:TinyMCE",
 	"authors": [
-			{
-				"name": "Ephox Corporation"
-			},
-			{
-				"name": "Hallo Welt! GmbH"
-			},
-			{
-				"name": "Duncan Crane"
-			},
-			{
-				"name": "Yaron Koren"
-			}
+		{
+			"name": "Ephox Corporation"
+		},
+		{
+			"name": "Hallo Welt! GmbH"
+		},
+		{
+			"name": "Duncan Crane"
+		},
+		{
+			"name": "Yaron Koren"
+		}
 	],
 	"require-dev": {
 		"jakub-onderka/php-parallel-lint": "1.0.0",
