@@ -45,7 +45,7 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 			{title: 'Internal', value: 'link internal mw-internal-link mceNonEditable'},
 		],
 		target_list: false,
-		visual_table_class : "wikitable",
+		visual_table_class : " ",
 		table_default_attributes: {
 			class: 'wikitable'
 		},
@@ -129,9 +129,11 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 				{title: "Align Middle", selector: "td", styles: {verticalalign: "middle"}},
 				{title: "Align Bottom", selector: "td", styles: {verticalalign: "bottom"}}
 			]},
-			{title: "Pre", block: "pre", classes: "bs_pre_from_space" },
+			{title: "Pre", block: "pre", classes: "mw_pre_from_space" },
 			{title: "Paragraph", block: "p" }
 		],
+		block_formats_merge: true,
+		block_formats: 'Paragraph=p;Header 1=h1;Header 2=h2;Header 3=h3;Header 4=h4;Header 5=h5;Header 6=h6',
 		images_upload_credentials: true,
 		autoresize_max_height: 400,
 		setup: function(editor) {

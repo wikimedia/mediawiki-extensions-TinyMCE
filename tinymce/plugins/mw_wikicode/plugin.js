@@ -998,6 +998,9 @@ var MwWikiCode = function() {
 			i++;
 		}
 
+		// preserve spaces at start of cells otherwise the dom parser strips them out
+		text = text.replace(/(<td>|<th>)\s/gmi, '$1@@TSP@@');
+
 		// protect new lines from being replaced by a space in the html domparser
 		text = text.replace(/\n/gmi, '@@TNL@@');
 
@@ -1039,6 +1042,8 @@ var MwWikiCode = function() {
 		});
 		//restore the new lines
 		text = text.replace(/@@TNL@@/gm, '\n');
+		//restore the spaces
+		text = text.replace(/@@TSP@@/gm, ' ');
 		//cleanup colgroup, col, thead, tfoot and tbody tags. Caution: Must be placed before th cleanup because of
 		//regex collision
 		text = text.replace(/<(\/)?colgroup([^>]*)>/gmi, "");
@@ -1070,7 +1075,13 @@ var MwWikiCode = function() {
 		text = text.replace(/\n?<tr([^>]*)>/gmi, "<@@tnl@@>" + pipeText + "-$1");
 		text = text.replace(/\n?<\/tr([^>]*)>/gmi, "");
 
-		text = text.replace(/\n?<th([^>]*)>/gmi, "<@@tnl@@>!$1" + pipeText);
+		text = text.replace(/\n?<th([^>]*)>/gmi, function (match, $1) {
+			if ($1) {
+				return "<@@tnl@@>!" + $1 + pipeText;
+			} else {
+				return "<@@tnl@@>!";
+			}
+		});
 		text = text.replace(/\n?<\/th([^>]*)>/gmi, "");
 
 		text = text.replace(/\n?<td([^>]*)>/gmi, function (match, $1) {
