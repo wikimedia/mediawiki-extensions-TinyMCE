@@ -576,7 +576,7 @@ END;
 
 		$useAjaxDestCheck = $config->get( 'UseAjax' ) && $config->get( 'AjaxUploadDestCheck' );
 		$useAjaxLicensePreview = $config->get( 'UseAjax' ) &&
-			$config->get( 'AjaxLicensePreview' ) && $config->get( 'EnableAPI' );
+			$config->get( 'AjaxLicensePreview' );
 		$this->mMaxUploadSize['*'] = UploadBase::getMaxUploadSize();
 
 		$scriptVars = array(
