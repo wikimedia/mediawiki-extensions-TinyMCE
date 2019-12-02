@@ -26,7 +26,11 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 		paste_data_images: true,
 		content_css:
 			[extensionAssetsPath + '/TinyMCE/MW_tinymce.css',
-			scriptPath + mw_skin_css],
+			extensionAssetsPath + '/TinyMCE/tinymce/plugins/fontawesome/css/font-awesome.min.css',
+			extensionAssetsPath + '/SyntaxHighlight_GeSHi/modules/pygments.wrapper.css',
+			extensionAssetsPath + '/SyntaxHighlight_GeSHi/modules/pygments.generated.css',
+			scriptPath + mw_skin_css
+			],
 		theme_url: extensionAssetsPath + '/TinyMCE/tinymce/themes/modern/theme.js',
 		skin_url: extensionAssetsPath + '/TinyMCE/tinymce/skins/lightgray',
 		paste_word_valid_elements: 'b,strong,i,em,h1,h2,h3,h4,h5,table,thead,tfoot,tr,th,td,ol,ul,li,a,sub,sup,strike,br,del,div,p',
@@ -96,6 +100,7 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 			'charmap': extensionAssetsPath + '/TinyMCE/tinymce/plugins/charmap/plugin.js',
 			'colorpicker': extensionAssetsPath + '/TinyMCE/tinymce/plugins/colorpicker/plugin.js',
 			'contextmenu': extensionAssetsPath + '/TinyMCE/tinymce/plugins/contextmenu/plugin.js',
+			'fontawesome': extensionAssetsPath + '/TinyMCE/tinymce/plugins/fontawesome/plugin.js',
 			'insertdatetime': extensionAssetsPath + '/TinyMCE/tinymce/plugins/insertdatetime/plugin.js',
 			'lists': extensionAssetsPath + '/TinyMCE/tinymce/plugins/lists/plugin.js',
 			'noneditable': extensionAssetsPath + '/TinyMCE/tinymce/plugins/noneditable/plugin.js',
@@ -108,12 +113,19 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 			'wikiupload': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_upload/plugin.js',
 //			'wikilink': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_link/plugin.js',
 			'wikipaste': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_paste/plugin.js',
-			'table': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_table/plugin.js',
+			'table': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_table/plugin.js'
 		},
+		// fontawesome configuration
+		noneditable_noneditable_class: 'fa',
+		extended_valid_elements: 'span[*]',
+		// tinymce configuration
 		menubar: false, //'edit insert view format table tools',
 		contextmenu_never_use_native: false,
 		removed_menuitems: 'media',
-		toolbar1: 'undo redo | cut copy paste insert | bold italic underline strikethrough subscript superscript forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | charmap singlelinebreak wikilink unlink table wikiupload wikimagic wikisourcecode | formatselect removeformat | searchreplace ',
+		// display small icons in the toolbar
+		toolbar_items_size: 'small',
+		// define items to be displayed in the toolbar
+		toolbar1: 'undo redo | cut copy paste insert | bold italic underline strikethrough subscript superscript forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | charmap fontawesome singlelinebreak wikilink unlink table wikiupload wikimagic wikisourcecode | formatselect removeformat | searchreplace ',
 		style_formats_merge: true,
 		style_formats: [
 			{title: "Table", items: [

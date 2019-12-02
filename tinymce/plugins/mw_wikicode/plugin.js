@@ -959,9 +959,10 @@ var MwWikiCode = function() {
 
 	function _tables2wiki(e) {
 		var text = e.content;
+
 		// save some effort if no tables
 		if (!text.match(/\<table/g)) return text;
-		
+
 		// table preprocessing
 		text = text.replace(/(\{\|[^\n]*?)\n+/gmi, "$1\n");
 		text = text.replace(/(\|-[^\n]*?)\n+/gmi, "$1\n");
@@ -1303,9 +1304,7 @@ var MwWikiCode = function() {
 				if (emptyLine) { // process empty lines
 					// If not already in a paragraph (block of blank lines).  Process first empty line differently
 					if (!inParagraph) {
-						if ((lines[i-1].match(/(<td)(\s|&nbsp;)*$/))
-							|| (lines[i-1].match(/(<\/table)(\s|&nbsp;)*$/))
-							) {
+						if ((i > 0) && ((lines[i-1].match(/(<td)(\s|&nbsp;)*$/) || (lines[i-1].match(/(<\/table)(\s|&nbsp;)*$/))))) {
 							// if first line of data in a table cell
 							// do nothing
 						} else {
@@ -1314,7 +1313,11 @@ var MwWikiCode = function() {
 								if ((lines[i + 1].match(/(^<td)/i)) || (lines[i + 1].match(/(^<\/td><td)/i))) {
 									lines[i] = lines[i] + '<br class="mw_emptyline"/><br class="mw_emptyline"/>';
 								} else {
-									lines[i] = lines[i] + '<br class="mw_emptyline_first"/>';
+									if (i > 0) {
+										lines[i] = lines[i] + '<br class="mw_emptyline_first"/>';
+									} else {
+										lines[i] = lines[i] + '<br class="mw_emptyline"/>';
+									}
 								}
 							}
 						}
@@ -1325,9 +1328,12 @@ var MwWikiCode = function() {
 					}
 				} else {
 				// not an empty line
-					if (!inParagraph && lines[i].match(/(^\<@@@TAG)/i) && i>0 ) {
-					// if the line starts with <@@@TAG then precede it with a blank line
-							lines[i] = '<br class="mw_emptyline"/>' + lines[i];
+					if (lines[i].match(/(^\<@@@BTAG)/i) && i>=0 ) {
+					// if the line starts with <@@@BTAG then follow it with a blank line
+					// unless the next line is already blank!
+							if (!(lines[i+1].match(/^(\s|&nbsp;)*$/))) {
+								lines[i] = lines[i] + '<br class="mw_emptyline"/>';
+							}
 					} else if (!inParagraph && lines[i].match(/(^\<@@@CMT)/i) && i>0 ) {
 					// if the line starts with <@@@CMT then precede it with a blank line
 							lines[i] = '<br class="mw_emptyline"/>' + lines[i];
@@ -1393,8 +1399,36 @@ var MwWikiCode = function() {
 		// the ^' fixes a problem with combined bold and italic markup
 		text = text.replace(/'''([^'\n][^\n]*?)'''([^']?)/gmi, '<strong>$1</strong>$2');
 		text = text.replace(/''([^'\n][^\n]*?)''([^']?)/gmi, '<em>$1</em>$2');
-		// horizontal rules
-		text = text.replace(/^\n?----\n?/gmi, "\n<hr>\n");
+		// horizontal rules, comprise of 4 or more consecutive '-'s
+		// these can be followed by spaces and text on the same line
+		// so make sure we don't loose these for when we convert back
+		var wikiText, 
+			newLines = '';
+		text = text.replace(/^(----+)([ ]*)(.*)(\n{0,3})/gmi, function(match, $1, $2, $3, $4, offset, string) {
+			// $1 = the dashes in the original wikicode, must be four or more
+			// $2 = any spaces that follow the dashes on the same line
+			// $3 any text following the spaces on the same line
+			// $4 any new lines following the text on the same line
+			// Because of a quirk with mediawiki, a horizontal rule can be followed by spaces and text
+			// The text is displayed on a new line. This text is rendered as part of the hr block so we 
+			// place it in a <div> block
+			wikiText = encodeURI($1 + $2);
+			if ($3) {
+				if ($4.length == 1) {
+					newLines = '<br class="mw_emptyline">';
+				} else if ($4.length == 2) {
+					newLines = '<br class="mw_emptyline_first">';
+				}
+				return '<hr class="mw-hr" data-mw-wikitext="' + wikiText + '">' + $3 + newLines;
+			} else {
+				if ($4.length == 1) {
+					newLines = _slb;
+				} else if ($4.length == 2) {
+					newLines = _slb + _slb;
+				}
+				return '<hr class="mw-hr" data-mw-wikitext="' + wikiText + '">' + newLines;
+			}
+		});
 		// div styles
 		// @todo check this, might be unnecessary
 		text = text.replace(/<div style='text-align:left'>(.*?)<\/div>/gmi, "<div align='left'>$1</div>");
@@ -1533,8 +1567,11 @@ var MwWikiCode = function() {
 		// call the event listeners
 		$(document).trigger('TinyMCEBeforeWikiToHtml', [textObject]);
 		// get the text back
-		text = tinymce.util.Tools.trim(textObject.text);
+//		text = tinymce.util.Tools.trim(textObject.text);
+		text = textObject.text;
 		// substitute {{!}} for | if text is part of template
+		// in fact, do this regardless as in some circumstances it will mess 
+		// up table processing.  Need to rewqrite handling of {{!}} in next version!!!
 		if ( _inTemplate ) {
 			// If the table is part of a template parameter, {{!}} should
 			// be used instead of |, so do this substitution first.
@@ -1563,18 +1600,7 @@ var MwWikiCode = function() {
 		text = text.replace(/(<[^!][^>]+?)(\n)([^<]+?>)/gi, "$1$3");
 
 		//preserve single line breaks
-		do {
-			_processFlag = false;
-			text = text.replace(/(^|\n|>| )([^\n]+)\n([^\n]{1,5})/gi, __preserveSingleLinebreaks);
-		} while (_processFlag);
-		
-		//normalize line endings to \n
-		text = text.replace(/\r\n/gi, '\n');
-		// br preprocessing - these should be preserved in wiki code
-		text = text.replace(/<br(.*?)\/?>/gi, function(match, p1, offset, string) {
-			p1 = p1.trim();
-			return '<br data-attributes="' + encodeURI(p1) + '" />'; // @todo: Use JSON.stringify
-		});
+		text = _preserveSingleLinebreaks(text);
 
 		// process style (bold, italic, rule, div styles
 		text = _styles2html(text);
@@ -1609,10 +1635,6 @@ var MwWikiCode = function() {
 		}
 		// this reverts the line above. otherwise undo/redo will not work
 		text = text.replace(/<div><br [^>]*mw_lastline[^>]*><\/div>/gmi, '');
-// DC TODO don't think next three lines are relevant here
-/*		text = text.replace(/<br data-attributes="" \/>/gmi, '<br />');
-		text = text.replace(/<br data-attributes="[^>]*data-mce-bogus[^>]*" \/>/gmi, '');
-		text = text.replace(/<br [^>]*data-mce-bogus="1"[^>]*>/gmi, '');*/
 
 		// wrap the text in an object to send it to event listeners
 		textObject = {text: text};
@@ -1650,14 +1672,6 @@ var MwWikiCode = function() {
 		text = text.replace(/\n?<div style=('|")padding-left: 60px;('|") data-mce-style=('|")padding-left: 60px;('|")>([\S\s]*?)<\/div>/gmi, "<blockquote><blockquote>$5</blockquote>");
 		text = text.replace(/\n?<div style=('|")padding-left: 90px;('|") data-mce-style=('|")padding-left: 90px;('|")>([\S\s]*?)<\/div>/gmi, "<blockquote><blockquote><blockquote>$5</blockquote>");
 
-/*		text = text.replace(/\n?<p class=('|")mw_paragraph('|") style=('|")padding-left: 20px;('|") data-mce-style=('|")padding-left: 20px;('|")>([\S\s]*?)<\/p>/gmi, "<@@nl@@>:$7")
-		text = text.replace(/\n?<p class=('|")mw_paragraph('|") style=('|")padding-left: 40px;('|") data-mce-style=('|")padding-left: 40px;('|")>([\S\s]*?)<\/p>/gmi, "<@@nl@@>::$7");
-		text = text.replace(/\n?<p class=('|")mw_paragraph('|") style=('|")padding-left: 60px;('|") data-mce-style=('|")padding-left: 60px;('|")>([\S\s]*?)<\/p>/gmi, "<@@nl@@>:::$7");
-
-		text = text.replace(/\n?<div style=('|")padding-left: 20px;('|") data-mce-style=('|")padding-left: 20px;('|")>([\S\s]*?)<\/div>/gmi, "<@@nl@@>:$5");
-		text = text.replace(/\n?<div style=('|")padding-left: 40px;('|") data-mce-style=('|")padding-left: 40px;('|")>([\S\s]*?)<\/div>/gmi, "<@@nl@@>::$5");
-		text = text.replace(/\n?<div style=('|")padding-left: 60px;('|") data-mce-style=('|")padding-left: 60px;('|")>([\S\s]*?)<\/div>/gmi, "<@@nl@@>:::$5");*/
-
 		return text
 	}
 
@@ -1666,7 +1680,9 @@ var MwWikiCode = function() {
 			findText, 
 			replaceText, 
 			currentPos, 
-			nextPos;
+			nextPos,
+			blockTagsList = "<h|<ol|<ul|<li|<p|<pre|<blockquote|dl|div|hr|source|table";
+
 		//Remove \nl as they are not part of html formatting
 		text = text.replace(/\n/gi, "");
 		//Process Enter Key (<p>) and Shift-Enter key (<br>)formatting
@@ -1677,6 +1693,7 @@ var MwWikiCode = function() {
 		text = text.replace(/<p class="mw_paragraph"><br class="mw_emptyline_first">(.*?)<\/p>/gmi, '<@@br_emptyline_first@@>$1');
 		text = text.replace(/<p class="mw_paragraph"><br class="mw_emptyline">(.*?)<\/p>/gmi, '<@@br_emptyline@@>$1');
 		//then replace empty paragraph following a paragraph with nothing
+		text = text.replace(/<\/p><p><\/p>/gmi, '</p>');
 		text = text.replace(/<\/p><p class="mw_paragraph"><\/p>/gmi, '</p>');
 		//then replace blank lines first followed by blank line at end of paragraph with blank line first
 		//text = text.replace(/<br class="mw_emptyline_first"><br class="mw_emptyline"><\/p>/gmi, '<@@br_emptyline_first@@></p>');
@@ -1688,16 +1705,22 @@ var MwWikiCode = function() {
 		text = text.replace(/<br class="mw_emptyline_first"[^>]*>/gmi, "<@@br_emptyline_first@@>");
 		//then replace Enter keypress followed by 'div's (eg table, lists etc, with a single empty line
 //		text = text.replace(/<p class="mw_paragraph">(.*?)<\/p><div>/gmi, '$1<@@br_emptyline@@><div>');
-		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<\/p><div>/gmi, '$1<@@br_emptyline@@><div>');
-		// replace thes same if not nested in 'div's
+		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<br class="mw_emptyline"><\/p><div/gmi, '$1<@@br_emptyline@@><div');
+		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<@@br_emptyline_first@@><\/p><div/gmi, '$1<@@br_emptyline_first@@><div');
+		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<\/p><div/gmi, '$1<@@br_emptyline@@><div');
+		// replace these same if not nested in 'div's
 //		text = text.replace(/<p class="mw_paragraph">(.*?)<\/p>(<table|<ul|<ol|<h)/gmi, '$1<@@br_emptyline@@>$2');
+		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<br class="mw_emptyline"><\/p>(<table|<ul|<ol|<h)/gmi, '$1<@@br_emptyline@@>$2');
+		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<@@br_emptyline_first@@><\/p>(<table|<ul|<ol|<h)/gmi, '$1<@@br_emptyline_first@@>$2');
 		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<\/p>(<table|<ul|<ol|<h)/gmi, '$1<@@br_emptyline@@>$2');
-		//then replace Enter keypress with wiki paragraph eg three new lines
+		//then replace Enter keypress with wiki paragraph eg three new lines unless </p> preceded by empty lines
+		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<br class="mw_emptyline"><\/p>/gmi, '$1<@@br_emptyline@@>');
+		text = text.replace(/<p class="mw_paragraph">((?:(?!\/p>).)*)<@@br_emptyline_first@@><\/p>/gmi, '$1<@@br_emptyline_first@@>');
 		text = text.replace(/<p class="mw_paragraph">(.*?)<\/p>/gmi, '$1<@@br_emptyline_first@@><@@br_emptyline@@>');
 		//then replace Enter keypress followed by specialTags (eg <h, <source,  etc, with a single empty line
-		regex = '<@@br_emptyline_first@@><@@br_emptyline@@><(' + _specialTagsList + ')';
-		findText = new RegExp(regex, 'gmi');
-		text = text.replace(findText, '<br><$1');
+///		regex = '<@@br_emptyline_first@@><@@br_emptyline@@><(' + _specialTagsList + ')';
+///		findText = new RegExp(regex, 'gmi');
+///		text = text.replace(findText, '<br><$1');
 //		regex = '<@@br_emptyline_first@@><(' + _specialTagsList + ')';
 //		findText = new RegExp(regex, 'gmi');
 //		text = text.replace(findText, '<br><$1');
@@ -1889,15 +1912,16 @@ var MwWikiCode = function() {
 		text = text.replace(/\n?<@@br_emptyline_first@@>/gmi, "<@@2nl@@>");
 		text = text.replace(/\n?<@@br_emptyline@@>/gmi, "<@@nl@@>");
 		//DC clean up new lines associated with blocks and or headers and or tables
+		text = text.replace(/^<@@[bht]nl@@>/gmi, "");
 		text = text.replace(/<@@bnl@@><@@bnl@@>/gmi, "<@@nl@@>");
 		text = text.replace(/<@@tnl@@><@@bnl@@>/gmi, "<@@nl@@>");
 		text = text.replace(/<@@bnl@@><@@tnl@@>/gmi, "<@@nl@@>");
 		text = text.replace(/<@@hnl@@><@@hnl@@>/gmi, "<@@nl@@>");
-		text = text.replace(/<@@2nl@@><@@[bh]nl@@>/gmi, "<@@2nl@@>");
-		text = text.replace(/<@@[bh]nl@@><@@2nl@@>/gmi, "<@@2nl@@>");
+		text = text.replace(/<@@2nl@@><@@[bht]nl@@>/gmi, "<@@2nl@@>");
+		text = text.replace(/<@@[bht]nl@@><@@2nl@@>/gmi, "<@@2nl@@>");
 		text = text.replace(/<@@hnl@@><@@nl@@>/gmi, "<@@nl@@>");
-		text = text.replace(/<@@nl@@><@@[bh]nl@@>/gmi, "<@@nl@@>");
-		text = text.replace(/<@@[bh]nl@@>/gmi, "<@@nl@@>");
+		text = text.replace(/<@@nl@@><@@[bht]nl@@>/gmi, "<@@nl@@>");
+		text = text.replace(/<@@[bht]nl@@>/gmi, "<@@nl@@>");
 		//DC clean up new lines associated with tables
 		text = text.replace(/<@@tnl@@>/gmi, "<@@nl@@>");
 		// Cleanup empty lines that exists if enter was pressed within an aligned paragraph
@@ -2021,8 +2045,10 @@ var MwWikiCode = function() {
 			id,
 			codeAttrs,
 			tagText,
+			tagType,
 			searchText,
-			replaceText;
+			replaceText,
+			blockTagsList = "h1|h2|h3|h4|h5|h6|ol|ul|li|p|pre|blockquote|dl|div|hr|source|table";
 
 		var ed = tinymce.get(e.target.id);
 		if (ed == null) {
@@ -2030,8 +2056,10 @@ var MwWikiCode = function() {
 		}
 
 		// Tags without innerHTML need /> as end marker. Maybe this should be task of a preprocessor,
-		// in order to allow mw style tags without /.
-		regex = '<(' + _specialTagsList + ')[\\S\\s]*?((/>)|(>([\\S\\s]*?<\\/\\1>)))';
+		// in order to allow mw style tags without /. Also, mediawiki doesn't recognise heading of level greater than 6
+		// so we have to catch these to avoid TinyMCE treating them as headings
+		// 
+		regex = '<(' + _specialTagsList + '|h\\d)[\\S\\s]*?((/>)|(>([\\S\\s]*?<\\/\\1>)))';
 		matcher = new RegExp(regex, 'gmi');
 		mtext = text;
 		i = 0;
@@ -2055,7 +2083,14 @@ var MwWikiCode = function() {
 			displayTagWikiText = encodeURI(tagWikiText);
 
 			t = Math.floor((Math.random() * 100000) + 100000) + i;
-			id = "<@@@TAG"+ t + "@@@>";
+			
+			if (tagName.match(/[h\d|ol|ul|li|p|pre|blockquote|dl|div|hr|source|table]/)) {
+				id = "<@@@BTAG"+ t + "@@@>";
+				tagType = 'div';
+			} else {
+				id = "<@@@TAG"+ t + "@@@>";
+				tagType = 'span';
+			}
 			codeAttrs = {
 				'id': id,
 				'class': "mceNonEditable wikimagic mw-tag",
@@ -2598,22 +2633,50 @@ var MwWikiCode = function() {
 		return text;
 	}
 
-	function __preserveSingleLinebreaks($0, $1, $2, $3) {
-		// hr table heading comment div end-table | ol ul dl dt comment cell row
-		// there was mw_comment:@@@ in there: |@@@PRE.*?@@@$|\|$|mw_comment:@@@|^
-		if ($2.match(/(----$|\|\}$|=$|-->$|<\/div>$|<\/pre>$|<@@@PRE.*?@@@>$|\|$|^(#|\*|:|;|<\!--|\|\||\|-)|<br \/>|(^\s*$))/i)) {
-			return $0;
-		}
-		// careful: only considers the first 5 characters in a line
-		if ($3.match(/(^(----|\||!|\{\||#|\*|:|;|=|<\!--|<div|<pre|<@@@P|<@@@T|<@@@C)|(^\s*$))/i)) {
-			return $0;
-		}
-		_processFlag = true;
-		if (_useNrnlCharacter) {
-			return $1 + $2 + _slb + $3;
-		} else {
-			return $1 + $2 + $3;
-		}
+	/**
+	 * Preserves single line breaks as placeholder in html code
+	 *
+	 * @param {String} text
+	 * @returns {String}
+	 */
+	function _preserveSingleLinebreaks(text) {	
+		var processFlag,
+			postText,
+			regex,
+			matcher,
+			startTagsList,
+			endTagsList,
+			_blockTagsList = "h1|h2|h3|h4|h5|h6|ol|ul|li|p|pre|blockquote|dl|div|hr|source|table";
+		// A single new line is not renderred as such by mediawiki unless 
+		// it is preceded or followed by certain types of line. We need 
+		// to pass text several times to be sure we got them all
+
+		// a single new line followed by any line starting with an 
+		// element in postText, possibly preceded by spaces, 
+		// is rendered as a new line
+		startTagsList = _blockTagsList.split("|").join("|<");
+		endTagsList = _blockTagsList.split("|").join("|<\\/");
+		postText = '\\s*(\\n|----|\\||!|\\{\\||#|\\*|:|;|=|<\\!--|<' + startTagsList + '|</ol|</ul|\\s*$)';
+		regex = '(^|\\n|)([^\\n]+)(\\n)(?!' + postText + ')';
+		matcher = new RegExp(regex, 'gi');
+		do {
+			processFlag = false;
+			text = text.replace(matcher, function(match, $1, $2, $3, $4, offset, string) {
+				// if the line preceding the single new line doeasn't end with any of the
+				// folowing characters in a line or start with others then render as a new line
+				if ($2.match(/(----\s*$|\|\}\s*$|=\s*$|-->\s*$|<\/div>\s*$|<\/pre>\s*$|<\/ol>\s*$|<\/ul>\s*$|<\/span>\s*$|<\/li>\s*$|\|\s*$|^\s*(#|\*|:|;|<\!--|----|\|\||\|-|\|\}|\||<br \/>|<@@@BTAG|<li|<ol|<ul|<\/li|<\/ol|<\/ul|$))/i)) {
+					return match;
+				}
+				processFlag = true;
+				if (_slb) {
+					return $1 + $2 + _slb;
+				} else {
+					return $1 + $2 + ' ';
+				}
+			});
+		} while (processFlag);
+
+		return text;
 	}
 
 	/*
@@ -2703,6 +2766,11 @@ var MwWikiCode = function() {
 			return decodeURI(this.getAttribute("data-mw-wikitext"));
 		});
 
+		// replace rule of class hr with their wikitext
+		$dom.find( "hr[class*='mw-hr']" ).replaceWith( function(a) {
+			return decodeURI(this.getAttribute("data-mw-wikitext"));
+		});
+
 		// replace spans of class single_linebreak with a single linebreak placeholder
 		$dom.find( "span[class*='single_linebreak']" ).replaceWith( function(a) {
 			return '<br class="mw_emptyline">';
@@ -2744,7 +2812,7 @@ var MwWikiCode = function() {
 		// postprocess to recover wikitext from placeholders
 		e.content = _postprocessHtml2Wiki(e);
 		//get rid of blank lines at end of text
-		e.content = tinymce.util.Tools.trim(e.content);
+//		e.content = tinymce.util.Tools.trim(e.content);
 		return e.content;
 	} 
 
@@ -2770,7 +2838,7 @@ var MwWikiCode = function() {
 		args = {format: 'raw'};
 		_ed.undoManager.transact(function(){
 			_ed.focus();
-			_ed.selection.setContent(_slb,args);
+			_ed.selection.setContent(_slb, args);
 			_ed.undoManager.add();
 		});
 	}
@@ -2942,13 +3010,15 @@ var MwWikiCode = function() {
 							wikitext = "[" + aLink + "]";
 						}
 					}
-					
-					_ed.undoManager.transact(function(){
+
+					var args = {format: 'wiki', load: 'true', convert2html: true};
+					_ed.undoManager.transact(function() {
 						_ed.focus();
-						_ed.selection.setContent(wikitext);
+						_ed.selection.setContent(wikitext, args);
 						_ed.undoManager.add();
-						_ed.format = 'raw';
 					});
+					_ed.selection.setCursorLocation();
+					_ed.nodeChanged();
 				}
 
 				if (!href) {
@@ -3037,26 +3107,29 @@ var MwWikiCode = function() {
 				value: value
 				},
 			onsubmit: function(e) {
-				_ed.undoManager.transact(function(){
+				var args = {format: 'wiki', load: 'true', convert2html: true};
+				_ed.undoManager.transact(function() {
 					_ed.focus();
-					e.load = true;
-					_ed.selection.setContent(e.data.code,e);
+					_ed.selection.setContent(e.data.code, args);
 					_ed.undoManager.add();
-					_ed.format = 'raw';
 				});
+				_ed.selection.setCursorLocation();
+				_ed.nodeChanged();
+
 				return;
 			}
 		});
 		return;
 	}
 	
-	function showWikiSourceCodeDialog() {
-		var originalValue = _ed.getContent({source_view: true});
+	function showWikiSourceCodeDialog(e) {
+		// use the 'raw' format to prevent tiny parser processing content
+		var originalValue = _ed.getContent({format : 'raw', convert2wiki : true});
 		var win = _ed.windowManager.open({
 			title: mw.msg("tinymce-wikisourcecode"),
 			body: {
 				type: 'textbox',
-				name: 'code',
+				name: 'wikicode',
 				multiline: true,
 				minWidth: _ed.getParam("code_dialog_width", 600),
 				minHeight: _ed.getParam("code_dialog_height", 
@@ -3068,12 +3141,11 @@ var MwWikiCode = function() {
 				// We get a lovely "Wrong document" error in IE 11 if we
 				// don't move the focus to the editor before creating an undo
 				// transation since it tries to make a bookmark for the current selection
+				var args = {format: 'wiki', load: 'true', convert2html: true};
 				_ed.undoManager.transact(function() {
 					_ed.focus();
-					e.load = true;
-					_ed.setContent(e.data.code,e);	
+					_ed.setContent(e.data.wikicode, args);	
 					_ed.undoManager.add();
-					_ed.format = 'raw';
 				});
 				_ed.selection.setCursorLocation();
 				_ed.nodeChanged();
@@ -3082,7 +3154,7 @@ var MwWikiCode = function() {
 
 		// Gecko has a major performance issue with textarea
 		// contents so we need to set it when all reflows are done
-		win.find('#code').value(originalValue);
+		win.find('#wikicode').value(originalValue);
 	}
 	
 	/**
@@ -3091,21 +3163,44 @@ var MwWikiCode = function() {
 	 * @param {tinymce.ContentEvent} e
 	 */
 	function _onBeforeSetContent(e) {
-		// if raw format is requested, this is usually for internal issues like
-		// undo/redo. So no additional processing should occur. Default is 'html'
-		if (e.format == 'raw' ) {
-			return;
-		}
-		e.format = 'raw';
-		if (!e.load) e.content = _convertHtml2Wiki(e);
 		// check if this is the content of a drag/drop event
 		// if it is then no need to convert wiki to html
 		if ((e.content.length > 9) && (e.content.substring(0,9) == '<dropsrc>')) {
 			e.content = e.content.substring(9, e.content.length - 10);
-			return;
 		}
-		e.content = _wiki2html(e);
-		return e.content;
+		// if this is the initail load of the editor
+		// tell it to convert wiki text to html
+		if (e.initial == true) {
+			e.convert2html = true;
+		}
+		// set format to raw so that the Tiny parser won't rationalise the html
+		e.format = 'raw';
+		// if the content is wikitext thyen convert to html
+		if (e.convert2html) {
+			e.content = _wiki2html(e);
+		}
+		return;
+	}
+
+	/**
+	 * Event handler for "onSetContent".
+	 * This is currently not used.
+	 * @param {tinymce.SetContentEvent} e
+	 */
+	function _onSetContent(ed, o) {
+		return;
+	}
+
+	/**
+	 * Event handler for "beforeGetContent".
+	 * This is used to ensure TintMCE process the content as 'raw' html.
+	 * @param {tinymce.ContentEvent} e
+	 */
+	function _onBeforeGetContent(e) {
+		// generally we want to get the content of the editor
+		// unaltered by any html rationalisation!!!
+		e.format = 'raw';
+		return;
 	}
 
 	/**
@@ -3114,6 +3209,22 @@ var MwWikiCode = function() {
 	 * @param {tinymce.ContentEvent} e
 	 */
 	function _onGetContent(e) {
+		// if we are going to save the content then we need to convert it
+		// back to wiki text
+		if (e.save == true) {
+			e.convert2wiki = true;
+		}
+
+		if (e.convert2wiki) {
+			e.content = _convertHtml2Wiki(e);
+			e.convert2wiki = false;
+		} else {
+			// if we are just retrieving the html, for example for CodeMirror,
+			// we may have to tidy up some of the 'rationalisation' that
+			// TinyMCE makes to the html, mainly as a result of forcing root blocks
+			e.content = e.content.replace(/<br class="mw_emptyline_first"><\/p>/gm,"</p>");
+		}
+		return
 		// if raw format is requested, this is usually for internal issues like
 		// undo/redo. So no additional processing should occur. Default is 'html'
 		if ( e.format == 'raw' ) return;
@@ -3137,7 +3248,7 @@ var MwWikiCode = function() {
 	}
 
 	/**
-	 * Event handler for "beforeSetContent"
+	 * Event handler for "onDrop"
 	 * Add function for processing when drag/dropping items.
 	 * @param {tinymce.DropEvent} e
 	 */
@@ -3196,6 +3307,8 @@ var MwWikiCode = function() {
 		}
 
 		ed.on('beforeSetContent', _onBeforeSetContent);
+		ed.on('setContent', _onSetContent);
+		ed.on('beforeGetContent', _onBeforeGetContent);
 		ed.on('getContent', _onGetContent);
 		ed.on('loadContent', _onLoadContent);
 		ed.on('drop', _onDrop)
@@ -3278,13 +3391,13 @@ var MwWikiCode = function() {
 		ed.addCommand("mceWikiCodeEditor", showWikiSourceCodeDialog);
 
 		ed.addButton('wikisourcecode', {
-			icon: 'code',
+			icon: 'wikicode',
 			tooltip: mw.msg('tinymce-wikisourcecode'),
 			onclick: showWikiSourceCodeDialog
 		});
 	
 		ed.addMenuItem('wikisourcecode', {
-			icon: 'code',
+			icon: 'wikicode',
 			text: mw.msg('tinymce-wikisourcecode-title'),
 			context: 'tools',
 			onclick: showWikiSourceCodeDialog
@@ -3342,13 +3455,15 @@ var MwWikiCode = function() {
 						insertText = insertText.substr( 0, replacementStart ) + selectedContent + insertText.substr( replacementEnd + 1 );
 					}
 
-				_ed.undoManager.transact(function(){
-					_ed.focus();
-					_ed.selection.setContent(insertText);
-					_ed.undoManager.add();
-					_ed.format = 'raw';
+					var args = {format: 'raw', load: 'true'};
+					_ed.undoManager.transact(function() {
+						_ed.focus();
+						_ed.selection.setContent(insertText, args);
+						_ed.undoManager.add();
 					});
 
+					_ed.selection.setCursorLocation();
+					_ed.nodeChanged();
 					return;
 				}
 			});
