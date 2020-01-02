@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\MediaWikiServices;
+
 /**
  * TinyMCEUploadWindow - used for uploading files from within a form.
  * This class is heavily based on the Page Forms extension's
@@ -931,14 +934,15 @@ END;
 	 * @return string
 	 */
 	public static function ajaxGetLicensePreview( $license ) {
-		global $wgParser, $wgUser;
+		global $wgUser;
 		$text = '{{' . $license . '}}';
 		$title = Title::makeTitle( NS_FILE, 'Sample.jpg' );
 		$options = ParserOptions::newFromUser( $wgUser );
 
+		$parser = MediaWikiServices::getInstance()->getParser();
 		// Expand subst: first, then live templates...
-		$text = $wgParser->preSaveTransform( $text, $title, $wgUser, $options );
-		$output = $wgParser->parse( $text, $title, $options );
+		$text = $parser->preSaveTransform( $text, $title, $wgUser, $options );
+		$output = $parser->parse( $text, $title, $options );
 
 		return $output->getText();
 	}

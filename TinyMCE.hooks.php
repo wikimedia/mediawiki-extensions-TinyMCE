@@ -149,7 +149,7 @@ class TinyMCEHooks {
 
 	static function setGlobalJSVariables( &$vars, $out ) {
 		global $wgTinyMCEEnabled, $wgTinyMCEMacros, $wgTinyMCEPreservedTags;
-		global $wgParser, $wgCheckFileExtensions, $wgStrictFileExtensions;
+		global $wgCheckFileExtensions, $wgStrictFileExtensions;
 		global $wgFileExtensions, $wgFileBlacklist;
 		global $wgEnableUploads;
 
@@ -159,7 +159,7 @@ class TinyMCEHooks {
 
 		$context = $out->getContext();
 
-		$extensionTags = $wgParser->getTags();
+		$extensionTags = MediaWikiServices::getInstance()->getParser()->getTags();
 		$specialTags = '';
 		foreach ( $extensionTags as $tagName ) {
 			if ( ( $tagName == 'pre' ) || ($tagName == 'nowiki') ) {
