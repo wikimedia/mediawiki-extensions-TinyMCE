@@ -878,7 +878,7 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 
 			editor.undoManager.transact(function(){
 				editor.focus();
-				editor.selection.setContent(wikitext);
+				editor.selection.setContent(wikitext, {format: 'raw', convert2html: 'true'});
 				editor.undoManager.add();
 			});
 
