@@ -803,10 +803,9 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 				return;
 			}
 
-			if (imgElm) {		//Editing image node so skip upload
+			if (imgElm) { // Editing image node so skip upload
 				uploadPage = dom.getAttrib(imgElm, 'data-mw-src');
 			} else {
-
 				if ((submittedData.type == 'File') || (submittedData.type == 'URL')) {
 					if (submittedData.type == 'File') {
 						fileContent = _srccontent;
@@ -878,13 +877,13 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 
 			editor.undoManager.transact(function(){
 				editor.focus();
-				editor.selection.setContent(wikitext, {format: 'raw', convert2html: 'true'});
+				editor.selection.setContent(wikitext, {format: 'wiki', convert2html: 'true'});
 				editor.undoManager.add();
 			});
 
 			// close the dialog window
 			win.close()
-			
+
 			return;
 		}
 

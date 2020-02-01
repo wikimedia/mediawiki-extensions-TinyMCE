@@ -1331,8 +1331,10 @@ var MwWikiCode = function() {
 					if (lines[i].match(/(^\<@@@BTAG)/i) && i>=0 ) {
 					// if the line starts with <@@@BTAG then follow it with a blank line
 					// unless the next line is already blank!
-							if (!(lines[i+1].match(/^(\s|&nbsp;)*$/))) {
-								lines[i] = lines[i] + '<br class="mw_emptyline"/>';
+							if (!lastLine) {
+								if (!(lines[i+1].match(/^(\s|&nbsp;)*$/))) {
+									lines[i] = lines[i] + '<br class="mw_emptyline"/>';
+								}
 							}
 					} else if (!inParagraph && lines[i].match(/(^\<@@@CMT)/i) && i>0 ) {
 					// if the line starts with <@@@CMT then precede it with a blank line
@@ -3156,17 +3158,25 @@ var MwWikiCode = function() {
 		// contents so we need to set it when all reflows are done
 		win.find('#wikicode').value(originalValue);
 	}
-	
+
 	/**
 	 * Event handler for "beforeSetContent"
 	 * This is used to process the wiki code into html.
 	 * @param {tinymce.ContentEvent} e
 	 */
 	function _onBeforeSetContent(e) {
+		// if raw format is requested, this is usually for internal issues like
+		// undo/redo. So no additional processing should occur. Default is 'html'
+		if (e.format == 'raw' ) {
+			return;
+		}
 		// check if this is the content of a drag/drop event
 		// if it is then no need to convert wiki to html
 		if ((e.content.length > 9) && (e.content.substring(0,9) == '<dropsrc>')) {
+			e.convert2html = true;
+			e.content = _convertHtml2Wiki(e);
 			e.content = e.content.substring(9, e.content.length - 10);
+			return;
 		}
 		// if this is the initail load of the editor
 		// tell it to convert wiki text to html
@@ -3176,9 +3186,9 @@ var MwWikiCode = function() {
 		// set format to raw so that the Tiny parser won't rationalise the html
 		e.format = 'raw';
 		// if the content is wikitext thyen convert to html
-		if (e.convert2html) {
+//		if (e.convert2html) {
 			e.content = _wiki2html(e);
-		}
+//		}
 		return;
 	}
 
@@ -3262,7 +3272,7 @@ var MwWikiCode = function() {
 		}
 		return;
 	}
-	
+
 	/**
 	 * Event handler for "dblclick"
 	 * Add function for processing when double clicking items.
@@ -3368,7 +3378,7 @@ var MwWikiCode = function() {
 		// add in wikimagic functionality
 		//
 		ed.addCommand('mceWikimagic', showWikiMagicDialog);
-	  
+
 		ed.addButton('wikimagic', {
 			icon: 'codesample',
 			stateSelector: '.wikimagic',
@@ -3437,7 +3447,7 @@ var MwWikiCode = function() {
 				text: curMacro['name'],
 				image: curMacro['image'],
 				context: 'insert',
-				wikitext: curMacro['text'],
+				wikitext: decodeURI(curMacro['text']),
 				onclick: function () {
 
 					// Insert the user-selected text into
@@ -3446,7 +3456,7 @@ var MwWikiCode = function() {
 					// (Demarcated by '!...!'.)
 					// @TODO - handle actual ! marks.
 					var selectedContent = _ed.selection.getContent();
-					var insertText = this.settings.wikitext;
+					var insertText = tinymce.DOM.decode(this.settings.wikitext);
 					var replacementStart = insertText.indexOf('!');
 					var replacementEnd = insertText.indexOf('!', replacementStart + 1);
 					if ( selectedContent == '' ) {
@@ -3455,7 +3465,7 @@ var MwWikiCode = function() {
 						insertText = insertText.substr( 0, replacementStart ) + selectedContent + insertText.substr( replacementEnd + 1 );
 					}
 
-					var args = {format: 'raw', load: 'true'};
+					var args = {format: 'wiki', load: 'true'};
 					_ed.undoManager.transact(function() {
 						_ed.focus();
 						_ed.selection.setContent(insertText, args);
