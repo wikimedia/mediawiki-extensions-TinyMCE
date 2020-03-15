@@ -27,8 +27,8 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 		_title = mw.config.get( "wgCanonicalNamespace" ) + ':' + mw.config.get( "wgTitle" );
 
 	_userThumbsize = _thumbsizes[ mw.user ? mw.user.options.get('thumbsize') : 3 ];
-	
-//DC always have the advtab leave for now incase want to repurpos?
+
+//DC always have the advtab leave for now in case want to repurpose?
 /*	if (!editor.settings.image_advtab) {
 		return;
 	}*/
@@ -373,7 +373,7 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 			if (!dialogData.height) dialogData.height = null;
 			if (!dialogData.horizontalalignment) dialogData.horizontalalignment = 'right';
 			if (!dialogData.verticalalignment) dialogData.verticalalignment = 'middle';
-			if (!dialogData.format) dialogData.format = null;
+			if (!dialogData.format) dialogData.format = 'thumb';
 
 			if (imgElm) { //Populate form with details of existing upload
 
@@ -399,7 +399,7 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 				dialogData.verticalalignment = dom.getAttrib(imgElm, 'data-mw-verticalalign');
 				if ( dialogData.verticalalignment == 'false') dialogData.verticalalignment = null;
 				dialogData.format = dom.getAttrib(imgElm, 'data-mw-format');
-				if ( dialogData.format == 'false') dialogData.format = null;
+				if ( dialogData.format == 'false') dialogData.format = '';
 			}
 
 			// setup the list of upload types according to user permissions
@@ -609,7 +609,8 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 						{ text: mw.msg("tinymce-upload-format-thumb-text"), value: 'thumb' },
 						{ text: mw.msg("tinymce-upload-format-border-text"), value: 'border' },
 						{ text: mw.msg("tinymce-upload-format-frame-text"), value: 'frame' },
-						{ text: mw.msg("tinymce-upload-format-frameless-text"), value: 'frameless'}
+						{ text: mw.msg("tinymce-upload-format-frameless-text"), value: 'frameless'},
+						{ text: mw.msg("tinymce-upload-format-none-text"), value: '' }
 					]
 			};
 
@@ -899,7 +900,7 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 		}
 
 		// test if we are modifying an existing upload else set to null
-		if (imgElm && (imgElm.className != 'mw-image' || imgElm.getAttribute('data-mce-object') || imgElm.getAttribute('data-mce-placeholder'))) {
+		if (imgElm && (imgElm.className.indexOf("mw-image") < 0 || imgElm.getAttribute('data-mce-object') || imgElm.getAttribute('data-mce-placeholder'))) {
 			imgElm = null;
 		}
 
@@ -958,7 +959,7 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 	// Add option to double-click on file to get
 	// "upload" popup.
 	editor.on('dblclick', function(e) {
-		if (e.target.className == "mw-image") {
+		if (e.target.className.indexOf("mw-image") > -1 ) {
 			tinyMCE.activeEditor.execCommand('mceImage');
 		}
 	});

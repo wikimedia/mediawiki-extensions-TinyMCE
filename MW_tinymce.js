@@ -112,7 +112,8 @@ window.mwTinyMCEInit = function( tinyMCESelector ) {
 			'wikicode': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_wikicode/plugin.js',
 			'wikiupload': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_upload/plugin.js',
 //			'wikilink': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_link/plugin.js',
-			'wikipaste': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_paste/plugin.js',
+//			'wikipaste': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_paste/plugin.js',
+			'paste': extensionAssetsPath + '/TinyMCE/tinymce/plugins/paste/plugin.js',
 			'table': extensionAssetsPath + '/TinyMCE/tinymce/plugins/mw_table/plugin.js'
 		},
 		// fontawesome configuration

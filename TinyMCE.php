@@ -159,6 +159,7 @@ $GLOBALS['wgResourceModules'] += array(
 			'tinymce-upload-format-border-text',
 			'tinymce-upload-format-frame-text',
 			'tinymce-upload-format-frameless-text',
+			'tinymce-upload-format-none-text',
 			'tinymce-upload-alert-uploads-not-enabled',
 			'tinymce-upload-alert-uploads-not-allowed',
 			'tinymce-upload-alert-error-uploading-to-wiki',
