@@ -272,11 +272,21 @@ class TinyMCEHooks {
 	 * editable with TinyMCE in the first place.
 	 */
 	public static function addEditSectionLink( $skin, $title, $section, $tooltip, &$links, $lang ) {
-		if ( !isset( $title ) || !$title->userCan( 'edit' ) ) {
-			return true;
+		$context = $skin->getContext();
+		if ( class_exists( \MediaWiki\Permissions\PermissionManager::class ) ) {
+			// MediaWiki 1.33+
+			if ( $title === null ||
+				!MediaWikiServices::getInstance()->getPermissionManager()
+					->userCan( 'edit', $context->getUser(), $title )
+			) {
+				return true;
+			}
+		} else {
+			if ( $title === null || !$title->userCan( 'edit' ) ) {
+				return true;
+			}
 		}
 
-		$context = $skin->getContext();
 		if ( !TinyMCEHooks::enableTinyMCE( $title, $context ) ) {
 			return true;
 		}

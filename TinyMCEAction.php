@@ -54,8 +54,18 @@ class TinyMCEAction extends Action {
 		$title = $obj->getTitle();
 		$context = $obj->getContext();
 
-		if ( !isset( $title ) || !$title->userCan( 'edit' ) ) {
-			return true;
+		if ( class_exists( \MediaWiki\Permissions\PermissionManager::class ) ) {
+			// MediaWiki 1.33+
+			if ( $title === null ||
+				!MediaWikiServices::getInstance()->getPermissionManager()
+					->userCan( 'edit', $context->getUser(), $title )
+			) {
+				return true;
+			}
+		} else {
+			if ( $title === null || !$title->userCan( 'edit' ) ) {
+				return true;
+			}
 		}
 
 		if ( !TinyMCEHooks::enableTinyMCE( $title, $context ) ) {
