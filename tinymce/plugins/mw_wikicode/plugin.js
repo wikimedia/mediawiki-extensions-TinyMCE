@@ -280,34 +280,24 @@ var MwWikiCode = function() {
 				var parsedHtml = data.parse.text["*"],
 					parsedWikiText = data.parse.wikitext["*"];
 
-				// remove leading and trailing spaces
-				parsedHtml = $.trim(parsedHtml);
-				
 				// replace encoded & characters
 				parsedHtml = parsedHtml.replace(/\&amp\;/gmi,'&');
-				
+
 				// remove href tags in returned html as links will screw up conversions
 				parsedHtml = parsedHtml.replace(/\shref="([^"]*)"/gmi,'');
 
-				// remove leading and trailing <p> in parsed html
-				if (parsedHtml.substring(0, 3) == '<p>') {
-					parsedHtml = parsedHtml.substring(3, parsedHtml.length);
-				}
-				if (parsedHtml.substring(parsedHtml.length-4,parsedHtml.length) == '</p>') {
-					parsedHtml = parsedHtml.substring(0, parsedHtml.length-4);
-				}
+				// remove leading and trailing <div class="mw-parser-output"> in parsed html
+				parsedHtml = parsedHtml.replace(/^<div class="mw-parser-output">([^]*)<\/div>$/gmi, '$1');
+				
+				// remove <p> tags in parsed html
+
+				parsedHtml = parsedHtml.replace(/<\/?p>/gmi, '');
+
+				//and get rid of all the <a> tags too
+				parsedHtml = parsedHtml.replace(/<\/?a[^>]*>/gmi, '');				
+
 				// remove leading and trailing spaces
 				parsedHtml = $.trim(parsedHtml);
-
-				// remove leading and trailing <p> in parsed wikitext
-				parsedWikiText = $.trim(parsedWikiText);
-				if (parsedWikiText.substring(0, 3) == '<p>') {
-					parsedWikiText = parsedWikiText.substring(3, parsedWikiText.length);
-				}
-				if (parsedWikiText.substring(parsedWikiText.length-4,parsedWikiText.length) == '</p>') {
-					parsedWikiText = parsedWikiText.substring(0, parsedWikiText.length-4);
-				}
-				parsedWikiText = $.trim(parsedWikiText);
 				
 				parserResult['parsedWikiText'] = parsedWikiText;
 				parserResult['parsedHtml'] = parsedHtml;		
@@ -496,7 +486,7 @@ var MwWikiCode = function() {
 		id = "<@@@IMG"+ t + "@@@>";
 		codeAttrs = {
 			'id': id,
-			'class': "mw-image",
+			'class': "mw-image mceNonEditableImage mwspan",
 			'title': imageWikiText,
 			'data-mw-type': "image",
 			'data-mw-id': t,
@@ -515,9 +505,9 @@ var MwWikiCode = function() {
 			'contenteditable': "false"
 		};
 
-		imageHTML = $.trim(imageHTML);		
-		imageHTML = '<mwspan>' + imageHTML + '</mwspan>';
-		el = _ed.dom.create('span', codeAttrs, imageHTML);
+		imageHTML = $.trim(imageHTML);
+
+		el = _ed.dom.create('div', codeAttrs, imageHTML);
 		imageWikiText = imageWikiText.replace(/[^A-Za-z0-9_]/g, '\\$&');
 		imageText = el.outerHTML;
 		_images4Html[id] = imageText;
@@ -542,7 +532,7 @@ var MwWikiCode = function() {
 			linkTargetParts, 
 			protocol, 
 			namespaces = mw.config.get( 'wgNamespaceIds' ),
-			anchorFormat = '<a href="{0}" data-mce-href="{5}" title="{6}" data-mw-type="{2}" class="{3}" data-mw-wikitext="{4}" contenteditable= "false" ><mwspan>{1}<div class="mceNonEditableOverlay"></div></mwspan></a>',
+			anchorFormat = '<a href="{0}" data-mce-href="{5}" title="{6}" data-mw-type="{2}" class="{3}" data-mw-wikitext="{4}" contenteditable= "false" >{1}</a>',
 			squareBraceDepth = 0,
 			linkDepth = 0,
 			linkStart = 0,
@@ -556,7 +546,7 @@ var MwWikiCode = function() {
 			checkedBraces = new Array(),
 			pos = 0,
 			urlProtocolMatch = "/^" + mw.config.get( 'wgUrlProtocols' ) + "/i";
-		
+
 		urlProtocolMatch = urlProtocolMatch.replace(/\|/g,"|^");
 		for (pos = 0; pos < text.length; pos++) {
 			if (text[pos] === '[') {
@@ -579,7 +569,7 @@ var MwWikiCode = function() {
 									pos = pos +1;
 									squareBraceDepth = 0;
 									tempLink = text.substring(linkStart,pos + 1)
-									internalLinks[tempLink] = tempLink;
+									internalLinks.push(tempLink);
 									break;
 								}
 							} else {
@@ -596,12 +586,11 @@ var MwWikiCode = function() {
 						} else if (text[pos] === ']') {
 							if (squareBraceDepth == 1) {
 								// checking for closure of external link eg ]
-								pos ++;
 								squareBraceDepth = 0;
-								tempLink = text.substring(linkStart,pos)
+								tempLink = text.substring(linkStart,pos + 1)
 								if (tempLink.substr(1,tempLink.length - 2).match(urlProtocolMatch) ||
 									tempLink.substr(1,2) === "//" ) {
-									externalLinks[tempLink] = tempLink;
+									externalLinks.push(tempLink);
 								}
 								break;
 							} else {
@@ -616,7 +605,7 @@ var MwWikiCode = function() {
 		// replace internal wiki links with html
 		if (Object.keys(internalLinks).length > 0) {
 			for (var aLink in internalLinks) {
-				link = aLink.substr(2, aLink.length - 4);
+				link = internalLinks[aLink].substr(2, internalLinks[aLink].length - 4);
 				linkParts = link.split("|");
 				linkTarget = linkParts[0];
 				linkLabel = linkParts[0];
@@ -631,7 +620,7 @@ var MwWikiCode = function() {
 					}
 				}
 
-				linkClass = 'link internal mw-internal-link mceNonEditable';
+				linkClass = 'link internal mw-internal-link mceNonEditable mceNonEditableOverlay mwspan';
 				linkTitle = linkTarget;
 
 				// check page exists on wiki
@@ -649,7 +638,7 @@ var MwWikiCode = function() {
 					linkLabel,				// <a>linkLabel</a>
 					'internal_link',		// data-mw-type
 					linkClass,				// class
-					encodeURI( aLink ),	// data-mw-wikitext
+					encodeURI( internalLinks[aLink] ),	// data-mw-wikitext
 					encodeURI( linkTarget ),// data-mce-href
 					linkTitle				// title
 				);
@@ -661,20 +650,26 @@ var MwWikiCode = function() {
 						nsText = targetParts[0];
 						nsId = namespaces[nsText.toLowerCase()];
 						if (nsId === 6) {
-							linkHtml = _image2html(aLink);
+							linkHtml = _image2html(internalLinks[aLink]);
 						}
 					}
 				}
 				link = link.replace( "@@PIPE@@", "|" );
-				text = text.replace("[[" + link + "]]", linkHtml);
+				// find and process all the external links in the wiki code
+				link = link.replace(/[^A-Za-z0-9_]/g, '\\$&');
+				regex = "\\[\\[" + link + "\\]\\]";
+				matcher = new RegExp(regex, 'mi');
+				text = text.replace(matcher, function(match) {
+					return linkHtml;
+				});
 			}
 		}
 
 		// replace external wiki links with html
 		if (Object.keys(externalLinks).length > 0) {
 			for (var aLink in externalLinks) {
-				link = aLink.substr(1, aLink.length - 2);
-				linkNoWrap = aLink.substr(1, aLink.length - 2);
+				link = externalLinks[aLink].substr(1, externalLinks[aLink].length - 2);
+				linkNoWrap = link;
 				link = linkNoWrap.replace(/^\s+|\s+$/gm,'');
 				linkParts = link.split(" ");
 				linkTarget = linkParts[0];
@@ -704,11 +699,20 @@ var MwWikiCode = function() {
 					linkLabel,					// <a>linkLabel</a>
 					'external_link',			// data-mw-type
 					'link external mw-external-link mceNonEditable',// class
-					encodeURI( aLink ),	// data-mw-wikitext
+					encodeURI( externalLinks[aLink] ),	// data-mw-wikitext
 					encodeURI( linkTarget.replace( /%20/g, ' ' ) ),	// data-mce-href
 					$( '<div/>' ).text( linkLabel ).html()	// title
 				);
-				text = text.replace("[" + linkNoWrap + "]", linkHtml);
+				var regex, 
+					matcher;
+	
+				// find and process all the external links in the wiki code
+				linkNoWrap = linkNoWrap.replace(/[^A-Za-z0-9_]/g, '\\$&');
+				regex = "\\[" + linkNoWrap + "\\]";
+				matcher = new RegExp(regex, 'mi');
+				text = text.replace(matcher, function(match) {
+					return linkHtml;
+				});
 			}
 		}
 		return text;
@@ -1530,7 +1534,7 @@ var MwWikiCode = function() {
 			id = "<@@@SWT"+ t + "@@@>";
 			var codeAttrs = {
 				'id': id,
-				'class': "mceNonEditable wikimagic mw-switch",
+				'class': "mceNonEditable wikimagic mw-switch mceNonEditableOverlay mwspan",
 				'title': switchWikiText,
 				'data-mw-type': "switch",
 				'data-mw-id': id,
@@ -1539,7 +1543,7 @@ var MwWikiCode = function() {
 				'contenteditable': "false"
 			};
 
-			switchHtml = '<mwspan>' + '&sect;' + '<div class="mceNonEditableOverlay"></div></mwspan>';
+			switchHtml = '&sect;';
 			el = ed.dom.create('span', codeAttrs, switchHtml);
 			var searchText = new RegExp(switchWikiText, 'g');
 			var replaceText = el.outerHTML;
@@ -2095,7 +2099,7 @@ var MwWikiCode = function() {
 			}
 			codeAttrs = {
 				'id': id,
-				'class': "mceNonEditable wikimagic mw-tag",
+				'class': "mceNonEditable wikimagic mw-tag mceNonEditableOverlay mwspan",
 				'title': tagWikiText ,
 				'data-mw-type': "tag",
 				'data-mw-id': t,
@@ -2105,7 +2109,6 @@ var MwWikiCode = function() {
 			};
 			
 			tagHTML = $.trim(tagHTML);
-			tagHTML = '<mwspan>' + tagHTML + '<div class="mceNonEditableOverlay"></div></mwspan>';
 			el = ed.dom.create('span', codeAttrs, tagHTML);
 			tagText = el.outerHTML;
 			tagWikiText = tagWikiText.replace(/[^A-Za-z0-9_]/g, '\\$&');
@@ -2247,7 +2250,6 @@ var MwWikiCode = function() {
 				};
 				
 				templateHTML = $.trim(templateHTML);
-				templateHTML = '<mwspan>' + templateHTML + '<div class="mceNonEditableOverlay"></div></mwspan>';
 				el = ed.dom.create('span', codeAttrs, templateHTML);
 				templateWikiText = templateWikiText.replace(/[^A-Za-z0-9_]/g, '\\$&');
 				searchText = new RegExp(templateWikiText, 'g');
@@ -2695,13 +2697,18 @@ var MwWikiCode = function() {
 			regex = '<mwspan>[\\S\\s]*?<\\/mwspan>',
 			matcher = new RegExp(regex, 'gmi');
 
-		$.htmlPrefilter = function( html ) {
-  			return html.replace(matcher, '' );
-		};
-
 		text = $.htmlPrefilter(text);
 		
 		$dom = $( "<div id='tinywrapper'>" + text + "</div>" );
+		// replace the innerHTML of elements of class 'mwspan' with ''
+		$dom.find( "*[class*='mwspan']" ).prop("innerHTML","")
+		text = $dom.html();
+
+		// replace spans of class mw-image with a placeholder to preserve their contents
+//		$dom.find( "span[class*='mw-image']" ).replaceWith( function() {
+		$dom.find( "div[class*='mw-image']" ).replaceWith( function() {
+			return this.id;
+		} );
 
 		done = false;
 		while (!done) {
@@ -2742,11 +2749,6 @@ var MwWikiCode = function() {
 		$dom.find( "span[class*='mw-template']" ).replaceWith( function(a) {
 			return this.id;
 		});
-
-		// replace spans of class mw-image with a placeholder to preserve their contents
-		$dom.find( "span[class*='mw-image']" ).replaceWith( function() {
-			return this.id;
-		} );
 
 		// replace html image links with inner html
 		$dom.find( "a[class*='mw-image-link']" ).replaceWith( function() {
@@ -2998,14 +3000,14 @@ var MwWikiCode = function() {
 					var aLabel = decodeURI(data.text).replace("_"," ");
 					var wikitext = "";
 
-					if (data["class"] == "link internal mw-internal-link mceNonEditable") { 
+					if (data["class"].indexOf("mw-internal-link") > -1){ 
 						aLink = aLink.replace("_"," ");
 						if (aLabel) {
 							wikitext = "[[" + aLink + "|" + aLabel + "]]";
 						} else {
 							wikitext = "[[" + aLink + "]]";
 						}
-					} else if (data["class"] == "link external mw-external-link mceNonEditable") {
+					} else if (data["class"].indexOf("mw-external-link") > -1) {
 						if (aLabel) {
 							wikitext = "[" + aLink + " " + aLabel + "]";
 						} else {
@@ -3158,37 +3160,369 @@ var MwWikiCode = function() {
 		// contents so we need to set it when all reflows are done
 		win.find('#wikicode').value(originalValue);
 	}
+	
+	function _uploadImages(editor,text) {
+	
+		function doUpload(fileType, fileToUpload, fileName, fileSummary, ignoreWarnings){
+			var uploadData = new FormData();
+			uploadData.append("action", "upload");
+			uploadData.append("filename", fileName);
+			uploadData.append("text", fileSummary);
+			uploadData.append("token", mw.user.tokens.get( 'editToken' ) );
+			uploadData.append("ignorewarnings", ignoreWarnings );
+			if (fileType == 'File') uploadData.append("file", fileToUpload);
+			if (fileType == 'URL') uploadData.append("url", fileToUpload);
+			uploadData.append("format", 'json');
+			var uploadDetails;
+			//as we now have created the data to send, we send it...
+			$.ajax( { //http://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
+				url:_wikiApi,
+				contentType:false,
+				processData:false,
+				type:'POST',
+				async: false,
+				data: uploadData,//the formdata object we created above
+				success:function(data){
+						uploadDetails = data;
+				},
+				error:function(xhr,status, error){
+					uploadDetails = error
+					console.log(error)
+				}
+			});
+			return uploadDetails;
+		}
+		
+		// check upload succesful or report errors and warnings
+		function checkUploadDetail(uploadDetails, ignoreWarnings, destinationName) {
+			var message,
+				result;
 
+			if (typeof uploadDetails == "undefined") {
+				message = mw.msg("tinymce-upload-alert-unknown-error-uploading",
+					destinationName );
+				result = false;
+			} else if (typeof uploadDetails.error != "undefined") {
+				message = mw.msg("tinymce-upload-alert-error-uploading",uploadDetails.error.info);
+				// if the error is because the file exists then we can ignore and 
+				// use the existing file 
+				if (uploadDetails.error.code == "fileexists-no-change") {
+					result = 'exists';
+				} else {
+					result = false;
+					_ed.windowManager.alert(message);
+				}
+			} else if (typeof uploadDetails.warnings != "undefined" && (!ignoreWarnings)) {
+				message = mw.msg("tinymce-upload-alert-warnings-encountered",
+					' ' + destinationName) + "\n\n" ;  
+				result = 'warning';
+				for (warning in uploadDetails.warnings) {
+					warningDetails = uploadDetails.warnings[warning];
+					if (warning == 'badfilename') {
+						message = message + "	" + mw.msg("tinymce-upload-alert-destination-filename-not-allowed") + "\n";
+						result = false;
+					} else if (warning == 'exists') {
+						message = message + "	" + mw.msg("tinymce-upload-alert-destination-filename-already-exists") + "\n";
+						result = 'exists';
+					} else if (warning == 'duplicate') {
+						duplicate = warningDetails[0];
+						message = message + "	" + mw.msg("tinymce-upload-alert-duplicate-file",destinationName) + "\n"
+						result = 'duplicate';
+					} else {
+						message = message + "	" + mw.msg("tinymce-upload-alert-other-warning",warning) + "\n"
+						result = false;
+					}
+				}
+				_ed.windowManager.alert(message);
+			} else if (typeof uploadDetails.imageinfo != "undefined") {
+				result = uploadDetails.imageinfo.url;
+			}
+			return result;
+		}
+
+		var $dom = $( "<div id='tinywrapper'>" + text + "</div>" );
+
+		// replace html image links with inner html
+		$dom.find( "img" ).replaceWith( function() {
+			var aLink,
+				fileType, 
+				uploadDetails, 
+				uploadResult, 
+				ignoreWarnings = true,
+				fileSummary = '',
+				wikiImageObject = [],
+				htmlImageObject = this,
+				attribute,
+				attributes = this.attributes,
+				sourceURI = attributes['src'].value.split('#')[0].split('?')[0],
+				protocol = sourceURI.split('/')[0].toLowerCase(),
+				dstName = sourceURI.split('/').pop().split('#')[0].split('?')[0],
+				wikiText,
+				stylestring,
+				properties,
+				style,
+				stylearray = {},
+				property,
+				value,
+				imageCaption,
+				size;
+			
+			// determine if this is a local image or external
+			if ((protocol == 'https:') || (protocol == 'http:')) {
+				fileType = 'URL';
+			} else {
+				fileType = 'File';
+			}
+			
+			// upload the image (or use existing image on wiki if already uploaded
+			// checking the response and process any errors or warning appropriately
+			uploadDetails = doUpload(fileType, sourceURI, dstName, fileSummary, ignoreWarnings);
+			uploadResult = checkUploadDetail(uploadDetails, ignoreWarnings, dstName);
+
+			// build the wiki code for the image link
+			// first process image tag attributes
+			for (var j = 0; j < attributes.length; j++) {
+				attribute = attributes[j].name;
+				if ( !( attribute == 'width' || !attribute == 'height' )) {
+					wikiImageObject[attribute] = attributes[j].value;
+				}
+			}
+
+			// check if wikiImageObject.style is set
+			// and then process the style attributes
+			if (wikiImageObject.style) {
+				stylestring = wikiImageObject.style;
+				stylestring = stylestring.replace(/\s/g, "");
+				properties = stylestring.split(';');
+				stylearray = {};
+				properties.forEach(function(property) {
+					var option = property.split(':');
+					stylearray[option[0]] = option [1];
+				});
+				stylestring = JSON.stringify(stylearray);
+				style = JSON.parse(stylestring);
+				if (style['display'] === 'block' &&
+					style['margin-left'] === 'auto' &&
+					style['margin-right'] === 'auto') {
+					wikiImageObject.align = 'center';
+				}
+				if (style['width']) {
+					var stylewidth = style['width'].replace('px', '');
+					if ( stylewidth !== "0" ) {
+						wikiImageObject.sizewidth = stylewidth ;
+					}
+				}
+				if (style['height']) {
+					var styleheight = style['height'].replace('px', '');
+					if ( styleheight !== "0" ) {
+						wikiImageObject.sizeheight = styleheight ;
+					}
+				}
+				if (style['float']) {
+					if (style['float'] === 'left') {
+						wikiImageObject.left = true;
+						wikiImageObject.align = 'left';
+					} else if (style['float'] === 'right') {
+						wikiImageObject.right = true;
+						wikiImageObject.align = 'right';
+					}
+				}
+				if (style['vertical-align']) {
+					wikiImageObject.verticalalign = style['vertical-align'];
+				}
+			}
+			
+			// now process the image class if it has wiki formats
+			if (wikiImageObject.class) {
+				if (wikiImageObject.class.indexOf("thumbborder") >= 0) {
+					wikiImageObject.border = "true";
+				}	
+				if (wikiImageObject.class.indexOf("thumbimage") >= 0) {
+					wikiImageObject.frame = "true";
+				}	
+				if (wikiImageObject.class.indexOf("thumbthumb") >= 0) {
+					wikiImageObject.thumb = "true";
+				}
+			}
+			
+			// now process the image size, width, caption and link if any set
+			if (htmlImageObject['width']
+				&& htmlImageObject['width'] !== wikiImageObject.sizewidth) {
+				wikiImageObject.sizewidth = htmlImageObject['width'];
+			}
+			if (htmlImageObject['height']
+				&& htmlImageObject['height'] !== wikiImageObject.sizeheight) {
+				wikiImageObject.sizeheight = htmlImageObject['height'];
+			}
+			if (htmlImageObject['caption']) {
+				wikiImageObject.caption = htmlImageObject['caption'];
+			}
+			if (htmlImageObject['link']) {
+				wikiImageObject.caption = htmlImageObject['link'];
+			}
+
+			// Build wikitext
+			wikiText = [];
+			wikiText.push(wikiImageObject.imagename);
+
+			// process attributes of image
+			for (property in wikiImageObject) {
+				if ($.inArray(property, ['imagename', 'thumbsize']) !== -1) {
+					continue; //Filter non-wiki data
+				}
+				if ($.inArray(property, ['left', 'right', 'center', 'nolink']) !== -1) {
+					continue; //Not used stuff
+				}
+
+				value = wikiImageObject[property];
+
+				//"link" may be intentionally empty. Therefore we have to
+				//check it _before_ "value is empty?"
+				if ( property === 'link' ) {
+					//If the 'nolink' flag is set, we need to discard a
+					//maybe set value of 'link'
+					if( wikiImageObject.nolink === 'true' ) {
+						wikiText.push( property + '=' );
+						continue;
+					}
+					if ( value === 'false' || value === false ) {
+						continue;
+					}
+					wikiText.push( property + '=' + value );
+					continue;
+				}
+
+				if ( !value ) continue; 
+
+/*				if( value == null || 
+					value == false || 
+					value == "" || 
+					typeof value == "undefined" ) 
+						continue;*/
+
+				if (property === 'sizewidth' ) {
+					size = '';
+					if (wikiImageObject.sizewidth && wikiImageObject.sizewidth !== "false") {
+						size = wikiImageObject.sizewidth;
+					}
+					if (wikiImageObject.sizeheight && wikiImageObject.sizeheight !== "false") {
+						size += 'x' + wikiImageObject.sizeheight;
+					}
+					if (size.length == 0 || size == "auto") continue;
+					size += 'px';
+					wikiText.push(size);
+					continue;
+				}
+				if (property == 'alt') {
+					wikiText.push(property + '=' + value);
+					continue;
+				}
+				if ( property == 'align' ) {
+					wikiText.push(value);
+					continue;
+				}
+				if ( property == 'verticalalign' ) {
+					wikiText.push(value);
+					continue;
+				}
+				if ( property == 'title' ) {
+					imageCaption = value;
+					continue;
+				}
+				if ( property == 'caption' ) {
+					imageCaption = value;
+					continue;
+				}
+				if ( property == 'thumb' && value === "true" ) {
+					wikiText.push( 'thumb' );
+					continue;
+				}
+				if ( property == 'frame' && value === "true") {
+					wikiText.push( 'frame' );
+					continue;
+				}
+				if ( property == 'border' && value === "true" ) {
+					wikiText.push( 'border' );
+					continue;
+				}
+			}
+
+			// make sure image caption comes in the end
+			if ( imageCaption ) {
+				wikiText.push( imageCaption );
+			}
+
+			if (this.parentNode.tagName == "A") {
+				dstName = dstName + "|link=" + this.parentNode.href;
+				aLink = '[[File:' + dstName + wikiText.join('|') + ']]';
+				this.parentNode.replaceWith(_links2html(aLink));
+				return;
+			} else {
+				aLink = '[[File:' + dstName + wikiText.join('|') + ']]';
+				return _links2html(aLink);
+			}	
+		});
+
+		// <a> tags tend to mess things up so convert to wiki links then process these
+		// back into html
+		$dom.find( "a" ).replaceWith( function(match) {
+			var aLink,
+				protocol = this.protocol,
+				dstName = this.href,
+				title = this.text;
+
+			if (protocol) {
+				if (title) {
+					dstName = dstName + ' ' + title;
+				}
+				aLink = '[' + dstName + ']'
+			} else {
+				if (title) {
+					dstName = dstName + '|' + title;
+				}
+				aLink = '[[' + dstName + ']]'
+			}
+debugger;
+			return _links2html(aLink);
+			
+		});
+
+		// convert DOM back to html text
+		text = $dom.html();
+
+		//remove &; encoding
+		text = text.replace(/(&[^\s]*?;)/gmi, function($0) {
+			return tinymce.DOM.decode($0);
+		});
+
+		return _recoverImages2html(text);
+	}
+		
 	/**
 	 * Event handler for "beforeSetContent"
 	 * This is used to process the wiki code into html.
 	 * @param {tinymce.ContentEvent} e
 	 */
-	function _onBeforeSetContent(e) {
+	function _onBeforeSetContent(e, args) {
 		// if raw format is requested, this is usually for internal issues like
 		// undo/redo. So no additional processing should occur. Default is 'html'
 		if (e.format == 'raw' ) {
 			return;
 		}
-		// check if this is the content of a drag/drop event
-		// if it is then no need to convert wiki to html
-		if ((e.content.length > 9) && (e.content.substring(0,9) == '<dropsrc>')) {
-			e.convert2html = true;
-			e.content = _convertHtml2Wiki(e);
-			e.content = e.content.substring(9, e.content.length - 10);
-			return;
-		}
+
 		// if this is the initail load of the editor
 		// tell it to convert wiki text to html
 		if (e.initial == true) {
 			e.convert2html = true;
 		}
+
 		// set format to raw so that the Tiny parser won't rationalise the html
 		e.format = 'raw';
-		// if the content is wikitext thyen convert to html
-//		if (e.convert2html) {
+
+		// if the content is wikitext then convert to html
+		if (e.convert2html) {
 			e.content = _wiki2html(e);
-//		}
+		}
 		return;
 	}
 
@@ -3263,16 +3597,28 @@ var MwWikiCode = function() {
 	 * @param {tinymce.DropEvent} e
 	 */
 	function _onDrop(e) {
-		if (typeof e.targetClone != 'undefined') {
-			if (typeof e.targetClone.className != 'undefined') {
-				if (/\bmw-image\b|\bmw-internal-link\b|\bmw-external-link\b|\bwikimagic\b/.test(e.targetClone.className)) {
-					e.targetClone = _ed.dom.create('dropsrc', '' , e.targetClone);
-				}
-			}
-		}
+	}
+	
+	/**
+	 * Event handler for "onBeforePastePreProcess"
+	 * Add function for processing when drag/dropping items.
+	 * @param {tinymce.DropEvent} e
+	 */
+	function _onBeforePastePreProcess(e) {
+		// check if this is the content of a drag/drop event
+		// if it is then no need to convert wiki to html
+debugger;
+		// Show progress for the active editor
+		tinymce.activeEditor.setProgressState(true);
+
+		// upload any images in the dropped content before continuing with paste
+		e.content = _uploadImages(_ed,e.content);
+
+		// Hide progress for the active editor
+		tinyMCE.activeEditor.setProgressState(false);
 		return;
 	}
-
+	
 	/**
 	 * Event handler for "dblclick"
 	 * Add function for processing when double clicking items.
@@ -3280,25 +3626,30 @@ var MwWikiCode = function() {
 	 */
 	function _onDblclick(e) {
 		var selectedNode;
-		if ((e.target.tagName == "IMG") || (e.target.tagName == "SPAN")) {
-			selectedNode = e.target;
-			while (selectedNode.parentNode != null) {
-				if (typeof selectedNode.className != "undefined") {
-					if (selectedNode.className.indexOf("mw-image") > -1) {
-						_ed.selection.select(selectedNode);
-						e.target = selectedNode;
-					}
+
+		selectedNode = e.target;
+		while (selectedNode.parentNode != null) {
+			if (typeof selectedNode.className != "undefined") {
+				if (selectedNode.className.indexOf("mw-image") > -1) {
+					_ed.selection.select(selectedNode);
+					e.target = selectedNode;
+					break;
+				} else if (selectedNode.className.indexOf("wikimagic") > -1) {
+					_ed.selection.select(selectedNode);
+					e.target = selectedNode;
+					tinyMCE.activeEditor.execCommand('mceWikimagic');
+					break;
+				} else if (selectedNode.className.indexOf("mw-internal-link") > -1 ||
+					e.target.className.indexOf("mw-external-link") > -1) {
+					_ed.selection.select(selectedNode);
+					e.target = selectedNode;
+					tinyMCE.activeEditor.execCommand('mceLink');
+					break;
 				}
-				selectedNode = selectedNode.parentNode;
 			}
-		} else if (e.target.className == 'mceNonEditableOverlay' ) {
-			if (e.target.parentNode.parentNode.className.indexOf("wikimagic") > -1) {
-				tinyMCE.activeEditor.execCommand('mceWikimagic');
-			} else if (e.target.parentNode.parentNode.className.indexOf("mw-internal-link") > -1 
-				|| e.target.parentNode.parentNode.className.indexOf("mw-external-link") > -1) {
-				tinyMCE.activeEditor.execCommand('mceLink');
-			}
+			selectedNode = selectedNode.parentNode;
 		}
+
 		return;
 	}
 
@@ -3321,7 +3672,10 @@ var MwWikiCode = function() {
 		ed.on('beforeGetContent', _onBeforeGetContent);
 		ed.on('getContent', _onGetContent);
 		ed.on('loadContent', _onLoadContent);
-		ed.on('drop', _onDrop)
+		ed.on('drop', _onDrop);
+		ed.on('beforePastePreProcess', _onBeforePastePreProcess);
+		ed.on('BeforePastePreProcess', _onBeforePastePreProcess);
+		ed.on('pastePreProcess', _onBeforePastePreProcess);
 		ed.on('dblclick', _onDblclick);
 
 		//
@@ -3465,7 +3819,7 @@ var MwWikiCode = function() {
 						insertText = insertText.substr( 0, replacementStart ) + selectedContent + insertText.substr( replacementEnd + 1 );
 					}
 
-					var args = {format: 'wiki', load: 'true'};
+					var args = {format: 'wiki', load: 'true', convert2html: true};
 					_ed.undoManager.transact(function() {
 						_ed.focus();
 						_ed.selection.setContent(insertText, args);

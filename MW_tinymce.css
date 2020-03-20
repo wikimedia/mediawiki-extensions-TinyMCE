@@ -21,7 +21,6 @@ div.floatright, table.floatright, div.floatleft, table.floatleft {
 	position: relative;
 }
 
-
 div.tright, div.floatright, table.floatright {
 	clear: right;
 	float: right;
@@ -178,7 +177,7 @@ a {
 }
 
 .mceNonEditableImage {
-	display: block;
+	display: contents;
 	/* Image created at http://www.patternify.com, with a 2-pixel width
 	 * of color #d9f7db on a 10x10 "canvas". */
 	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAASElEQVQoU2NkgIKb32//BzHVOVUZYWLINFiQkCKQGkZiFMEV4rIO2VlY3YPsNpiNeBUiOwunQnS3Y1WIzYMYCnGFAopCfEEFANTAK18PA4AuAAAAAElFTkSuQmCC");
@@ -189,11 +188,32 @@ a {
 }
 
 .mceNonEditableOverlay {
-	position: absolute;
-	height: 100%;
-	width: 100%;
+	position: relative;
 	top: 0;
 	left: 0;
+}
+
+div.mce-throbber {
+	position: absolute !important;
+	top: 50% !important;
+	left: 50% !important;
+/*    width: 100%;
+    height: 100%;*/
+	opacity: .6 !important;
+	border: 10px solid #f3f3f3 !important; /* Light grey */
+	border-top: 10px solid #3498db !important; /* Blue */
+	border-radius: 50% !important;
+	width: 60px !important;
+	height: 60px !important;
+	animation: spin 2s linear infinite !important;
+	filter: alpha(opacity=60) !important;
+	zoom: 1 !important;
+/*    background: #fff;*/
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
 }
 
 .single_linebreak{
