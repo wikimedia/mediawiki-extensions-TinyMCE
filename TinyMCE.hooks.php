@@ -213,6 +213,12 @@ class TinyMCEHooks {
 		}
 		$vars['wgTinyMCEUserIsBlocked'] = $userIsBlocked ;
 
+		if ( method_exists( MediaWikiServices::class, 'getRepoGroup' ) ) {
+			// MediaWiki 1.34+
+			$localRepo = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo();
+		} else {
+			$localRepo = RepoGroup::singleton()->getLocalRepo();
+		}
 		$jsMacroArray = array();
 		foreach ( $wgTinyMCEMacros as $macro ) {
 			if ( !array_key_exists( 'name', $macro ) || !array_key_exists( 'text', $macro ) ) {
@@ -224,7 +230,7 @@ class TinyMCEHooks {
 				if ( strtolower( substr( $macro['image'], 0, 4 ) ) === 'http' ) {
 					$imageURL = $macro['image'];
 				} else {
-					$imageFile = wfLocalFile( $macro['image'] );
+					$imageFile = $localRepo->newFile( $macro['image'] );
 					$imageURL = $imageFile->getURL();
 				}
 			}

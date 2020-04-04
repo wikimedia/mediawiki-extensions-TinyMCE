@@ -519,11 +519,17 @@ class TinyMCEUploadWindow extends UnlistedSpecialPage {
 		$basename = str_replace( ' ', '_', $basename );
 ## DC end
 ## DC Check that file exists on wiki and send error if not
-		if ( wfLocalFile( $basename ) && ( wfLocalFile( $basename )->exists() == false ) ) {
+		if ( method_exists( MediaWikiServices::class, 'getRepoGroup' ) ) {
+			// MediaWiki 1.34+
+			$localRepo = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo();
+		} else {
+			$localRepo = RepoGroup::singleton()->getLocalRepo();
+		}
+		if ( $localRepo->newFile( $basename ) && ( $localRepo->newFile( $basename )->exists() == false ) ) {
 			return $this->uploadError( wfMessage( 'filenotfound' , $basename )->parse() );
 		}
 ## DC generate hash path depending if its an upload or existing file
-		$hashpath = wfLocalFile( $basename )->getHashPath();
+		$hashpath = $localRepo->newFile( $basename )->getHashPath();
 # DC End
 		$output = "";
 
@@ -711,7 +717,13 @@ END;
 			return true;
 		}
 ##DC end
-		$local = wfLocalFile( $this->mDesiredDestName );
+		if ( method_exists( MediaWikiServices::class, 'getRepoGroup' ) ) {
+			// MediaWiki 1.34+
+			$local = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()
+				->newFile( $this->mDesiredDestName );
+		} else {
+			$local = wfLocalFile( $this->mDesiredDestName );
+		}
 		if ( $local && $local->exists() ) {
 			// We're uploading a new version of an existing file.
 			// No creation, so don't watch it if we're not already.
@@ -910,11 +922,17 @@ END;
 	 * @return array list of warning messages
 	 */
 	public static function ajaxGetExistsWarning( $filename ) {
-		$file = wfFindFile( $filename );
+		if ( method_exists( MediaWikiServices::class, 'getRepoGroup' ) ) {
+			// MediaWiki 1.34+
+			$repoGroup = MediaWikiServices::getInstance()->getRepoGroup();
+		} else {
+			$repoGroup = RepoGroup::singleton();
+		}
+		$file = $repoGroup->findFile( $filename );
 		if ( !$file ) {
 			// Force local file so we have an object to do further checks against
 			// if there isn't an exact match...
-			$file = wfLocalFile( $filename );
+			$file = $repoGroup->getLocalRepo()->newFile( $filename );
 		}
 		$s = '&#160;';
 		if ( $file ) {
