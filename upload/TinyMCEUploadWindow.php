@@ -205,9 +205,7 @@ class TinyMCEUploadWindow extends UnlistedSpecialPage {
 		}
 
 		# Check whether we actually want to allow changing stuff
-		if ( wfReadOnly() ) {
-			throw new ReadOnlyError();
-		}
+		$this->checkReadOnly();
 
 		# Unsave the temporary file in case this was a cancelled upload
 		if ( $this->mCancelUpload ) {
