@@ -68,7 +68,7 @@ $GLOBALS['wgTinyMCEIP'] = dirname( __FILE__ );
 //$GLOBALS['wgHooks']['ResourceLoaderRegisterModules'][] = 'TinyMCEHooks::registerModules';
 $GLOBALS['wgHooks']['MakeGlobalVariablesScript'][] = 'TinyMCEHooks::setGlobalJSVariables';
 $GLOBALS['wgHooks']['MagicWordwgVariableIDs'][] = 'TinyMCEHooks::addMagicWordVariableIDs';
-$GLOBALS['wgHooks']['ParserBeforeTidy'][] = 'TinyMCEHooks::handleMagicWords';
+$GLOBALS['wgHooks']['ParserAfterTidy'][] = 'TinyMCEHooks::handleMagicWords';
 $GLOBALS['wgHooks']['SkinTemplateNavigation'][] = 'TinyMCEAction::displayTab';
 $GLOBALS['wgHooks']['SkinEditSectionLinks'][] = 'TinyMCEHooks::addEditSectionLink';
 if ( class_exists( 'MediaWiki\Linker\LinkRenderer' ) ) {
