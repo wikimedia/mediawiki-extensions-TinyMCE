@@ -45,9 +45,10 @@ class TinyMCEAction extends Action {
 
 	/**
 	 * Adds an "action" (i.e., a tab) to edit the current article with
-	 * TinyMCE.
+	 * TinyMCE; and also modifies the "Add topic" link, if we are on a
+         * talk page.
 	 */
-	static function displayTab( $obj, &$links ) {
+	static function displayTabAndModifyAddTopicLink( $obj, &$links ) {
 		global $wgRequest;
 
 		$content_actions = &$links['views'];
@@ -112,6 +113,13 @@ class TinyMCEAction extends Action {
 		$content_actions = array();
 		for ( $i = 0; $i < count( $tab_keys ); $i++ ) {
 			$content_actions[$tab_keys[$i]] = $tab_values[$i];
+		}
+
+		// If we're on a talk page, also modify the "Add topic" link
+		// to use TinyMCE.
+		if ( array_key_exists( 'addsection', $content_actions ) ) {
+			$curURL = $content_actions['addsection']['href'];
+			$content_actions['addsection']['href'] = str_replace( 'action=edit', 'action=tinymceedit', $curURL );
 		}
 
 		return true; // always return true, in order not to stop MW's hook processing!

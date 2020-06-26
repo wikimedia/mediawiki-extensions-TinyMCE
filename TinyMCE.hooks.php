@@ -271,6 +271,24 @@ class TinyMCEHooks {
 		return true;
 	}
 
+	/**
+	 * If a talk page does not exist, modify the red link to it to point
+	 * to "action=tinymceedit". Uses the hook SkinTemplateTabAction.
+	 */
+	public static function modifyTalkPageLink( &$sktemplate, $title, $message, $selected, $checkEdit, &$classes, &$query, &$text, &$result ) {
+		if ( !$checkEdit ) {
+			return true;
+		}
+
+		$context = $sktemplate->getContext();
+		if ( !TinyMCEHooks::enableTinyMCE( $title, $context ) ) {
+			return true;
+		}
+
+		$query = str_replace( 'action=edit', 'action=tinymceedit', $query );
+
+		return true;
+	}
 
 	/**
 	 * Adds an "edit" link for TinyMCE, and renames the current "edit"
