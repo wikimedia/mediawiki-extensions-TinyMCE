@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"tinymce-desc": "WYSIWYG-уредник TinyMCE",
+	"tinymce-editsource": "Уреди извор",
+	"tinymce-editsectionsource": "уреди извор",
+	"upload-displayparams": "Прикажи параметри",
+	"tinymce-horizontal-align": "Хоризонтална порамнетост",
+	"tinymce-horizontal-align-left": "Лево",
+	"tinymce-horizontal-align-centre": "По средина",
+	"tinymce-horizontal-align-right": "Десно",
+	"tinymce-horizontal-align-none": "Никаква",
+	"tinymce-vertical-align": "Вертикална порамнетост",
+	"tinymce-vertical-align-middle": "во средина",
+	"tinymce-vertical-align-top": "горе",
+	"tinymce-vertical-align-bottom": "долу",
+	"tinymce-vertical-align-baseline": "основна линија",
+	"tinymce-vertical-align-sub": "долен индекс",
+	"tinymce-vertical-align-super": "горен индекс",
+	"tinymce-vertical-align-text-top": "текстот горе",
+	"tinymce-vertical-align-text-bottom": "текстот долу",
+	"tinymce-format": "Формат",
+	"tinymce-format-thumb": "минијатура",
+	"tinymce-format-border": "граничник",
+	"tinymce-format-frame": "рамка",
+	"tinymce-format-frameless": "без рамка",
+	"tinymce-source-local-file": "Вметнување на текстуална податотека",
+	"tinymce-insertbtn": "Вметни постоечка податотека",
+	"tinymce-uploadbtn": "Подигни/Вметни/Поднови податотека/врска",
+	"tinymce-upload": "Подигни/вметни викислика",
+	"tooltip-tinymce-upload": "Почни подигање/вметнување",
+	"tinymce-openlink": "Отвори врска",
+	"tinymce-wikimagic": "Додај википредлошки, расчленувачки функции и волшебни зборови",
+	"tinymce-upload-type-label": "Вид подигање",
+	"tinymce-upload-dimensions-label": "Димензии",
+	"tinymce-upload-dimensions-width-label": "ш",
+	"tinymce-upload-dimensions-height-label": "в",
+	"tinymce-upload-vertalign-label": "Вертикална порамнетост"
+}

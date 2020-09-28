@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"WikiPhoenix"
+		]
+	},
+	"tinymce-editsource": "Redigera källa",
+	"tinymce-horizontal-align-left": "Vänster",
+	"tinymce-horizontal-align-right": "Höger",
+	"tinymce-format-thumb": "miniatyr",
+	"tinymce-upload-title-image": "Bild",
+	"tinymce-upload-link": "Länk",
+	"tinymce-upload-height": "Höjd",
+	"tinymce-upload-type-label-file": "Lokal fil",
+	"tinymce-upload-title-label": "Titel/bildtext",
+	"tinymce-upload-summary-label": "Sammanfattning",
+	"tinymce-upload-horizontalalign-left-text": "Vänster",
+	"tinymce-upload-horizontalalign-right-text": "Höger",
+	"tinymce-upload-format-thumb-text": "Miniatyr",
+	"tinymce-link-title-label": "Titel",
+	"tinymce-link-target-new-window": "Nytt fönster",
+	"tinymce-link-type-label": "Typ",
+	"tinymce-link-link-list-none": "Ingen",
+	"tinymce-link-link-remove-button-tooltip": "Ta bort länk",
+	"tinymce-link": "Länk"
+}

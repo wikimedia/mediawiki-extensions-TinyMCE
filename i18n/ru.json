@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"tinymce-format": "Формат",
+	"tinymce-format-frame": "рамка",
+	"tinymce-format-frameless": "без рамки",
+	"tinymce-upload-title-image": "Изображение",
+	"tinymce-upload-link": "Ссылка",
+	"tinymce-upload-width": "Ширина",
+	"tinymce-upload-height": "Высота",
+	"tinymce-upload-dimensions-label": "Размеры",
+	"tinymce-upload-format-label": "Формат",
+	"tinymce-upload-format-frame-text": "Рамка",
+	"tinymce-upload-format-frameless-text": "Без рамки",
+	"tinymce-link-type-label": "Тип",
+	"tinymce-link": "Ссылка"
+}

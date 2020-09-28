@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"tinymce-horizontal-align-left": "Ձախ",
+	"tinymce-upload-title-image": "Պատկեր",
+	"tinymce-upload-horizontalalign-left-text": "Ձախ",
+	"tinymce-upload-horizontalalign-right-text": "Աջ"
+}
