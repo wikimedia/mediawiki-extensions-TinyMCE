@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"MuratTheTurkish",
-			"Robby"
+			"Robby",
+			"Umherirrender"
 		]
 	},
 	"tinymce-desc": "{{desc|name=TinyMCE|url=https://www.mediawiki.org/wiki/Extension:TinyMCE}}",
@@ -55,7 +56,7 @@
 	"tinymce-upload-height": "Used as label when uploading a file\n{{identical|Height}}",
 	"tinymce-upload-type-label": "Used as label. Used with javascript.",
 	"tinymce-upload-type-label-file": "Used as option. Used with javascript.",
-	"tinymce-upload-type-label-url": "Used as option. Used with javascript.",
+	"tinymce-upload-type-label-url": "{{optional}}\nUsed as option. Used with javascript.",
 	"tinymce-upload-type-label-wiki": "Used as option. Used with javascript.",
 	"tinymce-upload-type-tooltip": "Used as toolip. Used with javascript.",
 	"tinymce-upload-source-label": "Used as label. Used with javascript.",

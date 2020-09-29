@@ -135,5 +135,7 @@
 	"tinymce-link-want-to-link-external": "L’URL que vous avez saisi semble être un lien externe. Voulez-vous ajouter le préfixe // nécessaire ?",
 	"tinymce-link-link-button-tooltip": "Insérer/modifier le lien",
 	"tinymce-link-link-remove-button-tooltip": "Supprimer le lien",
-	"tinymce-link-open-link": "Ouvrir le lien"
+	"tinymce-link-open-link": "Ouvrir le lien",
+	"tinymce-link-context-menu": "openlink | lier délier",
+	"tinymce-link": "Lien"
 }
