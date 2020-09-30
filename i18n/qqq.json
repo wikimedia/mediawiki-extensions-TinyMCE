@@ -52,7 +52,7 @@
 	"tinymce-upload-title-image": "Used as label. Used with javascript.\n{{identical|Image}}",
 	"tinymce-upload-alternate-text": "Used as label when uploading a file",
 	"tinymce-upload-link": "Used as label when uploading a file",
-	"tinymce-upload-width": "Used as label when uploading a file",
+	"tinymce-upload-width": "Used as label when uploading a file\n{{Identical|Width}}",
 	"tinymce-upload-height": "Used as label when uploading a file\n{{identical|Height}}",
 	"tinymce-upload-type-label": "Used as label. Used with javascript.",
 	"tinymce-upload-type-label-file": "Used as option. Used with javascript.",
