@@ -4,6 +4,13 @@
 			"Saederup92"
 		]
 	},
+	"tinymce-upload-width": "Bredde",
+	"tinymce-upload-height": "Højde",
 	"tinymce-upload-dimensions-label": "Dimensioner",
-	"tinymce-upload-format-none-text": "Ingen"
+	"tinymce-upload-horizontalalign-left-text": "Venstre",
+	"tinymce-upload-format-none-text": "Ingen",
+	"tinymce-link-title-label": "Titel",
+	"tinymce-link-target-new-window": "Nyt vindue",
+	"tinymce-link-target-label": "Mål",
+	"tinymce-link-link-list-none": "Ingen"
 }
