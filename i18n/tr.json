@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"MuratTheTurkish"
+		]
+	},
+	"tinymce-desc": "TinyMCE WYSIWYG editörü",
+	"tinymce-editsource": "Kaynağı düzenle",
+	"tinymce-editsectionsource": "kaynağı düzenle",
+	"upload-displayparams": "Parametreleri göster",
+	"tinymce-horizontal-align": "Yatay hizalama",
+	"tinymce-horizontal-align-left": "Sol",
+	"tinymce-horizontal-align-centre": "Orta",
+	"tinymce-horizontal-align-right": "Sağ",
+	"tinymce-horizontal-align-none": "Hiçbiri",
+	"tinymce-vertical-align": "Dikey hizalama",
+	"tinymce-vertical-align-middle": "orta",
+	"tinymce-vertical-align-top": "üst",
+	"tinymce-vertical-align-bottom": "alt",
+	"tinymce-vertical-align-baseline": "temel",
+	"tinymce-vertical-align-sub": "alt",
+	"tinymce-vertical-align-super": "üst",
+	"tinymce-vertical-align-text-top": "metin üstü",
+	"tinymce-vertical-align-text-bottom": "metin altı",
+	"tinymce-format": "Biçim",
+	"tinymce-format-thumb": "küçük resim",
+	"tinymce-format-border": "kenarlık",
+	"tinymce-format-frame": "çerçeve",
+	"tinymce-format-frameless": "çerçevesiz",
+	"tinymce-source-local-file": "Mevcut dosyayı ekle",
+	"tinymce-source-insert-local-file": "Zaten yüklenmiş olan dosyanın başlığını girin (ad alanı öneki olmadan)",
+	"tinymce-no-file-name": "Dosya adı boş - uygun radyo düğmesini seçtiniz mi?",
+	"tinymce-insertbtn": "Mevcut dosyayı ekle",
+	"tinymce-uploadbtn": "Dosya/bağlantı yükle/ekle/güncelle",
+	"tinymce-sideupload-drop-error": "Doğrudan web sitesinden $1 yüklenirken sorunla karşılaşıldı. Yerel bir diske indirmeyi ve oradan yüklemek için resim ekle düğmesini kullanmayı deneyin",
+	"tinymce-upload": "Viki resmi yükle/ekle",
+	"tooltip-tinymce-upload": "Yüklemeyi başlat/dosya ekle",
+	"tinymce-openlink": "Açık bağlantı"
+}
