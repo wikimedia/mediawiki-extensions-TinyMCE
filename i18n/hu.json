@@ -39,6 +39,7 @@
 	"tinymce-upload-alert-warnings-encountered": "A fájl feltöltése során az alábbi hibaüzenetek jelentkeztek:",
 	"tinymce-upload-alert-duplicate-file": "A/Az $1 fájl a wikin már létező fájl másolata.",
 	"tinymce-upload-confirm-ignore-warnings": "Amennyiben újra szeretnéd próbálni és figyelmen kívül hagyod a figyelmeztetéseket, kattints az \"Ok\" gombra. Vagy válaszd a \"Mégse\" gombot.",
+	"tinymce-upload-menu-item-text": "Fájl feltöltése/szerkesztése",
 	"tinymce-wikicode-alert-image-not-found-on-wiki": "A/Az $1 oldal nem található ezen a wikin.",
 	"tinymce-wikicode-alert-image-request-invalid": "Érvénytelen keresési parancs a wikin belüli, $1 oldalra vonatkozóan",
 	"tinymce-wikicode-alert-image-request-unknown-error": "Hiba a wikin $1 oldal keresése közben",
