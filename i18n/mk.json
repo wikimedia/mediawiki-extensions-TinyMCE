@@ -79,5 +79,9 @@
 	"tinymce-link-title": "Вметни/измени врска",
 	"tinymce-link-title-label": "Наслов",
 	"tinymce-link-url-page-label": "Стави врска до URL/страница",
-	"tinymce-link-display-text-label": "Текст за приказ"
+	"tinymce-link-display-text-label": "Текст за приказ",
+	"tinymce-link-link-remove-button-tooltip": "Отстрани врска",
+	"tinymce-link-open-link": "Отвори врска",
+	"tinymce-link-context-menu": "отвориврска | врзи одврзи",
+	"tinymce-link": "Врска"
 }

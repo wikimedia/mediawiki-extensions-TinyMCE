@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hanna Tardos"
+			"Hanna Tardos",
+			"Misibacsi"
 		]
 	},
 	"tinymce-desc": "TinyMCE WYSIWYG szerkesztő",
@@ -109,7 +110,7 @@
 	"tinymce-wikicode-alert-image-not-found-on-wiki": "A/Az $1 oldal nem található ezen a wikin.",
 	"tinymce-wikicode-alert-image-request-invalid": "Érvénytelen keresési parancs a wikin belüli, $1 oldalra vonatkozóan",
 	"tinymce-wikicode-alert-image-request-unknown-error": "Hiba a wikin $1 oldal keresése közben",
-	"tinymce-wikicode-alert-infinte-loop": "Végtelen loop jött létre. A szerkesztő bezárt. Kérjük, ellenőrizd a lehetséges hibákat a wiki oldaladon.",
+	"tinymce-wikicode-alert-infinte-loop": "Végtelen hurok jött létre. A szerkesztő bezárt. Kérjük, ellenőrizd a lehetséges hibákat a wiki oldaladon.",
 	"tinymce-link-title": "Hivatkozás beillesztése/szerkesztése",
 	"tinymce-link-title-label": "Cím",
 	"tinymce-link-url-page-label": "URL/lap hivatkozás",
