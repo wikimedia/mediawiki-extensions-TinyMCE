@@ -316,7 +316,7 @@ class TinyMCEHooks {
 		}
 
 		foreach ( $links as &$link ) {
-			if ( $link['query']['action'] == 'edit' ) {
+			if (!empty($link['query']['action']) &&  $link['query']['action'] == 'edit' ) {
 				$newLink = $link;
 				$link['text'] = $skin->msg( 'tinymce-editsectionsource' )->text();
 			}
