@@ -46,7 +46,7 @@ class TinyMCEAction extends Action {
 	/**
 	 * Adds an "action" (i.e., a tab) to edit the current article with
 	 * TinyMCE; and also modifies the "Add topic" link, if we are on a
-         * talk page.
+     * talk page.
 	 */
 	static function displayTabAndModifyAddTopicLink( $obj, &$links ) {
 		global $wgRequest;
@@ -55,18 +55,8 @@ class TinyMCEAction extends Action {
 		$title = $obj->getTitle();
 		$context = $obj->getContext();
 
-		if ( class_exists( \MediaWiki\Permissions\PermissionManager::class ) ) {
-			// MediaWiki 1.33+
-			if ( $title === null ||
-				!MediaWikiServices::getInstance()->getPermissionManager()
-					->userCan( 'edit', $context->getUser(), $title )
-			) {
-				return true;
-			}
-		} else {
-			if ( $title === null || !$title->userCan( 'edit' ) ) {
-				return true;
-			}
+		if ( !isset( $title ) || !$title->userCan( 'edit' ) ) {
+			return true;
 		}
 
 		if ( !TinyMCEHooks::enableTinyMCE( $title, $context ) ) {
