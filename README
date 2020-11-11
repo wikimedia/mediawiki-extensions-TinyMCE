@@ -4,32 +4,43 @@ TinyMCE is an extension to MediaWiki that allows for using the
 open source TinyMCE text editor to edit page contents.
 
 For more information on the TinyMCE extension, see its homepage at
-https://www.mediawiki.org/wiki/Extension:TinyMCE
+
+	https://www.mediawiki.org/wiki/Extension:TinyMCE
 
 == Credits ==
 
 The TinyMCE extension was created by Duncan Crane and Yaron Koren.
-It uses a significant amount of code from the VisualEditor
+Originally it used a significant amount of code from the VisualEditor
 extension by Hallo Welt!, which is part of the BlueSpice MediaWiki
 package. (Not to be confused with the better-known VisualEditor
 extension developed by the Wikimedia Foundation.)
 
+Version 1.0 is almost a complete rewrite of the plugin for TinyMCE 
+that translates between html and wiki text.  IT greatly extends the
+scope of the editor to as many different wiki text constructs as we 
+could find! It also includes anumber of native TinyMCE plugins for 
+file uploads, links, tables, citations, editing raw wiki text, 
+comments, and a fontawesome plugin.
+
 The majority of the code, though, consists of the TinyMCE editor
 itself, which was mostly developed by the Ephox corporation.
+
+Version 1.0 has been extensively and independently tested by
+Wikibase bv.
 
 == Contact ==
 
 Comments, questions and suggestions can be submitted on the TinyMCE
 extension's talk page, or sent to the MediaWiki mailing list:
 
- https://lists.wikimedia.org/mailman/listinfo/mediawiki-l
+	https://lists.wikimedia.org/mailman/listinfo/mediawiki-l
 
 If possible, please add "[TinyMCE]" at the beginning of the subject
 line, to clarify the subject matter.
 
 Bug reports should be submitted at the Wikimedia Phabricator site:
 
- https://phabricator.wikimedia.org/maniphest/task/create/
+	https://phabricator.wikimedia.org/maniphest/task/create/
 
 == Credits to other projects ==
 
@@ -37,8 +48,46 @@ The TinyMCE extension includes the following JavaScript libraries:
 
 * TinyMCE (https://www.tinymce.com), distributed under the LGPL.
 
-* FancyBox (http://fancybox.net) by Janis Skarnelis, distributed
-under both the MIT and GPL licenses.
-
 TinyMCE also makes extensive use of the jQuery JavaScript library,
 included within MediaWiki.
+
+== Basic Installation and setup ==
+
+==Download==
+
+You can download the TinyMCE extension from:
+
+	https://www.mediawiki.org/wiki/Special:ExtensionDistributor/TinyMCE.
+
+You can also download the code directly via Git from the MediaWiki 
+source code repository, see 
+
+	https://phabricator.wikimedia.org/diffusion/ETMC/tags/master/
+
+From a command line, you can call the following:
+
+	git clone https://gerrit.wikimedia.org/r/mediawiki/extensions/TinyMCE.git
+
+==Installation==
+
+Please note, this extension is only tested on versions from LTS 1.31, and
+may well not work on earlier versions. If you are using MediaWiki 1.27 or
+higher, add the following line to your LocalSettings.php file:
+
+	wfLoadExtension( 'TinyMCE' );
+
+For earlier versions, you should call the following instead:
+
+	require_once "$IP/extensions/TinyMCE/TinyMCE.php";
+
+== Configuration ==
+
+The TinyMCE extension comes with a default configuration. You can run the
+TinyMCE extension straight 'out of the box 'just by setting
+$wgTinyMCEEnabled to 'true' in LocalSettings.php and making it available
+to users in their preferrences.
+
+TinyMCE has a very rich configuration environment.  Details of how to 
+tailor the default configuration are included on the extension page:
+
+	https://www.mediawiki.org/wiki/Extension:TinyMCE
