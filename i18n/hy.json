@@ -4,13 +4,13 @@
 			"Kareyac"
 		]
 	},
+	"tinymce-upload-link": "Հղում",
+	"tinymce-upload-width": "Լայնք",
+	"tinymce-upload-height": "Բարձրություն",
 	"tinymce-horizontal-align-none": "Ոչ մեկը",
 	"tinymce-format-frame": "շրջանակ",
 	"tinymce-format-frameless": "Առանց շրջանակի",
 	"tinymce-upload-title-image": "Պատկեր",
-	"tinymce-upload-link": "Հղում",
-	"tinymce-upload-width": "Լայնք",
-	"tinymce-upload-height": "Բարձրություն",
 	"tinymce-upload-summary-label": "Ամփոփում",
 	"tinymce-upload-format-label": "Ձևաչափ",
 	"tinymce-upload-format-border-text": "Շրջանակ",
