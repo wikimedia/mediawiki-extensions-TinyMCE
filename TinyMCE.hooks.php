@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+#use MediaWiki\User\UserOptionsManager;
 
 /**
  * Static functions called by various outside hooks, as well as by
@@ -19,9 +20,10 @@ class TinyMCEHooks {
 			return 1;
 		}
 
-		define( 'TINYMCE_VERSION', '0.3' );
+		define( 'TINYMCE_VERSION', '1.0' );
 
 		$GLOBALS['wgTinyMCEIP'] = dirname( __DIR__ ) . '/../';
+		$GLOBALS['wgTinyMCEUse'] = null;
 
 		// We have to have this hook called here, instead of in
 		// extension.json, because it's conditional.
@@ -148,10 +150,13 @@ class TinyMCEHooks {
 	}
 
 	static function setGlobalJSVariables( &$vars, $out ) {
-		global $wgTinyMCEEnabled, $wgTinyMCEMacros, $wgTinyMCEPreservedTags;
+		global $wgTinyMCEEnabled, $wgTinyMCETemplates, $wgTinyMCEPreservedTags;
 		global $wgCheckFileExtensions, $wgStrictFileExtensions;
 		global $wgFileExtensions, $wgFileBlacklist;
 		global $wgEnableUploads;
+		global $wgTinyMCESettings;
+		global $wgWsTinyMCEModals;
+		global $wgTinyMCEUse;
 
 		if ( !$wgTinyMCEEnabled ) {
 			return true;
@@ -161,6 +166,7 @@ class TinyMCEHooks {
 
 		$extensionTags = MediaWikiServices::getInstance()->getParser()->getTags();
 		$specialTags = '';
+		$preservedTags = '';
 		foreach ( $extensionTags as $tagName ) {
 			if ( ( $tagName == 'pre' ) || ($tagName == 'nowiki') ) {
 				continue;
@@ -169,13 +175,10 @@ class TinyMCEHooks {
 		}
 
 		$defaultTags = array(
-			"includeonly", "onlyinclude", "noinclude", "pre", "nowiki" //Definitively MediaWiki core
+			"includeonly", "onlyinclude", "noinclude", "nowiki" //Definitively MediaWiki core
 		);
 
 		$tinyMCETagList = $specialTags . implode( '|', $defaultTags );
-		if ( $wgTinyMCEPreservedTags  ) {
-			$tinyMCETagList = $tinyMCETagList . '|' . implode( '|', $wgTinyMCEPreservedTags );
-		}
 
 		$vars['wgTinyMCETagList'] = $tinyMCETagList;
 
@@ -189,6 +192,7 @@ class TinyMCEHooks {
 		$vars['wgFileExtensions'] = $wgFileExtensions;
 		$vars['wgFileBlacklist'] = $wgFileBlacklist;
 		$vars['wgEnableUploads'] = $wgEnableUploads;
+		$vars['wgTinyMCEVersion'] = ExtensionRegistry::getInstance()->getAllThings()['TinyMCE']['version'];
 
 		$user = $context->getUser();
 
@@ -212,35 +216,9 @@ class TinyMCEHooks {
 			$userIsBlocked = false;
 		}
 		$vars['wgTinyMCEUserIsBlocked'] = $userIsBlocked ;
+ 		$vars['wgTinyMCESettings'] = $wgTinyMCESettings;
+		$vars['wgWsTinyMCEModals'] = $wgWsTinyMCEModals;
 
-		if ( method_exists( MediaWikiServices::class, 'getRepoGroup' ) ) {
-			// MediaWiki 1.34+
-			$localRepo = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo();
-		} else {
-			$localRepo = RepoGroup::singleton()->getLocalRepo();
-		}
-		$jsMacroArray = array();
-		foreach ( $wgTinyMCEMacros as $macro ) {
-			if ( !array_key_exists( 'name', $macro ) || !array_key_exists( 'text', $macro ) ) {
-				continue;
-			}
-
-			$imageURL = null;
-			if ( array_key_exists( 'image', $macro ) ) {
-				if ( strtolower( substr( $macro['image'], 0, 4 ) ) === 'http' ) {
-					$imageURL = $macro['image'];
-				} else {
-					$imageFile = $localRepo->newFile( $macro['image'] );
-					$imageURL = $imageFile->getURL();
-				}
-			}
-			$jsMacroArray[] = array(
-				'name' => $macro['name'],
-				'image' => $imageURL,
-				'text' => htmlentities( $macro['text'] )
-			);
-		}
-		$vars['wgTinyMCEMacros'] = $jsMacroArray;
 
 		return true;
 	}
@@ -272,46 +250,28 @@ class TinyMCEHooks {
 	}
 
 	/**
-	 * If a talk page does not exist, modify the red link to it to point
-	 * to "action=tinymceedit". Uses the hook SkinTemplateTabAction.
-	 */
-	public static function modifyTalkPageLink( &$sktemplate, $title, $message, $selected, $checkEdit, &$classes, &$query, &$text, &$result ) {
-		if ( !$checkEdit ) {
-			return true;
-		}
-
-		$context = $sktemplate->getContext();
-		if ( !TinyMCEHooks::enableTinyMCE( $title, $context ) ) {
-			return true;
-		}
-
-		$query = str_replace( 'action=edit', 'action=tinymceedit', $query );
-
-		return true;
-	}
-
-	/**
 	 * Adds an "edit" link for TinyMCE, and renames the current "edit"
 	 * link to "edit source", for all sections on the page, if it's
 	 * editable with TinyMCE in the first place.
 	 */
 	public static function addEditSectionLink( $skin, $title, $section, $tooltip, &$links, $lang ) {
+		global $wgTinyMCEUse;
 		$context = $skin->getContext();
-		if ( class_exists( \MediaWiki\Permissions\PermissionManager::class ) ) {
-			// MediaWiki 1.33+
-			if ( $title === null ||
-				!MediaWikiServices::getInstance()->getPermissionManager()
-					->userCan( 'edit', $context->getUser(), $title )
-			) {
-				return true;
-			}
+		$user = $context->getUser();
+
+		if ( method_exists( 'MediaWiki\Permissions\PermissionManager', 'userCan' ) ) {
+			// MW 1.33+
+			$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
+			$userCanEdit = $permissionManager->userCan( 'edit', $user, $title );
 		} else {
-			if ( $title === null || !$title->userCan( 'edit' ) ) {
-				return true;
-			}
+			$userCanEdit = $title->userCan( 'edit', $user ) && $user->isAllowed( 'edit' );
 		}
 
-		if ( !TinyMCEHooks::enableTinyMCE( $title, $context ) ) {
+		if ( !isset( $title ) || !$userCanEdit ) {
+			return true;
+		}
+
+		if ( !$wgTinyMCEUse ) {
 			return true;
 		}
 
@@ -340,6 +300,9 @@ class TinyMCEHooks {
 	 * @return true
 	 */
 	static function changeRedLinkOld( $linker, $target, $options, $text, &$attribs, &$ret ) {
+		global $wgTinyMCEUse;
+		global $wgOut;
+
 		// If it's not a broken (red) link, exit.
 		if ( !in_array( 'broken', $options, true ) ) {
 			return true;
@@ -355,10 +318,12 @@ class TinyMCEHooks {
 			return true;
 		}
 
-		global $wgOut;
-		if ( !TinyMCEHooks::enableTinyMCE( $target, $wgOut->getContext() ) ) {
+		$exWgTinyMCEUse = $wgTinyMCEUse;
+		$context = $wgOut->getContext();
+		if ( !TinyMCEHooks::enableTinyMCE( $title, $context ) ) {
 			return true;
 		}
+		$wgTinyMCEUse = $exWgTinyMCEUse;
 
 		$attribs['href'] = $target->getLinkURL( array( 'action' => 'tinymceedit', 'redlink' => '1' ) );
 
@@ -382,6 +347,9 @@ class TinyMCEHooks {
 	 * @return true
 	 */
 	static function changeRedLink( MediaWiki\Linker\LinkRenderer $linkRenderer, $target, $isKnown, &$text, &$attribs, &$ret ) {
+		global $wgTinyMCEUse;
+		global $wgTinyMCEDisabledNamespaces;
+
 		// If it's not a broken (red) link, exit.
 		if ( $isKnown ) {
 			return true;
@@ -404,8 +372,8 @@ class TinyMCEHooks {
 			$title = Title::newFromLinkTarget( $target );
 		}
 
-		global $wgOut;
-		if ( !TinyMCEHooks::enableTinyMCE( $title, $wgOut->getContext() ) ) {
+		// check TinyMCE allowed for namespace
+		if ( in_array( $title->getNamespace(), $wgTinyMCEDisabledNamespaces ) ) {
 			return true;
 		}
 
@@ -428,17 +396,19 @@ class TinyMCEHooks {
 
 	public static function enableTinyMCE( $title, $context ) {
 		global $wgTinyMCEDisabledNamespaces, $wgTinyMCEUnhandledStrings;
+		global $wgTinyMCEUse;
+
+		if ( $wgTinyMCEUse !== null) return;
 
 		if ( in_array( $title->getNamespace(), $wgTinyMCEDisabledNamespaces ) ) {
-			return false;
+			return $wgTinyMCEUse = false;
 		}
 
 		if ( $context->getRequest()->getCheck( 'undo' ) ) {
-			return false;
+			return $wgTinyMCEUse = false;
 		}
-
 		if ( !$context->getUser()->getOption( 'tinymce-use' ) ) {
-			return false;
+			return $wgTinyMCEUse = false;
 		}
 
 		if ( !empty( $wgTinyMCEUnhandledStrings ) ) {
@@ -448,7 +418,7 @@ class TinyMCEHooks {
 				$pageText = $content->getNativeData();
 				foreach ( $wgTinyMCEUnhandledStrings as $str ) {
 					if ( strpos( $pageText, $str ) !== false ) {
-						return false;
+						return $wgTinyMCEUse = false;
 					}
 				}
 			}
@@ -466,18 +436,19 @@ class TinyMCEHooks {
 				'pp_propname' => 'notinymce'
 			)
 		);
+
 		// First row of the result set.
 		$row = $dbr->fetchRow( $res );
 		if ( $row != null ) {
-			return false;
+			return $wgTinyMCEUse = false;
 		}
 
-		// Give other extensions a chance to disable TinyMCE for this page.
-		if ( !Hooks::run( 'TinyMCEDisable', array( $title ) ) ) {
-			return false;
+		global $wgTinyMCELoadOnView;
+		if ( Action::getActionName( $context ) === 'view') {
+#		    return (bool)$wgTinyMCELoadOnView;
 		}
 
-		return true;
+		return $wgTinyMCEUse = true;
 	}
 
 	/**
@@ -492,6 +463,7 @@ class TinyMCEHooks {
 	 */
 	public static function determineIfTinyMCEIsEnabled( EditPage $editPage ) {
 		global $wgTinyMCEEnabled;
+		global $wgTinyMCEUse;
 
 		$wgTinyMCEEnabled = false;
 
@@ -531,6 +503,28 @@ class TinyMCEHooks {
 		return true;
 	}
 
+	/**
+	 * Load the extension on every view, if allowed.
+	 *
+	 * @param OutputPage $output
+	 * @return void
+	*/
+	public static function addToViewPage( OutputPage &$output ) {
+		$context = $output->getContext();
+		$action = Action::getActionName( $context );
+
+		if ( $action != 'view' ) {
+			return;
+		}
+
+		if( self::enableTinyMCE( $output->getTitle(), $context ) ) {
+			$GLOBALS['wgTinyMCEEnabled'] = true;
+			$output->addModules( 'ext.tinymce' );
+		} else {
+			$GLOBALS['wgTinyMCEEnabled'] = false;
+		}
+	}
+	
 	public static function addPreference( $user, &$preferences ) {
 		$preferences['tinymce-use'] = array(
 			'type' => 'toggle',
