@@ -1,8 +1,21 @@
 {
 	"@metadata": {
 		"authors": [
+			"FarsiNevis",
 			"Saadat"
 		]
 	},
-	"tinymce-desc": "ویرایشگر ویزی‌ویگ تاینی‌ام‌سی‌ای"
+	"tinymce-desc": "ویرایشگر ویزی‌ویگ تاینی‌ام‌سی‌ای",
+	"tinymce-upload-caption": "عنوان",
+	"tinymce-upload-title-general": "جزئیات پرونده",
+	"tinymce-upload-title-image": "ویژگی‌های تصویر",
+	"tinymce-upload-source-label": "منبع",
+	"tinymce-upload-button-label-use": "استفاده",
+	"tinymce-upload-button-label-rename": "تغییر نام",
+	"tinymce-link-type-external": "بیرونی",
+	"tinymce-link-type-internal": "درونی",
+	"tinymce-yes": "بله",
+	"tinymce-no": "نه",
+	"tinymce-ok": "تأیید",
+	"tinymce-cancel": "لغو"
 }

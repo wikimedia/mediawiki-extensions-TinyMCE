@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Abbas dhothar"
+		]
+	},
+	"tinymce-upload-caption": "عنوان",
+	"tinymce-wikimagic-title": "دیکھو تے ویکی ٹیکسٹ نوں اڈیٹ کرو",
+	"tinymce-upload-button-label-use": "ورتن",
+	"tinymce-upload-button-label-rename": "مڑ ناں",
+	"tinymce-upload-confirm-file-is-duplicate": "اس ویکی اُتے فائل $ 1 فائل $ 2 د‏‏ی اک نقل ا‏‏ے۔ جے تسیں موجودہ فائل دا استعمال کرنا چاہندے او تاں یا ہاں منتخب کرن تے اس اپ لوڈ دے لئی اک مختلف فائل دا انتخاب کرو"
+}

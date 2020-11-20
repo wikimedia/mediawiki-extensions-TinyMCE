@@ -12,5 +12,7 @@
 	"tinymce-link-title-label": "Titel",
 	"tinymce-link-target-new-window": "Nyt vindue",
 	"tinymce-link-target-label": "Mål",
-	"tinymce-link-link-list-none": "Ingen"
+	"tinymce-link-link-list-none": "Ingen",
+	"tinymce-yes": "Ja",
+	"tinymce-no": "Nej"
 }

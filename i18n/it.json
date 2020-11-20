@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"tinymce-upload-caption": "Didascalia",
+	"tinymce-upload-title-general": "Dettagli del file",
+	"tinymce-upload-title-image": "Proprietà dell'immagine",
+	"tinymce-upload-button-label-overwrite": "Sovrascrivi",
+	"tinymce-upload-button-label-use": "Usa",
+	"tinymce-upload-button-label-rename": "Rinomina",
+	"tinymce-link-type-external": "Esterno",
+	"tinymce-yes": "Sì",
+	"tinymce-no": "No",
+	"tinymce-ok": "OK",
+	"tinymce-cancel": "Annulla"
+}

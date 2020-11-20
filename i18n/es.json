@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Fitoschido"
+			"Fitoschido",
+			"Rodney Araujo"
 		]
 	},
 	"tinymce-editsource": "Editar código",
@@ -71,10 +72,13 @@
 	"tinymce-link-link-list-label": "Lista de enlaces",
 	"tinymce-link-target-new-window": "Ventana nueva",
 	"tinymce-link-target-label": "Destino",
+	"tinymce-link-type-external": "Externo",
 	"tinymce-link-type-label": "Tipo",
 	"tinymce-link-page-not-found": "(la página no existe)",
 	"tinymce-link-link-button-tooltip": "Insertar/editar enlace",
 	"tinymce-link-link-remove-button-tooltip": "Quitar enlace",
 	"tinymce-link-open-link": "Abrir enlace",
-	"tinymce-link": "Enlace"
+	"tinymce-link": "Enlace",
+	"tinymce-yes": "Sí",
+	"tinymce-no": "No"
 }
