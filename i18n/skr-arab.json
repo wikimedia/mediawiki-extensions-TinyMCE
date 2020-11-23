@@ -4,10 +4,12 @@
 			"Saraiki"
 		]
 	},
+	"tinymce-upload-caption": "عنوان",
 	"tinymce-upload-title-general": "فائل تفصیلاں",
 	"tinymce-upload-source-label": "ماخذ",
 	"tinymce-upload-button-label-use": "ورتو",
 	"tinymce-link-type-external": "ٻاہر آلا",
+	"tinymce-link-type-internal": "اندرونی",
 	"tinymce-yes": "جیا",
 	"tinymce-no": "کو",
 	"tinymce-ok": "ٹھیک ہے",

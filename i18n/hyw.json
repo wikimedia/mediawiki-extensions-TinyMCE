@@ -6,6 +6,11 @@
 	},
 	"tinymce-horizontal-align-left": "Ձախ",
 	"tinymce-upload-title-image": "Պատկեր",
+	"tinymce-upload-source-label": "Աղբիւր",
 	"tinymce-upload-horizontalalign-left-text": "Ձախ",
-	"tinymce-upload-horizontalalign-right-text": "Աջ"
+	"tinymce-upload-horizontalalign-right-text": "Աջ",
+	"tinymce-yes": "Այո",
+	"tinymce-no": "Ոչ",
+	"tinymce-ok": "Լաւ",
+	"tinymce-cancel": "Չեղարկել"
 }

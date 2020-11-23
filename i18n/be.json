@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"tinymce-upload-source-label": "Крыніца",
+	"tinymce-upload-button-label-overwrite": "Перазапісаць",
+	"tinymce-upload-button-label-rename": "Перайменаваць",
+	"tinymce-yes": "Так",
+	"tinymce-no": "Не",
+	"tinymce-ok": "Добра"
+}

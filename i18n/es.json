@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Fitoschido",
+			"MarcoAurelio",
 			"Rodney Araujo"
 		]
 	},
@@ -26,7 +27,7 @@
 	"tinymce-source-local-file": "Insertar archivo existente",
 	"tinymce-insertbtn": "Insertar archivo existente",
 	"tinymce-openlink": "Abrir enlace",
-	"tinymce-wikimagic-title": "Plantillas del wiki, funciones del analizador sintáctico y palabras mágicas",
+	"tinymce-wikimagic-title": "Ver y editar texto wiki",
 	"tinymce-browsercontextmenu-title": "Menú contextual del navegador",
 	"tinymce-wikisourcecode": "Ver y editar el código fuente del wiki",
 	"tinymce-wikisourcecode-title": "Código fuente del wiki",
@@ -59,6 +60,7 @@
 	"tinymce-upload-format-frame-text": "Marco",
 	"tinymce-upload-format-frameless-text": "Sin marco",
 	"tinymce-upload-format-none-text": "Ninguno",
+	"tinymce-upload-button-label-overwrite": "Sobrescribir",
 	"tinymce-upload-alert-uploads-not-enabled": "Este wiki no tiene activadas las cargas",
 	"tinymce-upload-alert-destination-filename-not-allowed": "No se permite el nombre de archivo de destino",
 	"tinymce-upload-alert-destination-filename-already-exists": "Ya existe el nombre de archivo de destino",
@@ -80,5 +82,6 @@
 	"tinymce-link-open-link": "Abrir enlace",
 	"tinymce-link": "Enlace",
 	"tinymce-yes": "Sí",
-	"tinymce-no": "No"
+	"tinymce-no": "No",
+	"tinymce-cancel": "Cancelar"
 }

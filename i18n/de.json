@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"tinymce-upload-source-label": "Quelle",
+	"tinymce-upload-button-label-overwrite": "Überschreiben",
+	"tinymce-yes": "Ja",
+	"tinymce-no": "Nein",
+	"tinymce-cancel": "Abbrechen"
+}

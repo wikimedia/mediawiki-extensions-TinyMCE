@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ayoubbouamri"
+		]
+	},
+	"tinymce-upload-caption": "شرح",
+	"tinymce-wikimagic": "شوف وبدل نص لويكي",
+	"tinymce-wikimagic-title": "شوف وبدّل لمكتوب",
+	"tinymce-upload-title-general": "تفاصيل الضوصي",
+	"tinymce-upload-source-label": "لمصدر",
+	"tinymce-upload-button-label-overwrite": "كتابا فوڭ لقياس",
+	"tinymce-upload-alert-error-uploading": "كانطلبو منك السماحا، وقع شي مشكل فاش بغيتي دخل لهاد لويكي: $1 دير ميزاجور للصفحة وحاول من جديد",
+	"tinymce-upload-alert-duplicate-file": "هاد الضوصي هو $1 نيت لي ديجا كاين ف ويكي",
+	"tinymce-upload-confirm-ignore-warnings": "الى بغيتي تعاود ختار آه ولا دير بحال الى ماشفتيش هاد التحدير، بغيتي شي حاجا خرى ختار لا",
+	"tinymce-link-type-external": "برّاوي",
+	"tinymce-yes": "آه",
+	"tinymce-no": "لا",
+	"tinymce-ok": "واخا",
+	"tinymce-cancel": "حيّد"
+}

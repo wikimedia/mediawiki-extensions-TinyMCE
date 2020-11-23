@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"tinymce-upload-source-label": "Zdroj",
+	"tinymce-yes": "Ano",
+	"tinymce-no": "Ne",
+	"tinymce-ok": "OK"
+}

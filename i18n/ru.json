@@ -4,17 +4,25 @@
 			"Kareyac"
 		]
 	},
+	"tinymce-upload-caption": "Подпись",
 	"tinymce-upload-link": "Ссылка",
 	"tinymce-upload-width": "Ширина",
 	"tinymce-upload-height": "Высота",
 	"tinymce-format": "Формат",
 	"tinymce-format-frame": "рамка",
 	"tinymce-format-frameless": "без рамки",
-	"tinymce-upload-title-image": "Изображение",
+	"tinymce-upload-title-image": "Свойства изображения",
+	"tinymce-upload-source-label": "Источник",
 	"tinymce-upload-dimensions-label": "Размеры",
 	"tinymce-upload-format-label": "Формат",
 	"tinymce-upload-format-frame-text": "Рамка",
 	"tinymce-upload-format-frameless-text": "Без рамки",
+	"tinymce-upload-button-label-overwrite": "Перезаписать",
+	"tinymce-upload-button-label-rename": "Переименовать",
 	"tinymce-link-type-label": "Тип",
-	"tinymce-link": "Ссылка"
+	"tinymce-link": "Ссылка",
+	"tinymce-yes": "Да",
+	"tinymce-no": "Нет",
+	"tinymce-ok": "OK",
+	"tinymce-cancel": "Отменить"
 }

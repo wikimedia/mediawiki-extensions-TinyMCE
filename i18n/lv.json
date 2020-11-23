@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"tinymce-upload-source-label": "Avots",
+	"tinymce-upload-button-label-rename": "Pārsaukt",
+	"tinymce-yes": "Jā",
+	"tinymce-no": "Nē",
+	"tinymce-ok": "Labi",
+	"tinymce-cancel": "Atcelt"
+}
