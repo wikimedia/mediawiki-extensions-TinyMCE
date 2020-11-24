@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"DannyS712",
 			"Fitoschido",
 			"MarcoAurelio",
 			"Rodney Araujo"
@@ -39,7 +40,7 @@
 	"tinymce-upload-type-label-file": "Archivo local",
 	"tinymce-upload-type-label-url": "URL",
 	"tinymce-upload-type-label-wiki": "Archivo en este wiki",
-	"tinymce-upload-source-label": "Nombre de archivo de origen",
+	"tinymce-upload-source-label": "Origen",
 	"tinymce-upload-destination-label": "Nombre de archivo de destino",
 	"tinymce-upload-title-label": "Título/leyenda",
 	"tinymce-upload-summary-label": "Resumen",

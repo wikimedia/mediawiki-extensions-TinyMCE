@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"tinymce-upload-source-label": "Извор",
+	"tinymce-yes": "Да",
+	"tinymce-no": "Не",
+	"tinymce-ok": "У реду",
+	"tinymce-cancel": "Откажи"
+}

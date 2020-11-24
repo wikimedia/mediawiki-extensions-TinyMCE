@@ -1,14 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Fitoschido"
+			"Fitoschido",
+			"Mguix"
 		]
 	},
 	"tinymce-upload-alternate-text": "Text alternatiu",
 	"tinymce-upload-link": "Enllaç",
 	"tinymce-upload-width": "Amplada",
 	"tinymce-upload-height": "Alçada",
-	"tinymce-upload-title-image": "Imatge",
+	"tinymce-upload-title-image": "Propietats de la imatge",
 	"tinymce-upload-type-label-file": "Fitxer local",
 	"tinymce-upload-type-label-url": "URL",
 	"tinymce-upload-type-label-wiki": "Fitxer en aquest wiki",
