@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"YaronSh"
+		]
+	},
+	"tinymce-upload-caption": "כיתוב",
+	"tinymce-upload-title-image": "מאפייני תמונה",
+	"tinymce-upload-source-label": "מקור",
+	"tinymce-upload-button-label-overwrite": "שכתוב",
+	"tinymce-upload-button-label-rename": "שינוי שם",
+	"tinymce-link-type-external": "חיצוני",
+	"tinymce-link-type-internal": "פנימי",
+	"tinymce-yes": "כן",
+	"tinymce-no": "לא",
+	"tinymce-ok": "אישור",
+	"tinymce-cancel": "ביטול"
+}
