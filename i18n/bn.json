@@ -10,5 +10,7 @@
 	"tinymce-horizontal-align-left": "বামে",
 	"tinymce-horizontal-align-right": "ডানে",
 	"tinymce-horizontal-align-none": "কিছু নয়",
-	"tinymce-upload-title-image": "চিত্র"
+	"tinymce-upload-title-image": "চিত্র",
+	"tinymce-upload-source-label": "উৎস",
+	"tinymce-cancel": "বাতিল"
 }
