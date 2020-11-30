@@ -4,7 +4,22 @@
 			"Teitei Para"
 		]
 	},
+	"tinymce-upload-caption": "Chôtlâhpi",
 	"tinymce-upload-link": "Link",
+	"tinymce-wikimagic": "Wiki châ kha moh la taopathi teih",
+	"tinymce-wikimagic-title": "Wiki châ kha moh la taopathi teih",
+	"tinymce-upload-title-general": "Faih chhichânazy",
+	"tinymce-upload-title-image": "Hmâthlâ rihzy",
+	"tinymce-upload-source-label": "Hnawh",
 	"tinymce-upload-summary-label": "Biechuapa",
-	"tinymce-link-link-list-none": "Yvei"
+	"tinymce-upload-button-label-use": "Hmâh",
+	"tinymce-upload-button-label-rename": "Moh rohpathi",
+	"tinymce-upload-confirm-file-is-duplicate": "$1 faih cha he wiki liata $2 faih nata â patho haw. Y cheihpa faih na hmâ khoh khiah Ei khoh kha a tlyh la, acv he khâna châta faih hropa nâ tly khoh khiah Khoh vana kha a tlyh mah y. Been Ft!",
+	"tinymce-link-type-external": "Khôtho",
+	"tinymce-link-type-internal": "Chhôh",
+	"tinymce-link-link-list-none": "Yvei",
+	"tinymce-yes": "Ei khoh",
+	"tinymce-no": "Châvei",
+	"tinymce-ok": "A PHA",
+	"tinymce-cancel": "Châvei"
 }
