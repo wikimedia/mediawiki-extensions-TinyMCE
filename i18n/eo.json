@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Javiero"
+		]
+	},
+	"tinymce-editreference": "Referenco, duobla klako por redakti",
+	"tinymce-upload-caption": "Titolo",
+	"tinymce-wikimagic": "Rigardi kaj redakti Vikian tekston",
+	"tinymce-wikimagic-title": "Rigardi kaj redakti Vikian tekston",
+	"tinymce-upload-title-image": "Bildaj ecoj",
+	"tinymce-upload-source-label": "Fonto",
+	"tinymce-upload-destination-label": "Nomo por uzi por stoki dosieron en ĉi tiu Vikio",
+	"tinymce-upload-button-label-use": "Uzu",
+	"tinymce-upload-button-label-rename": "Renomi",
+	"tinymce-upload-alert-error-uploading": "Pardonu, vi renkontis eraron provante alŝuti al ĉi tiu vikio: $1 Bonvolu reŝargi la paĝon kaj provi denove",
+	"tinymce-upload-alert-warnings-encountered": "Pardonu, vi renkontis la jenajn avertojn provante alŝuti dosieron $1",
+	"tinymce-upload-alert-duplicate-file": "La dosiero estas duplikato de $1 kiu jam estas en la Vikio",
+	"tinymce-link-type-external": "Ekstera",
+	"tinymce-pre-alert-only-plain-text": "Nur simpla teksto estas permesita en ĉi tiu klaso de elemento",
+	"tinymce-yes": "Jes",
+	"tinymce-no": "Ne",
+	"tinymce-ok": "Bone"
+}
