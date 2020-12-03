@@ -1,14 +1,19 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kareyac"
+			"Kareyac",
+			"Շահէն"
 		]
 	},
+	"tinymce-upload-caption": "Գրառում",
 	"tinymce-horizontal-align-left": "Ձախ",
+	"tinymce-wikimagic": "Տեսնել եւ խմբագրել ուիքիի պարունակութիւնը",
 	"tinymce-upload-title-image": "Պատկեր",
 	"tinymce-upload-source-label": "Աղբիւր",
 	"tinymce-upload-horizontalalign-left-text": "Ձախ",
 	"tinymce-upload-horizontalalign-right-text": "Աջ",
+	"tinymce-link-type-internal": "Ներքին",
+	"tinymce-reference-insertReference": "Մուտքագրեցէ՛ք ծանօթագրութիւն մը",
 	"tinymce-yes": "Այո",
 	"tinymce-no": "Ոչ",
 	"tinymce-ok": "Լաւ",
