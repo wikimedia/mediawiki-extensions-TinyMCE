@@ -5,6 +5,7 @@
 			"MuratTheTurkish",
 			"Pols12",
 			"Robby",
+			"Thibaut120094",
 			"Umherirrender"
 		]
 	},
@@ -123,7 +124,7 @@
 	"tinymce-upload-alert-source-or-destination-undefined": "Used as error message. Used with javascript.",
 	"tinymce-upload-alert-file-source-empty": "Used as error message. Used with javascript.",
 	"tinymce-upload-confirm-file-already-exists": "Used as confirm message. Used with javascript.\nShould be consistent with:\n* {{msg-mw|Tinymce-upload-button-label-overwrite}}\n* {{msg-mw|Tinymce-upload-button-label-use}}\n* {{msg-mw|Tinymce-upload-button-label-rename}}",
-	"tinymce-upload-confirm-file-name-already-exists": "Used as confirm message. Used with javascript.\nShould be consistent with:\n* {{msg-mw|Tinymce-upload-button-label-overwrite}}\n* {{msg-mw|Tinymce-upload-button-label-use}}\n* {{msg-mw|Tinymce-upload-button-label-rename}}",
+	"tinymce-upload-confirm-file-name-already-exists": "Used as confirm message. Used with JavaScript.\nShould be consistent with:\n* {{msg-mw|Tinymce-upload-button-label-overwrite}}\n* {{msg-mw|Tinymce-upload-button-label-use}}\n* {{msg-mw|Tinymce-upload-button-label-rename}}",
 	"tinymce-upload-confirm-file-is-duplicate": "Used as confirm message. Used with javascript.",
 	"tinymce-upload-confirm-file-not-on-wiki": "Used as confirm message. Used with javascript.",
 	"tinymce-upload-confirm-ignore-warnings": "Used as confirm message. Used with javascript.",
