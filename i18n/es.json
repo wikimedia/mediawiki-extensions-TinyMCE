@@ -62,6 +62,7 @@
 	"tinymce-upload-format-frameless-text": "Sin marco",
 	"tinymce-upload-format-none-text": "Ninguno",
 	"tinymce-upload-button-label-overwrite": "Sobrescribir",
+	"tinymce-upload-button-label-rename": "Cambiar nombre",
 	"tinymce-upload-alert-uploads-not-enabled": "Este wiki no tiene activadas las cargas",
 	"tinymce-upload-alert-destination-filename-not-allowed": "No se permite el nombre de archivo de destino",
 	"tinymce-upload-alert-destination-filename-already-exists": "Ya existe el nombre de archivo de destino",
