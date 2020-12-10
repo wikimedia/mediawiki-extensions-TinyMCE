@@ -4,5 +4,11 @@
 			"PastelKos"
 		]
 	},
-	"tinymce-upload-summary-label": "Σύνοψις"
+	"tinymce-upload-source-label": "Πηγή",
+	"tinymce-upload-summary-label": "Σύνοψις",
+	"tinymce-upload-button-label-rename": "Ἐπανωνομάζειν",
+	"tinymce-yes": "Ναί",
+	"tinymce-no": "Οὐ",
+	"tinymce-ok": "Εἶεν",
+	"tinymce-cancel": "Ἀκυροῦν"
 }
