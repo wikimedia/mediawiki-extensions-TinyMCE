@@ -161,6 +161,7 @@
 	"tinymce-nonbreaking-insertNonBreakingSpace": "Used as tooltip. Used with javascript.",
 	"tinymce-reference-insertReference": "Used as tooltip. Used with javascript.",
 	"tinymce-reference-alert-not-allowed": "Used as error message. Used with javascript.",
+	"tinymce-pre-alert-only-plain-text": "Used as error message. Used with javascript.",
 	"tinymce-yes": "Used as label. Used with javascript.\n{{identical|Yes}}",
 	"tinymce-no": "Used as label. Used with javascript.\n{{identical|No}}",
 	"tinymce-ok": "{{identical|OK}}\nUsed as label. Used with javascript.",
