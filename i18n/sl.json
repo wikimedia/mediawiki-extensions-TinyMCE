@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"tinymce-yes": "Da",
+	"tinymce-no": "Ne",
+	"tinymce-cancel": "Prekliči"
+}
