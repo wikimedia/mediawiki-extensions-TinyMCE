@@ -244,7 +244,7 @@ class TinyMCEHooks {
 			$magicWord = MagicWord::get( 'MAG_NOTINYMCE' );
 		}
 		if ( $magicWord->matchAndRemove( $text ) ) {
-			$parser->mOutput->setProperty( 'notinymce', 'y' );
+			$parser->getOutput()->setProperty( 'notinymce', 'y' );
 		}
 		return true;
 	}
