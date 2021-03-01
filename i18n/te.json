@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"Chaduvari",
 			"Veeven"
 		]
 	},
-	"tinymce-upload-title-image": "బొమ్మ లక్షణాలు"
+	"tinymce-upload-title-image": "బొమ్మ లక్షణాలు",
+	"tinymce-link-title": "లింకును చేర్చండి/సవరించండి",
+	"tinymce-link-link-button-tooltip": "లింకును చేర్చండి/సవరించండి"
 }
