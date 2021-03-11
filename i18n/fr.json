@@ -60,6 +60,7 @@
 	"tinymce-upload-title-image": "Propriétés de l’image",
 	"tinymce-upload-type-label": "Type de téléversement",
 	"tinymce-upload-type-label-file": "Fichier local",
+	"tinymce-upload-type-label-url": "URL",
 	"tinymce-upload-type-label-wiki": "Fichier dans ce wiki",
 	"tinymce-upload-type-tooltip": "Entrez le type de fichier que vous souhaitez téléverser : un fichier local qui se trouve sur votre appareil ou un fichier situé à un URL sur Internet ou affichez un fichier sur cette page qui a déjà été téléversé sur ce wiki.",
 	"tinymce-upload-source-label": "Source",
