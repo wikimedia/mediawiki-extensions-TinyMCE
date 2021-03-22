@@ -5,7 +5,9 @@
 		]
 	},
 	"tinymce-upload-caption": "Napis",
+	"tinymce-upload-summary-label": "Povzetek",
 	"tinymce-yes": "Da",
 	"tinymce-no": "Ne",
+	"tinymce-ok": "V redu",
 	"tinymce-cancel": "Prekliči"
 }
