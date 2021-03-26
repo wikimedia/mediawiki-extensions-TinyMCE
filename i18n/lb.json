@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robby"
+			"Robby",
+			"Soued031"
 		]
 	},
 	"tinymce-editsource": "Quelltext änneren",
@@ -19,7 +20,7 @@
 	"tinymce-openlink": "Link opmaachen",
 	"tinymce-upload-title": "Fichier eroplueden a weisen",
 	"tinymce-upload-title-general": "Detailer vum Fichier",
-	"tinymce-upload-title-image": "Eegeschafte vum Bild",
+	"tinymce-upload-title-image": "Eegenschafte vum Bild",
 	"tinymce-upload-type-label-file": "Lokale Fichier",
 	"tinymce-upload-source-label": "Quell",
 	"tinymce-upload-summary-label": "Resumé",
