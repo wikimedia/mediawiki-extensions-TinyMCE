@@ -60,16 +60,26 @@
 
     var setup = function (editor) {
 		editor.on('keydown', function (evt) {
-			if ( evt.keyCode == 32 ) {
+			if ( evt.keyCode == 32 ) { // space key pressed
 				var html,
 					args,
 					element,
 					outerHTML;
+
 				if (( evt.ctrlKey == true ) && ( evt.shiftKey == true )) {
 					editor.execCommand('mwt-nonBreaking');
+					evt.preventDefault();
 				}
-				return true;
+			} else if ( event.keyCode == 9 ) { // tab pressed
+				if (( evt.ctrlKey == true ) && ( evt.shiftKey == true )) {
+ 					editor.execCommand( 'mceInsertContent', false, '&emsp;&emsp;' ); // inserts tab
+					evt.preventDefault();
+					evt.stopImmediatePropagation();
+					evt.stopPropagation();
+					return false;
+				}
 			}
+			return true;
 		});
     };
 

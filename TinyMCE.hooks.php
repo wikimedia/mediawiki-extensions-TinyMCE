@@ -244,7 +244,7 @@ class TinyMCEHooks {
 			$magicWord = MagicWord::get( 'MAG_NOTINYMCE' );
 		}
 		if ( $magicWord->matchAndRemove( $text ) ) {
-			$parser->getOutput()->setProperty( 'notinymce', 'y' );
+			$parser->mOutput->setProperty( 'notinymce', 'y' );
 		}
 		return true;
 	}
@@ -258,8 +258,10 @@ class TinyMCEHooks {
 		global $wgTinyMCEUse;
 		$context = $skin->getContext();
 		$user = $context->getUser();
+		
+		$wgTinyMCEUse =  TinyMCEHooks::enableTinyMCE( $title, $context );
 
-		if ( method_exists( 'MediaWiki\Permissions\PermissionManager', 'userCan' ) ) {
+/*		if ( method_exists( 'MediaWiki\Permissions\PermissionManager', 'userCan' ) ) {
 			// MW 1.33+
 			$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
 			$userCanEdit = $permissionManager->userCan( 'edit', $user, $title );
@@ -269,7 +271,7 @@ class TinyMCEHooks {
 
 		if ( !isset( $title ) || !$userCanEdit ) {
 			return true;
-		}
+		}*/
 
 		if ( !$wgTinyMCEUse ) {
 			return true;
@@ -278,7 +280,7 @@ class TinyMCEHooks {
 		foreach ( $links as &$link ) {
 			if ( $link['query']['action'] == 'edit' ) {
 				$newLink = $link;
-				$link['text'] = $skin->msg( 'tinymce-editsectionsource' )->text();
+				$link['text'] = ' | ' . $skin->msg( 'tinymce-editsectionsource' )->text() ;
 			}
 		}
 		$newLink['query']['action'] = 'tinymceedit';
@@ -397,8 +399,23 @@ class TinyMCEHooks {
 	public static function enableTinyMCE( $title, $context ) {
 		global $wgTinyMCEDisabledNamespaces, $wgTinyMCEUnhandledStrings;
 		global $wgTinyMCEUse;
+		$user = $context->getUser();
 
-		if ( $wgTinyMCEUse !== null) return;
+		// already checked so save work
+		if ( $wgTinyMCEUse !== null) return $wgTinyMCEUse;
+
+		// if the user isn't allowed to edit this page then won't need TinyMCE!
+		if ( method_exists( 'MediaWiki\Permissions\PermissionManager', 'userCan' ) ) {
+			// MW 1.33+
+			$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
+			$userCanEdit = $permissionManager->userCan( 'edit', $user, $title );
+		} else {
+			$userCanEdit = $title->userCan( 'edit', $user ) && $user->isAllowed( 'edit' );
+		}
+
+		if ( !isset( $title ) || !$userCanEdit ) {
+			return $wgTinyMCEUse = false;
+		}
 
 		if ( in_array( $title->getNamespace(), $wgTinyMCEDisabledNamespaces ) ) {
 			return $wgTinyMCEUse = false;
@@ -509,7 +526,7 @@ class TinyMCEHooks {
 	 * @param OutputPage $output
 	 * @return void
 	*/
-	public static function addToViewPage( OutputPage &$output ) {
+	public static function addToViewPage(  OutputPage $output, ParserOutput $parserOutput ) {
 		$context = $output->getContext();
 		$action = Action::getActionName( $context );
 
@@ -517,14 +534,46 @@ class TinyMCEHooks {
 			return;
 		}
 
-		if( self::enableTinyMCE( $output->getTitle(), $context ) ) {
+		self::enableTinyMCE( $output->getTitle(), $context );
+		$GLOBALS['wgTinyMCEEnabled'] = true;
+		$output->addModules( 'ext.tinymce' );
+/*0422		if (( self::enableTinyMCE( $output->getTitle(), $context ) ) ||
+			( substr( $output->getTitle()->getBaseText(), 0, 8 ) == 'FormEdit' )) {
 			$GLOBALS['wgTinyMCEEnabled'] = true;
 			$output->addModules( 'ext.tinymce' );
 		} else {
 			$GLOBALS['wgTinyMCEEnabled'] = false;
-		}
+		}*/
 	}
-	
+
+	/**
+	 * Add a tag for bracketing in-line editable wiki text.
+	 *
+	 * @param OutputPage $output
+	 * @return void
+	*/
+	public static function onParserFirstCallInit( Parser $parser ) {
+
+		$parser->setHook( 'editinline', [ self::class, 'renderEditInline' ] );
+
+	}
+
+	public static function renderEditInline( $input, array $args, Parser $parser, PPFrame $frame ) {
+		$attr = [];    
+		// This time, make a list of attributes and their values, and dump them, along with the user input
+		foreach( $args as $name => $value ) {
+ 			$attr[] = $name . '="' . $value . '"';
+		}
+		return '<form action="get"><div ' . implode( ' ', $attr ) .  '>' . htmlspecialchars( $input ) . '</div></form>';	
+#		return implode( '<br />', $attr ) . "\n\n" . htmlspecialchars( $input );
+
+	/**
+	 * The following lines can be used to get the variable values directly:
+	 * $to = $args['to'] ;
+	 * $email = $args['email'] ;
+	 */
+	}	
+
 	public static function addPreference( $user, &$preferences ) {
 		$preferences['tinymce-use'] = array(
 			'type' => 'toggle',

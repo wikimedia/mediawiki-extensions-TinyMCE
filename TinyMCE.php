@@ -14,7 +14,7 @@
 // In some versions of MW 1.25, there's a bug in which global variables
 // set in LocalSettings.php do not override the settings in
 // extension.json. For simplicity's sake, don't load extensions unless we're
-// at version 1.27 or higher.
+// at version 1.31 or higher.
 if ( version_compare( $GLOBALS['wgVersion'], '1.31', '>' ) ) {
 	if ( function_exists( 'wfLoadExtension' ) ) {
 		wfLoadExtension( 'TinyMCE' );
@@ -34,7 +34,7 @@ if ( defined( 'TINYMCE_VERSION' ) ) {
 	return 1;
 }
 
-define( 'TINYMCE_VERSION', '1.0' );
+define( 'TINYMCE_VERSION', '1.1' );
 
 $GLOBALS['wgExtensionCredits']['hook'][] = array(
 	'path' => __FILE__,
@@ -222,6 +222,8 @@ $GLOBALS['wgResourceModules'] += array(
 			'tinymce-toggle-button-toggle-wiki-placeholders',
 			'tinymce-nonbreaking-insertNonBreakingSpace',
 			'tinymce-reference-insertReference',
+			'tinymce-reference-enterReferenceContent',
+			'tinymce-empty-reference',
 			'tinymce-reference-alert-not-allowed',
 			'tinymce-pre-alert-only-plain-text',
 			'tinymce-yes',

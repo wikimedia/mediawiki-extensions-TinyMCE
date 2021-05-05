@@ -1,7 +1,7 @@
 {
 	"@Note": "When updating this file please also update TinyMCE.php with the same changes.",
 	"name": "TinyMCE",
-	"version": "1.0",
+	"version": "1.1",
 	"author": [
 		"Ephox",
 		"Hallo Welt",
@@ -11,7 +11,7 @@
 	"url": "https://www.mediawiki.org/wiki/Extension:TinyMCE",
 	"descriptionmsg": "tinymce-desc",
 	"license-name": "GPL-2.0+",
-	"type": "hook",
+	"type": "editor",
 	"callback": "TinyMCEHooks::registerExtension",
 	"requires": {
 		"MediaWiki": ">= 1.31.0"
@@ -151,6 +151,8 @@
 				"tinymce-toggle-button-toggle-wiki-placeholders",
 				"tinymce-nonbreaking-insertNonBreakingSpace",
 				"tinymce-reference-insertReference",
+				"tinymce-empty-reference",
+				"tinymce-reference-enterReferenceContent",
 				"tinymce-reference-alert-not-allowed",
 				"tinymce-pre-alert-only-plain-text",
 				"tinymce-yes",
@@ -177,12 +179,12 @@
 		"SkinTemplateNavigation::Universal": "TinyMCEAction::displayTabAndModifyAddTopicLink",
 		"SkinEditSectionLinks": "TinyMCEHooks::addEditSectionLink",
 		"AlternateEdit": "TinyMCEHooks::determineIfTinyMCEIsEnabled",
-		"EditPageBeforeEditToolbar": "TinyMCEHooks::removeDefaultToolbar",
 		"EditPage::showEditForm:initial": "TinyMCEHooks::addToEditPage",
 		"WikiEditorDisable": "TinyMCEHooks::disableWikiEditor",
 		"GetPreferences": "TinyMCEHooks::addPreference",
 		"PageForms::addRLModules": "TinyMCEHooks::addRLModules",
-		"OutputPageBeforeHTML": "TinyMCEHooks::addToViewPage"
+		"OutputPageParserOutput": "TinyMCEHooks::addToViewPage",
+    		"ParserFirstCallInit": "TinyMCEHooks::onParserFirstCallInit"
 	},
 	"Actions": {
 		"tinymceedit": "TinyMCEAction"

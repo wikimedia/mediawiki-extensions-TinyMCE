@@ -56,8 +56,7 @@
 		mw_htmlBlockPairsStatic = [
 			'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 			'ol', 'ul', 'li',
-//			p', 'pre', 
-			'p',
+			'p', 'pre', 'ppre', 'pnowiki',
 			'blockquote',
 			'dl','dd','dt',
 			'div',
@@ -362,7 +361,7 @@
 			
 		}
 
-		if ( tinyMCEDebugFlags.debug = 'true' ) debugger;
+		if ( tinyMCEDebugFlags.debug == 'true' ) debugger;
 		
 	}
 
@@ -416,6 +415,7 @@
 					mw_extensionAssetsPath + '/SyntaxHighlight_GeSHi/modules/pygments.wrapper.css',
 					mw_extensionAssetsPath + '/SyntaxHighlight_GeSHi/modules/pygments.generated.css',
 				],
+			content_css_cors: true,
 			external_plugins: {
 				'advlist': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/advlist/plugin.js',
 				'anchor': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/anchor/plugin.js',
@@ -423,7 +423,7 @@
 				'autosave': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/autosave/plugin.js',
 				'charmap': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/charmap/plugin.js',
 				'insertdatetime': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/insertdatetime/plugin.js',
-				'lists': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/lists/plugin.js',
+//				'lists': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/lists/plugin.js',
 				'noneditable': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/noneditable/plugin.js',
 				'preview': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/preview/plugin.js',
 				'save': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/save/plugin.js',
@@ -432,6 +432,7 @@
 				'visualblocks': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/visualblocks/plugin.js',
 				'visualchars': mw_extensionAssetsPath + '/TinyMCE/tinymce/plugins/visualchars/plugin.js',
 				'wikilink': mw_extensionAssetsPath + '/TinyMCE/custom_plugins/mediawiki/plugins/mw_wikilink/plugin.js',
+				'wikilists': mw_extensionAssetsPath + '/TinyMCE/custom_plugins/mediawiki/plugins/mw_wikilists/plugin.js',
 				'wikinonbreaking': mw_extensionAssetsPath + '/TinyMCE/custom_plugins/mediawiki/plugins/mw_wikinonbreaking/plugin.js',
 				'wikinonrenderinglinebreak': mw_extensionAssetsPath + '/TinyMCE/custom_plugins/mediawiki/plugins/mw_wikinonrenderinglinebreak/plugin.js',
 				'wikiparser': mw_extensionAssetsPath + '/TinyMCE/custom_plugins/mediawiki/plugins/mw_wikiparser/plugin.js',
@@ -505,6 +506,7 @@
 			contextmenu: "undo redo | cut copy paste insert | link wikimagic table | styleselect removeformat | browsercontextmenu",
 			convert_fonts_to_spans: true,
 			link_title: false,
+			link_allow_external_targets: true,
 			link_assume_external_targets: true,
 			link_class_list: [
 				{title: 'External', value: 'mwt-nonEditable mwt-wikiMagic mwt-externallink'},
@@ -535,12 +537,15 @@
 			// enable resizing for element like images, tables or media objects
 			object_resizing: true,
 			// define the element what all inline elements needs to be wrapped in
-			forced_root_block: 'p',
+//			forced_root_block: 'p',
+			forced_root_block: true,
 			forced_root_block_attrs: {
 				'class': 'mwt-paragraph'
 			},
 			remove_trailing_brs: false,
 			// indentation depth
+			indentation: "25px",
+			indent_use_margin: true,
 			// keep current style on pressing return
 			keep_styles: true,
 			// save plugin
@@ -568,12 +573,13 @@
 			images_dataimg_filter: function(img) {
 				return false;
 			},
+			font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
 			menubar: false, //'edit insert view format table tools',
 			contextmenu_never_use_native: false,
 			// fontawesome configuration
 			// tinymce configuration
 			toolbar_sticky: true,
-			toolbar: 'undo redo | cut copy paste insert selectall| bold italic underline strikethrough subscript superscript forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist advlist outdent indent | wikilink wikiunlink table image media | formatselect removeformat| visualchars visualblocks| searchreplace | wikimagic wikisourcecode wikitext wikiupload | wikitoggle nonbreaking singlelinebreak reference comment template',
+			toolbar: 'undo redo | cut copy paste insert selectall | fontselect fontsizeselect bold italic underline strikethrough subscript superscript forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist advlist outdent indent | wikilink wikiunlink table image media | formatselect removeformat| visualchars visualblocks| searchreplace | wikimagic wikisourcecode wikitext wikiupload | wikitoggle nonbreaking singlelinebreak reference comment template',
 			//style_formats_merge: true,
 			style_formats: [
 				{
@@ -628,6 +634,89 @@
 						}
 					}
 				});
+	  		editor.on('ScriptsLoaded', function(e) {
+	  			var _toolbarResizeFactor = tinymce.activeEditor.getParam("toolbarResize");
+			
+				  /**
+				   * dynamicallyAccessCSS 
+				   *
+				   * @link    https://github.com/Frazer/dynamicallyAccessCSS.js
+				   * @license MIT
+				   *          
+				   * @author  Frazer Kirkman
+				   * @published 2016
+				   */
+					
+	  			var returnStyleSheetRules = (function (){  
+					  if(!document.styleSheets[0]){
+						  // Create the <style> tag
+						  var style = document.createElement("style");
+						  // WebKit hack :(
+						  style.appendChild(document.createTextNode(""));
+						  // Add the <style> element to the page
+						  document.head.appendChild(style);
+						
+					  }
+					  if(document.styleSheets[0].cssRules){
+						  return function (item) {return  item.cssRules;}
+					  } else if (document.styleSheets[0].rules) {
+						  return function (item) {return  item.rules;}
+					  }
+				  })();
+					
+				  function getCSSRule(search, returnArray) {  
+					  let styleSheets = [].map.call(document.styleSheets, function(item) {
+						  return [].slice.call(returnStyleSheetRules(item));
+					  });
+			
+					  let rule = null;
+					  let rules = [];
+					  styleSheets.forEach(function(thisSheet){
+						  let findTheRule = thisSheet.filter(function(rule) {
+							  if(rule.selectorText){
+								  if(rule.selectorText == search){
+									  return rule.selectorText.indexOf(search)>=0;	
+								  }else return false;
+							  }
+						  });
+						
+						  if(findTheRule.length){
+								rules = rules.concat(findTheRule);
+								rule = findTheRule[findTheRule.length-1];    //findTheRule will contain all rules that reference the selector. findTheRule[findTheRule.length-1] contains the last rule.
+						  }
+					  });
+	  
+					  if (rule){
+						  if(returnArray){
+							  return rules;
+						  }else{
+							  return rule;
+						  }
+					  }else{
+						  let sheet = document.styleSheets[0];   //if the rule we are looking for doesn't exist, we create it
+						  var pos = sheet.cssRules.length;
+						  rule = search + "{  }";
+						  sheet.insertRule( rule ,pos );
+						  rule = sheet.cssRules[pos];
+					  }
+		  
+					  if(returnArray){
+						  returnStyleSheetRules(document.styleSheets[0]);
+						  return rules = rules.concat(rule);
+					  }else{
+						  returnStyleSheetRules(document.styleSheets[0])[pos];
+						  return rule;
+					  }
+				  }
+	  
+				  var myRules  = getCSSRule('.tox-tbtn', true);
+
+				  myRules.forEach(function(thisRule){
+					  thisRule.style.transform = "scale(" + _toolbarResizeFactor + ")";
+					  thisRule.style.setProperty ("height", 34 * _toolbarResizeFactor + "px", "important");
+					  thisRule.style.setProperty ("width", "auto", "important");
+				  });
+			  });
 			},
 			init_instance_callback: function (instance) {
 				// For some reason, in some installations this only works as an inline function,
@@ -663,6 +752,7 @@
 
 	var mwTinyMCEInit = function( tinyMCESelector, settings ) {
 		var customSettings = updateSettings( tinyMCESelector, settings );
+
 		window.tinymce.init( customSettings );
 	};
 
@@ -741,9 +831,9 @@
 		return defaultSet;
 	};
 
-	$.each(tinyMCESettings, function (selector, settings) {
-		mwTinyMCEInit(selector, settings);
-	});
+	Object.keys( tinyMCESettings ).forEach( function(selector, index) {
+			mwTinyMCEInit( selector, this[selector] );
+		}, tinyMCESettings );
 
 	// Let others know we're done here
 	$( document ).trigger( 'TinyMCELoaded' ); 

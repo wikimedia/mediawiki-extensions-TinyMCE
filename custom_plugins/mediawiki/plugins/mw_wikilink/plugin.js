@@ -19,6 +19,8 @@ var wikilink = function (editor) {
 
 	var editor = tinymce.activeEditor;
 	
+	var allow_external_targets = editor.getParam("link_allow_external_targets");
+	
 	var utility = editor.getParam("wiki_utility");
 	
 	var setContent = utility.setContent;
@@ -66,7 +68,11 @@ var wikilink = function (editor) {
 			dialogItems,
 			initialData;
 
-		if (typeof(selectedNode.attributes["data-mwt-type"]) !== "undefined" ) {
+			if ( !allow_external_targets ) {
+				dataType = "internallink";
+			}
+			
+			if (typeof(selectedNode.attributes["data-mwt-type"]) !== "undefined" ) {
 			aClass = selectedNode.attributes["class"].value;
 			dataType = selectedNode.attributes["data-mwt-type"].value;
 			isWikiLink = 
@@ -120,7 +126,8 @@ var wikilink = function (editor) {
 		}
 
 		var initialData = {
-			class: aClass,
+//1125			class: aClass,
+			class: dataType,
 			href: aLink,
 			text: aLabel,
 			trail: aTrail
@@ -128,16 +135,20 @@ var wikilink = function (editor) {
 
 		var dialogBody = function ( initialData ) {
 
+
 			// for inputing the type of link, internal or external
 			var classListCtrl = {
 				name: 'class',
 				type: 'selectbox',
 				label: translate("tinymce-link-type-label"),
+				hidden: true,
 				items: [
-					{text: translate("tinymce-link-type-external"), value: 'mwt-nonEditable mwt-wikiMagic mwt-externallink'},
-					{text: translate("tinymce-link-type-internal"), value: 'mwt-nonEditable mwt-wikiMagic mwt-internallink'},
+//					{text: translate("tinymce-link-type-external"), value: 'mwt-nonEditable mwt-wikiMagic mwt-externallink'},
+					{text: translate("tinymce-link-type-external"), value: 'externallink'},
+//					{text: translate("tinymce-link-type-internal"), value: 'mwt-nonEditable mwt-wikiMagic mwt-internallink'},
+					{text: translate("tinymce-link-type-internal"), value: 'internallink'},
 				]
-			};
+			}
 	
 			// for inputing the target location of the link
 			var linkCtrl = {
@@ -166,19 +177,34 @@ var wikilink = function (editor) {
 				maximized: true,
 			};
 			
-			var initialDialogItems = [
-				classListCtrl,
-				linkCtrl,
-				labelCtrl
-			];
+			if ( allow_external_targets ) {
+				var initialDialogItems = [
+					classListCtrl,
+					linkCtrl,
+					labelCtrl
+				];
+
+				var linkTrailDialogItems = [
+					classListCtrl,
+					linkCtrl,
+					labelCtrl,
+					trailCtrl
+				];
+			} else {
+				var initialDialogItems = [
+//					classListCtrl,
+					linkCtrl,
+					labelCtrl
+				];
+
+				var linkTrailDialogItems = [
+					classListCtrl,
+					linkCtrl,
+					labelCtrl,
+					trailCtrl
+				];
+			}
 	
-			var linkTrailDialogItems = [
-				classListCtrl,
-				linkCtrl,
-				labelCtrl,
-				trailCtrl
-			];
-			
 			if ( initialData.trail ) {
 				dialogItems = linkTrailDialogItems;
 			} else {
@@ -250,26 +276,28 @@ var wikilink = function (editor) {
 					aTrail = '';
 				}
 			
-				if (data["class"].indexOf("mwt-internallink") > -1){ 
+//1125				} else if (data["class"].indexOf("mwt-externallink") > -1) {
+				if ( data["class"] == "externallink" ){ 
+					if (aLabel) {
+						wikitext = "[" + aLink + " " + aLabel + "]" + aTrail;
+					} else {
+						wikitext = "[" + aLink + "]" + aTrail;
+					}
+				} else {
+//1125				if (data["class"].indexOf("mwt-internallink") > -1){ 
+//1129				if ( data["class"] == "internallink" ){ 
 						aLink = aLink.replace("_"," ");
 					if (aLabel) {
 						wikitext = "[[" + aLink + "|" + aLabel + "]]" + aTrail;
 					} else {
 						wikitext = "[[" + aLink + "]]" + aTrail;			
 					}
-				} else if (data["class"].indexOf("mwt-externallink") > -1) {
-					if (aLabel) {
-						wikitext = "[" + aLink + " " + aLabel + "]" + aTrail;
-					} else {
-						wikitext = "[" + aLink + "]" + aTrail;
-					}
 				}
-				
 				args = {format: 'wiki', mode: 'inline', convert2html: true};
-//0929				setSelection( editor, wikitext, args );
-				editor.insertContent(wikitext, args );
-				editor.focus( );
-				editor.nodeChanged();	
+				setSelection( editor, wikitext, args );
+//				editor.focus( );
+//				editor.insertContent(wikitext, args );
+//				editor.nodeChanged();	
 			}
 
 			newData = api.getData();
@@ -302,24 +330,22 @@ var wikilink = function (editor) {
 				hasUrl = true;
 			}
 			
-			if ((newData["class"].indexOf("mwt-externallink") > -1) &&
+//1125			if ((newData["class"].indexOf("mwt-externallink") > -1) &&
+			if (( newData["class"] == "externallink" ) && 
 				(editor.settings.link_assume_external_targets && !hasUrl)) {
-				delayedConfirm(
-					translate("tinymce-link-want-to-link-external"),
-					function(state) {
-						if (state) {
-							newData.href = '//' + encodeURI(newData.href);
-							insertLink( newData );
-							
-							api.close();
-						}
+				delayedConfirm( translate("tinymce-link-want-to-link-external" ), function(state) {
+					if (state) {
+						newData.href = '//' + encodeURI(newData.href);
+						api.close();
+						insertLink( newData );
 					}
-				);
+				});
+				api.close();
 				return;
 			}
 
-			insertLink( newData );
 			api.close();
+			insertLink( newData );
 		};
 		
 		editor.windowManager.open({

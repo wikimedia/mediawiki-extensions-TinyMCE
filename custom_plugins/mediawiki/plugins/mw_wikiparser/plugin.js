@@ -316,22 +316,7 @@
 		 * code that has already been converted!
 		 * @type Array
 		 */
-		_tags4Wiki = new Array(),
-
-		/**
-		 *
-		 * following use to hold the cursor position before and 
-		 * after up or down arrow kepress
-		 */
-		_cursorOnDown,
-		_cursorOnUp,
-		_cursorOnDownIndex,
-		_cursorOnUpIndex,
-		_cursorOnDownPreviousNode,
-		_cursorOnUpPreviousNode,
-		_cursorOnDownNextNode,
-		_cursorOnUpNextNode;
-
+		_tags4Wiki = new Array();
 
 	var pluginManager = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
@@ -344,109 +329,18 @@
 	 */
 	function _sanitize( text, validate ) {
 		var serializer = new tinymce.html.Serializer(),
-			parser = new tinymce.html.DomParser({validate: validate});
+			parser = new tinymce.html.DomParser({validate: validate}, editor.schema);
 
 		if (text == '' ) return text;
 		text = "<div class='tinywrapper'>" + text + "</div>";
 		text = text.replace(/\n/gmi, '{@@vnl@@}');	
-		text = serializer.serialize( parser.parse( text ) );
+		text = serializer.serialize( parser.parse( text, { forced_root_block: false, context: editor.getBody() } ) );
 		text = text.replace(/<p class="mwt-paragraph">{@@vnl@@}<\/p>/gmi, '\n');	
 		text = text.replace(/{@@vnl@@}/gmi, '\n');	
 		text = text.replace(/^<div class=('|")tinywrapper\1>([^]*)<\/div>$/m, '$2');	
 
 		return text;
 	}
-
-	/**
-	 * find the offset of the cursor within the displayed text
-	 *
-	 * @param {String} text
-	 * @returns {String}
-	 */
-	function _getCursorOffset() {
-		var range,
-			text,
-			bm,
-			index,
-			parents = {},
-			parentsPreviousSibling = {},
-			rootNode = editor.getBody(),
-			currentNode = null,
-			previousNode = null,
-			nextNode = null,
-			firstNode = false;
-
-		function getPreviousNode( aNode ) {
-			var previousNode = aNode.previousSibling,
-				parents = editor.dom.getParents( aNode );
-
-			function validPreviousNode( aaNode ) {
-				while ( aaNode  && (aaNode.nodeType != 3 )) {
-					if ( aaNode.attributes[ "data-mce-bogus" ] ) {
-						aaNode = aaNode.previousSibling;
-					} else {
-						break;
-					}
-				}
-				return aaNode;
-			}
-			
-			if ( !validPreviousNode( previousNode )) {
-				tinymce.each( parents , function( aParent ) {
-					if ( aParent == rootNode ) return false;
-					if ( validPreviousNode( aParent.previousSibling ) ) {
-						previousNode = aParent.previousSibling;
-						return false;
-					}
-				});
-			} 
-			return previousNode;
-		}
-
-		function getNextNode( aNode ) {
-			var nextNode = aNode.nextSibling,
-				parents = editor.dom.getParents( aNode );
-
-			function validNextNode ( aaNode ) {
-				while ( aaNode && (aaNode.nodeType != 3 )) {
-					if ( aaNode.attributes[ "data-mce-bogus" ] ) {
-						aaNode = aaNode.nextSibling;
-					} else {
-						break;
-					}
-				}
-				return aaNode;
-			}
-			
-			if ( !validNextNode( nextNode )) {
-				tinymce.each( parents , function( aParent ) {
-					if ( aParent == rootNode ) return false;
-					if ( validNextNode( aParent.nextSibling ) ) {
-						nextNode = aParent.nextSibling;
-						return false;
-					}
-				});
-			}
-			return nextNode;
-		}
-
-		currentNode = editor.selection.getNode()
-		previousNode = getPreviousNode( currentNode );
-		nextNode = getNextNode( currentNode );
-		bm = tinymce.activeEditor.selection.getBookmark();
-		range = editor.selection.getRng();
-		range.setStart(editor.getBody().firstChild, 0);
-		text = range.toString();
-		tinymce.activeEditor.selection.moveToBookmark(bm);
-
-		return {
-			cursor: text.length, 
-			text: text,
-			index: index,
-			previousNode: previousNode,
-			nextNode: nextNode
-		}
-	} 
 
 	/**
 	 * replace any wiki placeholders in the text with their 
@@ -1200,7 +1094,7 @@
 						
 						if ((tagClass == 'internallink' )|| (tagClass == 'externallink' )) {
 							element.attr({
-								'href': ( element.attr.href ? element.attr.href : '#')
+								'href': ( element.attr( "href" ) ? element.attr( "href" ) : '#')
 							});
 						}
 
@@ -1274,7 +1168,8 @@
 				var comHtml,
 					id = 'R' + createUniqueNumber();
 	
-				comHtml = $1.replace(/\n/gm, '{@@@ENL:0@@@}');
+				comHtml = $1.replace(/</gm, '{@@@LTE:0@@@}');
+				comHtml = comHtml.replace(/\n/gm, '{@@@ENL:0@@@}');
 				
 				if ( comHtml == '' ) {
 					comHtml = 'Empty comment'
@@ -1421,19 +1316,21 @@
 				if ( $1 == 'ref' ) {
 					// $1 = content of the comment
 					var refHtml,
+						showRef = '',
 						id = 'R' + createUniqueNumber();
 
+					if ( $3.includes( "mwt-dummyReference" )) showRef = " mwt-showReference";
 					refHtml = $3.replace(/\n/gm, '{@@@ENL:0@@@}');
 					refHtml = refHtml.replace(/([^}])\{@@@ENL:0@@@}\{@@@ENL:0@@@}/gmi, '$1{@@@ELF:0@@@}');
 					refHtml = _convertWiki2Html( $.trim( $3 ), "inline" );
 					
 					if ( refHtml == '' ) {
-						refHtml = 'Empty reference'
+						refHtml = ' ' + translate( 'tinymce-empty-reference' );
 					}
 					
 					// create inner span that contains the content of the reference
 					refHtml = 
-						'<span class="mwt-editable mwt-reference'  
+						'<span class="mwt-editable mwt-reference' + showRef
 						+ '" id="' + id
 						+ '" data-mwt-type="reference"'
 						+ '" draggable="false" contenteditable="true">' 
@@ -1444,9 +1341,9 @@
 					refHtml = '<span class="mwt-placeHolder mwt-referenceHolder " title="' 
 						+ translate( 'tinymce-editreference' ) 
 						+ '" data-mwt-type="reference" contenteditable="false" draggable="true" data-mwt-ref="' 
-						+ id + '">' 
+						+ id + '"> ' 
 						+ refHtml 
-						+ '</span>';
+						+ ' </span>';
 					  
 					return _getPlaceHolder4Html(match, refHtml, 'reference', 'editable')	
 				} else {
@@ -1623,11 +1520,13 @@
 							&& (elmTagName != 'tbody')
 							&& (elmTagName != 'tr')) {
 							// conserve any new lines in the inner html
-							// except in table tags that don't contain data!
-							
+							// except in table tags that don't contain data!			
 							innerHTML = innerHTML.replace(/\n/gmi,'{@@vnl@@}');
-							elm.prop( "innerHTML", innerHTML );
+						} else {
+							// if table markup the remove spaces at start of lines
+							innerHTML = innerHTML.replace(/\n\s*/gmi,'\n');
 						}
+						elm.prop( "innerHTML", innerHTML );
 
 						if ((elmTagName != 'table')
 							&& (elmTagName != 'tbody')
@@ -1670,34 +1569,35 @@
 			// find and process pseudo <pre> tags where wikicode lines starts with spaces.  If
 			// several consecutive lines start with a space they are treated as a single <pre> block.
 			// If the space is followed by any tag or | then ignore
-			regex = '(^|\\n)( +)([^]*?)(?=(\\n\\S|\\n\\s*$|$))';
-			matcher = new RegExp(regex, 'gi');
+			regex = '(^|\\n)(([ ][^]*?\\n)+)'; //0119
+			matcher = new RegExp(regex, 'gmi');
 			text = text.replace(matcher, function(match, $1, $2, $3, $4, offset, string) {
 				// $1 = the new lines preceding the text in pseudo <pre>s
-				// $2 = the initial space
-				// $3 = lines starting with spaces to be placed in the pseudo <pre>s
-				// $4 = the line following the text in pseudo <pre>s
+
+				// $2 = lines starting with spaces to be placed in the pseudo <pre>s //0119
+				// $3 = the line following the text in pseudo <pre>s //0119
 				var tagName,
 					html;
 
-				if ( $3.match( /^\s*\{\|/ ) ) {
+				if ( $2.match( /^\s*\{\|/ ) ) {
 					// spaces before the opening '{|' of a table aren't treated as a pseodo pre
 					return match;
-				} else if ( $3.match(/^\s*{@@@NOWIKI:\d*@@@}\s*$/) ) {
-					var id = $3.match(/{@@@NOWIKI:\d*@@@}/); 
+				} else if ( $2.match(/^\s*{@@@NOWIKI:\d*@@@}\s*$/) ) {
+					var id = $2.match(/{@@@NOWIKI:\d*@@@}/); 
 					// pseudo nowiki is plain text so treat differently
 					tagName = 'pnowiki';
 					html = _tags4Html[ id ].replace(/^<span class="mwt-nowiki" data-mwt-type="nowiki"([^]*)\/span>$/, '<pre class="mwt-pnowiki" data-mwt-type="pnowiki"$1/pre>');
-					return _getPlaceHolder4Html($2 + $3, html, tagName, 'editable');
+					return $1 + _getPlaceHolder4Html($2, html, tagName, 'editable') + '\n';
 				} else {
 					// we need to preserve any new lines so they aren't lost when we
+					$2 = $2.substring( 1, $2.length );
 					// decode the contents of any preserved html tags
-					$3 = $3.replace(/\n /gmi,'{@@@ENL:0@@@}');
-					$3 = _convertWiki2Html( $3 );
+					$2 = $2.replace(/\n /gmi,'{@@@ENL:0@@@}');
+					$2 = _convertWiki2Html( $2 );
 
 					tagName = 'ppre';
-					html = '<pre class="mwt-ppre" data-mwt-type="ppre">' + $3 + '</pre>';
-					return $1 + _getPlaceHolder4Html(match, html, tagName, 'editable');
+					html = '<pre class="mwt-ppre" data-mwt-type="ppre">' + $2 + '</pre>';
+					return $1 + _getPlaceHolder4Html(match, html, tagName, 'editable') + '\n';
 				}
 			});
 
@@ -2018,7 +1918,8 @@
 
 			// replace multiple new lines after table start with single new line
 			// and a data attribute to store the number of new lines for recovery later
-			text = text.replace(/(^|\n)(\{\|[^\n]*?)(\n+)/gmi, function(match, $1, $2, $3) {
+//0125			text = text.replace(/(^|\n)(\{\|[^\n]*?)(\n+)/gmi, function(match, $1, $2, $3) {
+			text = text.replace(/(^|\n)(\{\|[^\n]*?)(\n+)/i, function(match, $1, $2, $3) { //0125
 				// $1 = start of page or new line before table defiunition
 				// $2 = the first line of the table defintion 
 				// $3 = the empty new lines immediately following the table definition
@@ -2055,7 +1956,7 @@
 
 			// step through text a line at a time looking for lines 
 			// that that belong to tables
-			lines = text.split(/\n/);
+			lines = text.split("\n");
 			for (var i = 0; i < lines.length; i++) {
 				line = lines[i].match(/^\:?\s*\{\|(.*)/gi);
 				lastLine = (i == lines.length - 1);
@@ -2181,7 +2082,7 @@
 					// check to see if cell row starts with '|' or '||' and remeber
 					if (line[0].substr(1,1) == '|') cellStart = 2 ;
 
-					// split the cell row inot individual cells if there are any
+					// split the cell row into individual cells if there are any
 					cells = line[0].substr(cellStart, line[0].length).split("||");
 
 					// process the individual cells in the row
@@ -2335,10 +2236,18 @@
 							// if this is first line in cell
 							if ( lines[i-1].match( /<td[^>]*>(\s|&nbsp;)*$/) ) {
 								// if first line of data in a table cell
+								// if the next line is not empty remove and set counter back one
+								if ( lines[i + 1].match(/^(\s|&nbsp;)*$/)) {
+									lines[i] = lines[i] + '{@@@ELF:0@@@}'; //0125
+									lines.splice(i+1, 1); //0125
+								} else { //0125
+									lines.splice(i, 1); //0125
+									i = i - 1;
+								}
 							}
 						} else {
 							// process non empty first line of data
-							if ( lines[i-1].match( /<td[^>]*>/) ) {
+							if ( lines[i-1].match( /^<td[^>]*>/) ) { //0125
 								// previous line was start of cell
 								if ( lines[i-1].match( /<td[^>]*>(\s|&nbsp;)*$/) ) {
 									// previous line contained no data
@@ -2353,6 +2262,9 @@
 				}
 			}
 			text = lines.join("\n");
+			
+			// fix any empty cells by putting in temporary <br>s
+			text = text.replace(/<td([^>]*)>\n{0,1}<\/td>/gmi, "<td$1><br></td>");
 			return text;
 		}
 
@@ -2860,7 +2772,7 @@
 						if ( mode == 'inline' ) {
 							return $1 + $2 + '{@@@ELF:0@@@}';
 						} else {
-							return $1 + $2 + '</p><p class="mwt-paragraph">' + _slb + _slb;
+							return $1 + $2 + '<p class="mwt-paragraph"></p>';
 						}
 					}else {
 						if ( mode == 'inline' ) {
@@ -2898,6 +2810,13 @@
 					|| ( elm[0].tagName == 'DIV' )) {
 					// process cells
 					innerHtml = elm[0].innerHTML;
+					if (( elm[0].tagName == 'TD' ) 
+						|| ( elm[0].tagName == 'TH' )) {
+							// cells that start n a new line should have
+							// the initial new line removed as this has been 
+							// stored in the TD tag
+							innerHtml = innerHtml.replace(/^\n/, '');
+						}
 					innerHtml = singleLinebreaks2html( innerHtml ); 
 					innerHtml = paragraphNewLines2html( innerHtml, mode );
 
@@ -2975,6 +2894,8 @@
 		// convert new lines
 		text = newLines2html( text, mode );
 
+		//replace remaining \n
+		text = text.replace(/\n/gmi, "");
 		//Write back content of preserved code to placeholders.
 		text = _recoverTags2html(text);
 		// wrap the text in an object to send it to event listeners
@@ -3146,6 +3067,12 @@
 							processElement2Wiki ( $(this), level + '.' + index )
 						})
 					}
+					
+					// remove classes left over from pasting parsed mw text
+					elm.removeClass( 'mw-headline' );
+					if ( elm.attr( 'class' ) == '' ) {
+						elm.removeAttr( 'class' );
+					}
 
 					if ( _mwtPlainTextClasses.some( r => elm[0].className.split(' ').includes( r )) &&
 						(elm[0].id != "_mce_caret")) {
@@ -3175,7 +3102,7 @@
 							outerHtml = outerHtml.replace(/<pre/, ' <pre');
 							regex = '^(\\{@@nl@@\\})?(\\s?)<(' + tagName + ')([^]*?)\n?<\\/\\3>$';
 							matcher = new RegExp(regex, 'gmi');
-							outerHtml = outerHtml.replace( matcher, '{@@enl@@}$2<' + targetTagName + '$4</' + targetTagName + '>');
+							outerHtml = outerHtml.replace( matcher, '{@@bnl@@}$2<' + targetTagName + '$4</' + targetTagName + '>{@@bnl@@}'); //0120
 						} else if ( targetTagName == 'comment' ) {
 							// beware comments are double wrapped
 							if ( innerHtml.match(/^{@@@PRE:\d*@@@}$/)) {
@@ -3203,10 +3130,13 @@
 						// spans with class mwt-dummyRference are replaced with their innerHTML
 
 						outerHtml = $.trim( elm[0].innerHTML );
+						if ( outerHtml == '' ) outerHtml = translate( 'tinymce-empty-reference' );
 
 					} else if ( elm.hasClass( 'mwt-reference' )) {
 						// spans with class mwt-reference are coverted to mediawiki <ref>
 
+						outerHtml = $.trim( elm[0].innerHTML );
+						if ( outerHtml == '' ) outerHtml = translate( 'tinymce-empty-reference' );
 						outerHtml = '<ref>' + elm[0].innerHTML + '</ref>';
 
 					} else if ( elm.hasClass( 'mwt-referenceHolder' )) {
@@ -3256,7 +3186,9 @@
 									newLineAfter = '{@@bnl@@}';
 							}
 
+							elm.removeClass( 'mwt-paragraph' );
 							elm.removeClass( 'mwt-preserveHtml' );
+							elm.removeClass( 'mw-headline' );
 							elm.removeAttr( 'data-mwt-sameLine' );
 							elm.removeAttr( 'data-mwt-spaces' );
 							if ( elm.attr( 'class' ) == '' ) {
@@ -3417,7 +3349,7 @@
 							outerHtml = elm[0].outerHTML;
 						}
 
-					} else if (elm.hasClass( 'mwt-heading' )) {
+					} else if ( elm[0].tagName.match(/^H\d$/) ) {
 						// process headings
 						var headingMarkup = '======',
 							text = elm[0].innerText,
@@ -3428,15 +3360,33 @@
 							altro = headingMarkup.substring(0, hLevel),
 							heading;
 
-						// build the header, including any spaces before the header text
-						heading = altro + spacesBefore + text + spacesAfter + altro ;
-						heading = '{@@hnl@@}' + heading + '{@@hnl@@}';
-						// build back any new lines after the heading
-						for (var i = 0; i < newlines; i++) {
-							heading += '{@@nl@@}';
-						}
-						outerHtml = heading;
+						spacesBefore = spacesBefore ? spacesBefore : ' ';
+						spacesAfter = spacesAfter ? spacesAfter : ' ';
+						newlines = newlines ? newlines : 0;
 
+						// mediawiki doesn't like leading and trailing new lines
+						text = text.replace(/{@@elf@@}/gm, "\n\n");
+						text = text.replace(/{@@enl@@}/gm, "\n");
+						text = text.replace(/{@@snl@@}/gm, "\n");
+						text = text.replace(/^(\n*)([^]*?)(\n*)$/, function (match, $1, $2, $3) {
+							// $1 = new lines before
+							// $2 = heading text
+							// $3 = new lines after
+							
+							// build the header, including any spaces before the header text
+							$2 = $2.replace(/\/n/gmi, '<br>');
+							heading = altro + spacesBefore + $2 + spacesAfter + altro ;
+							heading = '{@@hnl@@}' + heading + '{@@hnl@@}';
+							// build back any new lines after the heading
+							for (var i = 0; i < newlines; i++) {
+								heading += '{@@nl@@}';
+							}
+							$1 = $1.replace(/\n/gm, '{@@nl@@}');
+							$2 = $2.replace(/\n/gm, '{@@nl@@}');
+							return $1 + heading + $3;
+						});
+						outerHtml = text;
+						
 					} else if ( elm[0].tagName == 'TABLE' ) {
 						// now process code at start and end of tables.  Note the new line handling for these
 						// happens when all the other new line codes are processed in newLines2wiki
@@ -3492,9 +3442,9 @@
 							// process other attributes
 							$1 = processStoredAttributes2Wiki( $1 );
 							if ($1) {
-								return "{@@tnl@@}" + _pipeText + "+" + $1 + _pipeText + $2;
+								return "{@@tnl@@}" + _pipeText + "+ " + $1 + _pipeText + $2;
 							} else {
-								return "{@@tnl@@}" + _pipeText + "+" + $2;
+								return "{@@tnl@@}" + _pipeText + "+ " + $2;
 							}
 						});
 
@@ -3691,7 +3641,14 @@
 							outerHtml = innerHtml;
 						} else if ( innerHtml == '&nbsp;' ) {
 							// likewise spans containing only nbsp
-							outerHtml = innerHtml;
+//0205							outerHtml = innerHtml;
+							if (elm[0].attributes.length == 0 ||
+								elm[0].classList.length == 0 ||
+								elm[0].style == '') {
+								outerHtml = ' ';
+							} else {
+								outerHtml = innerHtml;
+							}
 						}
 					} else if ( elm[0].tagName == 'PRE' ) {
 						// process spans containing only nbsp
@@ -3706,7 +3663,20 @@
 					} else if (( elm[0].tagName == 'DIV' ) || ( elm[0].tagName == 'P' )) {
 						var html,
 							outerHtml = elm[0].outerHTML,
-							innerHtml = elm[0].innerHTML;
+							innerHtml = elm[0].innerHTML,
+							indentation = editor.getParam( "indentation" ).replace(/px/i, ""),
+							indented = editor.dom.getStyle( elm[0], "margin-left").replace(/px/i, ""),
+							tabChars = "::::::::::::::::::::::::::::",
+							tabs,
+							tabStops = '';
+							
+						if ((indented > 0) && ( indentation > 0)) {
+							tabs = Math.round( indented / indentation );
+							tabStops = tabChars.substr( 0, tabs) ;
+						}
+							
+						innerHtml = tabStops + innerHtml;
+
 						if ( innerHtml.match(/^(\s|&nbsp;|\{@@nl@@})*$/)) {
 							// remove empty P's and DIV's created by TinyMCE and this plugin
 							outerHtml = '';
@@ -3715,19 +3685,21 @@
 							if ( innerHtml == '&nbsp;' ) {
 								outerHtml  = '{@@pnl@@}';
 							} else {
-								outerHtml  = '{@@pnl@@}' + $.trim( elm.html() );
+//								outerHtml  = '{@@pnl@@}' + $.trim( elm.html() );
+								outerHtml  = '{@@pnl@@}' + $.trim( innerHtml );
 							}
 						} else if ( elm.hasClass( 'mwt-notParagraph' ) ||
 							elm.hasClass( 'tinywrapper' )) {
 							// not paragraph or tinywrapper means it has no new lines before it
-							outerHtml  = $.trim(elm.html());
+//0701							outerHtml  = $.trim(elm.html()) + '{@@pnl@@}';
+							outerHtml  = $.trim( innerHtml ) + '{@@npl@@}';
 						} else if ( elm.hasClass( 'mw-references-wrap' ) ) {
 							// not paragraph or tinywrapper means it has no new lines before it
 							outerHtml  = '<references />';
 						}
 					} else {
 						// treat everything else as preserved html
-							outerHtml = elm[0].outerHTML;	
+						outerHtml = elm[0].outerHTML;	
 					}
 
 					// create a place holder for the converted element
@@ -3806,8 +3778,11 @@
 			// protect any new lines embedded in the html
 			text = text.replace(/\n(?!{@@enl@@})/gmi, "{@@enl@@}"); //0907
 			
+			// process any multiple block new lines
+			text = text.replace(/({@@bnl@@})+/gmi, '{@@bnl@@}');
+			
 			// protect any pre blocks followed by pnl
-			text = text.replace(/<\/pre>{@@pnl@@}/gmi, "</pre> ");
+//0126			text = text.replace(/<\/pre>{@@pnl@@}/gmi, "</pre> ");
 			
 			// process single new lines bracketed by block new lines
 //1019			text = text.replace(/({@@[epbht]nl@@})*(\s*{@@snl@@}\s*)/gmi, "$2");
@@ -3815,15 +3790,31 @@
 //0914			text = text.replace(/(\s*{@@snl@@}\s*)({@@[pbht]nl@@})*/gmi, function(match, $1, $2, $3, $4) {
 //0914				return $1;
 //0914			});
-			text = text.replace(/(\s*{@@snl@@}\s*)({@@[pbht]nl@@})*/gmi, "$1");
+//0102			text = text.replace(/(\s*{@@snl@@}\s*)({@@[pbht]nl@@})*/gmi, "$1");
+			text = text.replace(/(\s*{@@snl@@}\s*)({@@[pbht]nl@@})+/gmi, "$2");
 			// process empty lines bracketed by block new lines
 //0914			text = text.replace(/({@@[pbht]nl@@})?((\s*{@@(enl|elf)?@@}\s*)+)({@@[pbht]nl@@})?/gmi, "$2");
+			text = text.replace(/({@@([bht]nl|npl)@@})?{@@pnl@@}{@@enl@@}{@@[bht]nl@@}/gmi, "{@@nl@@}{@@nl@@}{@@nl@@}"); //0115
+			text = text.replace(/{@@tnl@@}{@@elf@@}{@@npl@@}{@@bnl@@}/gmi, "{@@nl@@}{@@nl@@}{@@nl@@}"); //0126
 			text = text.replace(/({@@[bht]nl@@})*((\s*{@@(enl|elf)?@@}\s*)+)({@@[bht]nl@@})*/gmi, "$2"); //0907a
 			text = text.replace(/({@@[p]nl@@})((\s*{@@(enl|elf)?@@}\s*)+)({@@[p]nl@@})/gmi, "$2"); //0907a
 //0916			text = text.replace(/({@@pnl@@})({@@[bht]nl@@})/gmi, "$1"); //0907a
-			text = text.replace(/({@@pnl@@})({@@[bht]nl@@})*/gmi, "$1"); //0916
-			text = text.replace(/({@@pnl@@})({@@enl@@})* /gmi, "$1"); //1030
-			text = text.replace(/({@@elf@@}\s*)({@@pnl@@})*/gmi, "$1"); //1018
+//0114			text = text.replace(/({@@pnl@@})({@@[bht]nl@@})*/gmi, "$1"); //0916
+//0202			text = text.replace(/({@@pnl@@})({@@[bht]nl@@})+/gmi, "$2"); //0114
+			text = text.replace(/({@@pnl@@})({@@[bht]nl@@})/gmi, "$2"); //0114
+//0202			text = text.replace(/({@@npl@@})({@@[bht]nl@@})+/gmi, "$2"); //0118
+			text = text.replace(/({@@npl@@})({@@[bht]nl@@})/gmi, "$2"); //0118
+//0115			text = text.replace(/({@@[bht]nl@@})({@@pnl@@})+/gmi, "$1"); //0115
+//0115			text = text.replace(/({@@[bht]nl@@})({@@pnl@@})+/gmi, "$2"); //0115
+			text = text.replace(/({@@[bht]nl@@})({@@pnl@@})+({@@enl@@})/gmi, "{@@nl@@}{@@nl@@}{@@nl@@}"); //0115
+			text = text.replace(/({@@npl@@})({@@pnl@@})+({@@enl@@})/gmi, "{@@nl@@}{@@nl@@}{@@nl@@}"); //0119
+			text = text.replace(/({@@[bht]nl@@})({@@pnl@@})+/gmi, "$1"); //0115
+//0115			text = text.replace(/({@@pnl@@})({@@enl@@})*/gmi, "$1"); //1030
+//0119			text = text.replace(/({@@pnl@@})({@@enl@@})+/gmi, "$2"); //0115
+			text = text.replace(/({@@npl@@})({@@enl@@})+/gmi, "$2"); //0118
+			// process tables with separate cells on same line separated by '||'
+			text = text.replace(/({@@npl@@})\|\|/gmi, " ||"); //0118
+			text = text.replace(/({@@elf@@}\s*)({@@(npl|pnl)@@})*/gmi, "$1"); //1018
 
 			// deal with table ends
 			text = text.replace(/{@@tnl@@}{@@pnl@@}(({@@enl@@})*)/gmi, function(match, $1) {
@@ -3855,7 +3846,7 @@
 //			text = text.replace(/{@@hnl@@}(({@@nl@@})*){@@[bht]nl@@}/gmi, '{@@nl@@}$1');//0918
 			
 //0916			text = text.replace(/({@@[bht]nl@@})({@@pnl@@})/gmi, "$2"); //0907a
-			text = text.replace(/({@@[bht]nl@@})*({@@pnl@@})/gmi, "$2"); //0916
+//0115			text = text.replace(/({@@[bht]nl@@})*({@@pnl@@})/gmi, "$2"); //0916
 //			text = text.replace(/({@@[bht]nl@@})*({@@pnl@@})/gmi, "{@@nl@@}"); //1018
 			// replace remaining br_emptyline_first with 2 new lines
 			text = text.replace(/\n?{@@elf@@}/gmi, "{@@2nl@@}");
@@ -3868,7 +3859,7 @@
 			text = text.replace(/^({@@[pbht]nl@@})*/gmi, "");
 			// where two or more blocks are adjacent we only need one new line
 //0916			text = text.replace(/({@@[pbht]nl@@}\s*)+{@@[pbht]nl@@}/gmi, "{@@nl@@}");
-			text = text.replace(/({@@[bht]nl@@}\s*)+{@@[bht]nl@@}/gmi, "{@@nl@@}"); //0916
+//0120			text = text.replace(/({@@[bht]nl@@}\s*)+{@@[bht]nl@@}/gmi, "{@@nl@@}"); //0916
 			// where one or two new lines are followed or preceded by
 			// a header/block/table new line then remove it
 			text = text.replace(/{@@2nl@@}{@@[pbht]nl@@}/gmi, "{@@2nl@@}");
@@ -3878,11 +3869,16 @@
 			text = text.replace(/{@@nl@@}{@@[bht]nl@@}/gmi, "{@@nl@@}"); //0907
 			// rationalise forced new lines for blocks at start and end of table cells
 			text = text.replace(/(({@@tnl@@})?\|{1,2}\s*){@@[bh]nl@@}/gmi, "$1");
+			text = text.replace(/(({@@tnl@@})?\|{1,2}\s*{@@tnl@@}\s*){@@[bh]nl@@}/gmi, "$1");//0125
 			text = text.replace(/{@@[bh]nl@@}(({@@tnl@@})?\|{1,2}\s*)/gmi, "$1");
 			// clean up newline before tables in definitions
 			text = text.replace(/{@@pnl@@}:{/gmi, '{@@bnl@@}:{');
 			// otherwise replace forced 'p' placeholder with single new line
 			text = text.replace(/{@@pnl@@}/gmi, "{@@2nl@@}");
+			// otherwise replace no paragraph placeholders with nothing
+			text = text.replace(/{@@npl@@}/gmi, "");
+			// replace two adjacent table new lines by a single one
+			text = text.replace(/{@@tnl@@}{@@tnl@@}/gmi, "{@@nl@@}"); //0126
 			// otherwise replace forced new line placeholder with single new line
 			text = text.replace(/{@@[bht]nl@@}/gmi, "{@@nl@@}");
 			// replace br_singlelinebreak with single new line
@@ -4044,6 +4040,21 @@
 			}
 		});
 
+		// process headers from rendered wiki pages
+		$dom.find( ":header" ).replaceWith( function() {
+			var elm = $( this ),
+				contentText,
+				childElm;
+				
+			childElm = elm.children( ".mw-headline" )[0]
+			if ( childElm ) {
+				childElm.replaceWith( childElm.innerHTML );
+				elm.addClass( "mw-headline" );
+			}
+			
+			return elm[0].outerHTML;
+		});
+
 		return $dom;
 	}
 
@@ -4097,16 +4108,23 @@
 			}
 		}
 
-		// for seome reason _showPlaceholders won't be picked up so set it here again!
+		// for some reason _showPlaceholders won't be picked up so set it here again!
 		_showPlaceholders = editor.getParam("showPlaceholders");
 		_placeholderClass = _showPlaceholders ? "mwt-showPlaceholder" : "mwt-hidePlaceholder";
 
 		// set format to raw so that the Tiny parser won't rationalise the html
 		e.format = 'raw';
 
+		// if the content left over from browser back event
+		if ( e.content.match(/^<div class="tinywrapper">/)
+			|| e.content.match(/^<p class="mwt-notParagraph">/)
+			|| e.content.match(/.*class=('|")[^\1]*mwt-[^\1]*?\1/) ) {
+			e.convert2html = false;
+		}
+
 		// if the content is wikitext then convert to html
 		if ( e.convert2html ) {
-			e.content = _convertWiki2Html(e.content);
+			e.content = _convertWiki2Html(e.content, e.mode);
 		}
 
 		// sanitize the content to be sure xss vulnerabilities are removed
@@ -4138,7 +4156,7 @@
 			selectedNodeParent = editor.selection.getNode().parentNode,
 			args,
 			wikitext;
-			
+
 		// if this is a SelectAll operation then bypass processing altogether
 		if ( e.command == "SelectAll" ) {
 			//return;
@@ -4222,6 +4240,7 @@
 			}
 			if (e.value.convert2html) {
 				e.value.content = _convertWiki2Html(e.value.content, e.value.mode);
+				e.value.convert2html = false;
 				e.value["format"] = 'raw';
 			}			
 		}
@@ -4265,7 +4284,7 @@
 			// if we are just retrieving the html, for example for CodeMirror,
 			// we may have to tidy up some of the 'rationalisation' that
 			// TinyMCE makes to the html, mainly as a result of forcing root blocks
-			text = text.replace(/<br class="mwt-emptylineFirst"><\/p>/gm,"</p>");
+//			text = text.replace(/<br class="mwt-emptylineFirst"><\/p>/gm,"</p>");
 			text = text.replace(/{@@nl@@}/gmi, '\n');
 
 		}
@@ -4283,6 +4302,89 @@
 	 * @param {tinymce.LoadContentEvent} e
 	 */
 	function _onLoadContent(e) {
+//		tinymce.activeEditor.on('ScriptsLoaded', function(e) {
+//			var _toolbarResizeFactor = tinymce.activeEditor.getParam("toolbarResize");
+	  
+			/**
+			 * dynamicallyAccessCSS 
+			 *
+			 * @link    https://github.com/Frazer/dynamicallyAccessCSS.js
+			 * @license MIT
+			 *          
+			 * @author  Frazer Kirkman
+			 * @published 2016
+			 */
+			  
+/*			var returnStyleSheetRules = (function (){  
+				if(!document.styleSheets[0]){
+					// Create the <style> tag
+					var style = document.createElement("style");
+					// WebKit hack :(
+					style.appendChild(document.createTextNode(""));
+					// Add the <style> element to the page
+					document.head.appendChild(style);
+				  
+				}
+				if(document.styleSheets[0].cssRules){
+					return function (item) {return  item.cssRules;}
+				} else if (document.styleSheets[0].rules) {
+					return function (item) {return  item.rules;}
+				}
+			})();
+			  
+			function getCSSRule(search, returnArray) {  
+				let styleSheets = [].map.call(document.styleSheets, function(item) {
+					return [].slice.call(returnStyleSheetRules(item));
+				});
+	  
+				let rule = null;
+				let rules = [];
+				styleSheets.forEach(function(thisSheet){
+					let findTheRule = thisSheet.filter(function(rule) {
+						if(rule.selectorText){
+							if(rule.selectorText == search){
+								return rule.selectorText.indexOf(search)>=0;	
+							}else return false;
+						}
+					});
+				  
+					if(findTheRule.length){
+						  rules = rules.concat(findTheRule);
+						  rule = findTheRule[findTheRule.length-1];    //findTheRule will contain all rules that reference the selector. findTheRule[findTheRule.length-1] contains the last rule.
+					}
+				});
+
+				if (rule){
+					if(returnArray){
+						return rules;
+					}else{
+						return rule;
+					}
+				}else{
+					let sheet = document.styleSheets[0];   //if the rule we are looking for doesn't exist, we create it
+					var pos = sheet.cssRules.length;
+					rule = search + "{  }";
+					sheet.insertRule( rule ,pos );
+					rule = sheet.cssRules[pos];
+				}
+	
+				if(returnArray){
+					returnStyleSheetRules(document.styleSheets[0]);
+					return rules = rules.concat(rule);
+				}else{
+					returnStyleSheetRules(document.styleSheets[0])[pos];
+					return rule;
+				}
+			}
+
+			var myRules  = getCSSRule('.tox-tbtn', true);
+			myRules.forEach(function(thisRule){
+				thisRule.style.transform = "scale(" + _toolbarResizeFactor + ")";
+				thisRule.style.setProperty ("height", 34 * _toolbarResizeFactor + "px", "important");
+				thisRule.style.setProperty ("width", "auto", "important");
+			});
+//		});*/
+
 		return;
 	}
 
@@ -4302,7 +4404,6 @@
 	 */
 	function _onPastePreProcess(e) {
 		// if this is html then covert to wiki and back so it displays correctly
-
 		var text = e.content,
 			textObject,
 			selectedNode = editor.selection.getNode(),
@@ -4353,7 +4454,19 @@
 
 		dom = $(e.node);
 		text = dom[0].innerHTML;
-
+		
+		// get rid of any empty spans - these result from drag drop
+		// operations where computed styles have been filtered out
+		dom.find( "span" ).replaceWith( function() {
+			if (this.attributes.length == 0 ||
+				this.classList.length == 0 ||
+				this.style == '') {
+				return this.innerHTML;
+			} else {
+				return this.outerHTML;
+			}
+		})
+		
 		debug( editor, "anteOnPastePostProcess", _mwtDebugFlags.anteOnPastePreProcess, text );
 
 		if ( e.internal ) {
@@ -4470,10 +4583,109 @@
 	 * @param {tinymce.onKeyDownEvent} e
 	 */	
 	function _onKeyDown(evt) {
+		var editor = tinyMCE.activeEditor,
+			_cursorOnDown,
+			_cursorOnUp,
+			_cursorOnDownIndex,
+			_cursorOnUpIndex,
+			_cursorOnDownPreviousNode,
+			_cursorOnUpPreviousNode,
+			_cursorOnDownNextNode,
+			_cursorOnUpNextNode;
+		
+		//find the offset of the cursor within the displayed text
+		function getCursorOffset() {
+			var range,
+				text,
+				bm,
+				index,
+				parents = {},
+				parentsPreviousSibling = {},
+				rootNode = editor.getBody(),
+				currentNode = null,
+				previousNode = null,
+				nextNode = null,
+				firstNode = false;
+
+			function getPreviousNode( aNode ) {
+				var previousNode = aNode.previousSibling,
+					parents = editor.dom.getParents( aNode );
+	
+				function validPreviousNode( aaNode ) {
+					while ( aaNode  && (aaNode.nodeType != 3 )) {
+						if ( aaNode.attributes[ "data-mce-bogus" ] ) {
+							aaNode = aaNode.previousSibling;
+						} else {
+							break;
+						}
+					}
+					return aaNode;
+				}
+				
+				if ( !validPreviousNode( previousNode )) {
+					tinymce.each( parents , function( aParent ) {
+						if ( aParent == rootNode ) return false;
+						if ( validPreviousNode( aParent.previousSibling ) ) {
+							previousNode = aParent.previousSibling;
+							return false;
+						}
+					});
+				} 
+				return previousNode;
+			}
+	
+			function getNextNode( aNode ) {
+				var nextNode = aNode.nextSibling,
+					parents = editor.dom.getParents( aNode );
+	
+				function validNextNode ( aaNode ) {
+					while ( aaNode && (aaNode.nodeType != 3 )) {
+						if ( aaNode.attributes[ "data-mce-bogus" ] ) {
+							aaNode = aaNode.nextSibling;
+						} else {
+							break;
+						}
+					}
+					return aaNode;
+				}
+				
+				if ( !validNextNode( nextNode )) {
+					tinymce.each( parents , function( aParent ) {
+						if ( aParent == rootNode ) return false;
+						if ( validNextNode( aParent.nextSibling ) ) {
+							nextNode = aParent.nextSibling;
+							return false;
+						}
+					});
+				}
+				return nextNode;
+			}
+	
+			currentNode = editor.selection.getNode()
+			previousNode = getPreviousNode( currentNode );
+			nextNode = getNextNode( currentNode );
+			bm = editor.selection.getBookmark();
+			range = editor.selection.getRng();
+			range.setStart(editor.getBody().firstChild, 0);
+			text = range.toString();
+			editor.selection.moveToBookmark(bm);
+	
+			return {
+				cursor: text.length, 
+				text: text,
+				index: index,
+				previousNode: previousNode,
+				nextNode: nextNode
+			}
+		} 
+	
 		if ( evt.keyCode == 38 ) {
 			// up-arrow or down arrow at start or end of editor
 			// content results in an empty paragraph being added
-			var cursorLocation = _getCursorOffset();
+			var cursorLocation = getCursorOffset();
+
+			//if previous node is not null, carry on 
+			if ( cursorLocation.previousNode != null ) return;
 
 			_cursorOnDown = cursorLocation.cursor;
 			_cursorOnDownPreviousNode = cursorLocation.previousNode;
@@ -4489,12 +4701,15 @@
 		} else if ( evt.keyCode == 40 ) {
 			// up-arrow or down arrow at start or end of editor
 			// content results in an empty paragraph being added
-			var cursorLocation = _getCursorOffset();
+			var cursorLocation = getCursorOffset();
 
+			//if next node is not null, carry on 
+			if ( cursorLocation.nextNode != null ) return;
+			
 			_cursorOnDown = cursorLocation.cursor;
 			_cursorOnDownNextNode = cursorLocation.nextNode;
 			var range = editor.selection.getRng();
-			editor.selection.select(tinyMCE.activeEditor.getBody(), true);
+			editor.selection.select(editor.getBody(), true);
 			var ftxt = editor.selection.getRng().toString().trimRight().length;
 			editor.selection.setRng( range );
 			if ( _cursorOnDown >= ftxt ) {
@@ -4619,7 +4834,21 @@ function wikiparser( editor ) {
 		editor.on('dblclick', _onDblClick);
 		editor.on('keydown', _onKeyDown);
 		editor.on('keyup', _onKeyUp);
-
+			
+		//
+		// set up element to contain toolbar if not attached to edit window
+		//
+		var selector = '#top',
+			mwexttb = $( '#mwext-tinytoolbar' );
+		// if there is no placeholder for inline toolbar already, then add one
+		if ( mwexttb.length == 0 ) {
+			$( selector ).before( '<div id="mwext-tinytoolbar" class="mwt-toolbar"></div>' );
+			mwexttb = $( '#mwext-tinytoolbar' );
+			// if you wish to have empty space permanently for the tool bar then
+			// un-comment the following line
+//			mwexttb.append( '' );
+		}
+				
 		//
 		// add processing for browser context menu
 		//
@@ -4678,19 +4907,26 @@ function wikiparser( editor ) {
 			});
 		}
 		editor.settings['templates'] = templateItems;
+
 	//
 	// setup minimising menubar when field not selected in pageforms
 	//
 	var minimizeOnBlur = $(editor.getElement()).hasClass( 'mceMinimizeOnBlur' );
 		if ( minimizeOnBlur ) {
 			editor.on('focus', function(e) {
-				var mcePane = $("textarea#" + e.target.id).prev();
+//0207			tinyMCE.activeEditor.on('focus', function(e) {
+debugger;
+//0207				var mcePane = $("textarea#" + e.target.id).prev();
+				var mcePane = $("textarea#" + e.target.id).css( "background-color", "red" );
 				mcePane.find(".tox-toolbar__primary").css("height", "");
 				mcePane.find(".tox-toolbar__primary .tox-flow-layout").show("medium");
 
 			});
 			editor.on('blur', function(e) {
-				var mcePane = $("textarea#" + e.target.id).prev();
+//0207			tinyMCE.activeEditor.on('blur', function(e) {
+debugger;
+//0207				var mcePane = $("textarea#" + e.target.id).prev();
+				var mcePane = $("textarea#" + e.target.id).css( "background-color", "green" );
 				// Keep a little sliver of the toolbar so that users see it.
 				mcePane.find(".tox-toolbar__primary").css("height", "10px");
 				mcePane.find(".tox-toolbar__primary .tox-flow-layout").hide("medium");
