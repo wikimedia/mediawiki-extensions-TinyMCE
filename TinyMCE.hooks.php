@@ -432,7 +432,7 @@ class TinyMCEHooks {
 			$wikiPage = new WikiPage( $title );
 			$content = $wikiPage->getContent();
 			if ( $content != null ) {
-				$pageText = $content->getNativeData();
+				$pageText = $content->getText();
 				foreach ( $wgTinyMCEUnhandledStrings as $str ) {
 					if ( strpos( $pageText, $str ) !== false ) {
 						return $wgTinyMCEUse = false;
