@@ -1,11 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kareyac"
+			"Kareyac",
+			"Papuass"
 		]
 	},
 	"tinymce-upload-source-label": "Avots",
 	"tinymce-upload-button-label-rename": "Pārsaukt",
+	"tinymce-reference-enterReferenceContent": "Tukša atsauce",
+	"tinymce-empty-reference": "Tukša atsauce",
 	"tinymce-yes": "Jā",
 	"tinymce-no": "Nē",
 	"tinymce-ok": "Labi",

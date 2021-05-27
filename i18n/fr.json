@@ -3,6 +3,7 @@
 		"authors": [
 			"Florian COLLIN",
 			"Gomoko",
+			"JenyxGym",
 			"Pols12",
 			"Verdy p",
 			"Wladek92"
@@ -158,6 +159,7 @@
 	"tinymce-toggle-button-toggle-wiki-placeholders": "Basculer les variables substituées du wiki",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "Insérer un espace non sécable",
 	"tinymce-reference-insertReference": "Insérer une référence",
+	"tinymce-reference-enterReferenceContent": "Référence vide",
 	"tinymce-reference-alert-not-allowed": "Impossible d’insérer une référence dans une référence",
 	"tinymce-pre-alert-only-plain-text": "Seul du texte simple est autorisé dans cette classe d’élément",
 	"tinymce-yes": "Oui",
