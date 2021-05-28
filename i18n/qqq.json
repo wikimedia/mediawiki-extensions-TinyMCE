@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
+			"Kareyac",
 			"MuratTheTurkish",
+			"Pols12",
 			"Robby",
 			"Umherirrender"
 		]
@@ -13,6 +15,11 @@
 	"tinymce-editreference": "Used as title for an element",
 	"tinymce-notice": "{{notranslate}}\nUsed as notice message on edit page",
 	"upload-displayparams": "Name for an section bundling the other labels when uploading a file",
+	"tinymce-upload-alternate-text": "Used as label when uploading a file",
+	"tinymce-upload-caption": "{{identical|Caption}}",
+	"tinymce-upload-link": "Used as label when uploading a file",
+	"tinymce-upload-width": "Used as label when uploading a file\n{{Identical|Width}}",
+	"tinymce-upload-height": "Used as label when uploading a file\n{{identical|Height}}",
 	"tinymce-horizontal-align": "Used as label when uploading a file",
 	"tinymce-horizontal-align-left": "Option for a dropdown box, label is {{msg-mw|tinymce-horizontal-align}}",
 	"tinymce-horizontal-align-centre": "Option for a dropdown box, label is {{msg-mw|tinymce-horizontal-align}}",
@@ -113,8 +120,9 @@
 	"tinymce-upload-alert-other-warning": "Used as error message. Used with javascript.",
 	"tinymce-upload-alert-correct-and-try-again": "Used as error message. Used with javascript.",
 	"tinymce-upload-alert-destination-filename-needed": "Used as error message. Used with javascript.",
-	"tinymce-upload-alert-file-source-empty" : "Used as error message. Used with javascript.",
-	"tinymce-upload-confirm-file-already-exists": "Used as confirm message. Used with javascript.",
+	"tinymce-upload-alert-source-or-destination-undefined": "Used as error message. Used with javascript.",
+	"tinymce-upload-alert-file-source-empty": "Used as error message. Used with javascript.",
+	"tinymce-upload-confirm-file-already-exists": "Used as confirm message. Used with javascript.\nShould be consistent with:\n* {{msg-mw|Tinymce-upload-button-label-overwrite}}\n* {{msg-mw|Tinymce-upload-button-label-use}}\n* {{msg-mw|Tinymce-upload-button-label-rename}}",
 	"tinymce-upload-confirm-file-name-already-exists": "Used as confirm message. Used with javascript.",
 	"tinymce-upload-confirm-file-is-duplicate": "Used as confirm message. Used with javascript.",
 	"tinymce-upload-confirm-file-not-on-wiki": "Used as confirm message. Used with javascript.",
@@ -154,6 +162,7 @@
 	"tinymce-reference-enterReferenceContent": "Used as placeholder for new reference text.  Used with javascript.",
 	"tinymce-empty-reference": "Used as placeholder for empty reference.  Used with javascript.",
 	"tinymce-reference-alert-not-allowed": "Used as error message. Used with javascript.",
+	"tinymce-pre-alert-only-plain-text": "Used as error message. Used with javascript.",
 	"tinymce-yes": "Used as label. Used with javascript.",
 	"tinymce-no": "Used as label. Used with javascript.",
 	"tinymce-ok": "Used as label. Used with javascript.",
