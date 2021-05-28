@@ -184,7 +184,7 @@
 		"GetPreferences": "TinyMCEHooks::addPreference",
 		"PageForms::addRLModules": "TinyMCEHooks::addRLModules",
 		"OutputPageParserOutput": "TinyMCEHooks::addToViewPage",
-    		"ParserFirstCallInit": "TinyMCEHooks::onParserFirstCallInit"
+		"ParserFirstCallInit": "TinyMCEHooks::onParserFirstCallInit"
 	},
 	"Actions": {
 		"tinymceedit": "TinyMCEAction"
