@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Mim.saitkilic",
 			"MuratTheTurkish"
 		]
 	},
@@ -153,6 +154,8 @@
 	"tinymce-toggle-button-toggle-wiki-placeholders": "Viki yer tutucularını değiştir",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "Bölünemez boşluk ekle",
 	"tinymce-reference-insertReference": "Bir kaynak ekleyin",
+	"tinymce-reference-enterReferenceContent": "Boş referans",
+	"tinymce-empty-reference": "Boş referans",
 	"tinymce-reference-alert-not-allowed": "Bir kaynağın içine kaynak eklenemez",
 	"tinymce-pre-alert-only-plain-text": "Bu öğe sınıfında yalnızca düz metne izin verilir",
 	"tinymce-yes": "Evet",

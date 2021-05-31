@@ -155,6 +155,8 @@
 	"tinymce-toggle-button-toggle-wiki-placeholders": "Alternar marcadores de posição da wiki",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "Insira um espaço não separável",
 	"tinymce-reference-insertReference": "Insira uma referência",
+	"tinymce-reference-enterReferenceContent": "Referência vazia",
+	"tinymce-empty-reference": "Referência vazia",
 	"tinymce-reference-alert-not-allowed": "Não é possível inserir uma referência dentro de outra referência",
 	"tinymce-pre-alert-only-plain-text": "Somente texto plano é permitido nessa classe de elementos",
 	"tinymce-yes": "Sim",

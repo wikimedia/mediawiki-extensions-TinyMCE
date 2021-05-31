@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"FarsiNevis",
+			"Jeeputer",
 			"Saadat"
 		]
 	},
@@ -14,6 +15,8 @@
 	"tinymce-upload-button-label-rename": "تغییر نام",
 	"tinymce-link-type-external": "بیرونی",
 	"tinymce-link-type-internal": "درونی",
+	"tinymce-reference-enterReferenceContent": "ارجاع خالی",
+	"tinymce-empty-reference": "ارجاع خالی",
 	"tinymce-yes": "بله",
 	"tinymce-no": "نه",
 	"tinymce-ok": "تأیید",
