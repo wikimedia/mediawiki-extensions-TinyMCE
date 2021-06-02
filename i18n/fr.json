@@ -160,6 +160,7 @@
 	"tinymce-nonbreaking-insertNonBreakingSpace": "Insérer un espace non sécable",
 	"tinymce-reference-insertReference": "Insérer une référence",
 	"tinymce-reference-enterReferenceContent": "Référence vide",
+	"tinymce-empty-reference": "Référence vide",
 	"tinymce-reference-alert-not-allowed": "Impossible d’insérer une référence dans une référence",
 	"tinymce-pre-alert-only-plain-text": "Seul du texte simple est autorisé dans cette classe d’élément",
 	"tinymce-yes": "Oui",
