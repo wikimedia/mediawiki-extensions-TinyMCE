@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Kareyac",
+			"Rivka Silinsky",
 			"Rubin16"
 		]
 	},
@@ -50,6 +51,7 @@
 	"tinymce-link": "Ссылка",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "Вставьте неразрывный пробел",
 	"tinymce-reference-insertReference": "Вставьте сноску",
+	"tinymce-reference-enterReferenceContent": "Пустая ссылка",
 	"tinymce-reference-alert-not-allowed": "Невозможно вставить сноску в сноску",
 	"tinymce-pre-alert-only-plain-text": "В этом классе элементов разрешен только простой текст",
 	"tinymce-yes": "Да",
