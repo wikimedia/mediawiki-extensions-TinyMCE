@@ -153,6 +153,8 @@
 	"tinymce-toggle-button-toggle-wiki-placeholders": "切換 Wiki 佔位符",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "插入非換行空白",
 	"tinymce-reference-insertReference": "插入參考資料",
+	"tinymce-reference-enterReferenceContent": "空白參考資料",
+	"tinymce-empty-reference": "空白參考資料",
 	"tinymce-reference-alert-not-allowed": "不能在參考資料裡插入參考資料",
 	"tinymce-pre-alert-only-plain-text": "在此元素類別僅允許純文字",
 	"tinymce-yes": "是",
