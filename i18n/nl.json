@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mainframe98"
+			"Mainframe98",
+			"McDutchie"
 		]
 	},
 	"tinymce-editsource": "Brontekst bewerken",
@@ -19,8 +20,8 @@
 	"tinymce-format-border": "rand",
 	"tinymce-format-frame": "frame",
 	"tinymce-format-frameless": "zonder frame",
-	"tinymce-upload-title-general": "Algemeen",
-	"tinymce-upload-title-image": "Afbeelding",
+	"tinymce-upload-title-general": "Bestandsdetails",
+	"tinymce-upload-title-image": "Afbeeldingseigenschappen",
 	"tinymce-upload-type-label-file": "Lokaal bestand",
 	"tinymce-upload-type-label-wiki": "Bestand op deze wiki",
 	"tinymce-upload-summary-label": "Samenvatting",
