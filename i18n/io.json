@@ -5,5 +5,6 @@
 		]
 	},
 	"tinymce-format-thumb": "miniaturo",
-	"tinymce-ok": "O.K."
+	"tinymce-ok": "O.K.",
+	"tinymce-cancel": "Nuligar"
 }
