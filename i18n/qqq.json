@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Ajeje Brazorf",
 			"Kareyac",
 			"MuratTheTurkish",
 			"Pols12",
@@ -35,7 +36,7 @@
 	"tinymce-vertical-align-text-top": "Option for a dropdown box, label is {{msg-mw|tinymce-vertical-align}}",
 	"tinymce-vertical-align-text-bottom": "Option for a dropdown box, label is {{msg-mw|tinymce-vertical-align}}",
 	"tinymce-format": "Used as label when uploading a file\n{{identical|Format}}",
-	"tinymce-format-thumb": "Option for a dropdown box, label is {{msg-mw|tinymce-format}}",
+	"tinymce-format-thumb": "Option for a dropdown box, label is {{msg-mw|tinymce-format}}\n\n{{Identical|Thumb}}",
 	"tinymce-format-border": "Option for a dropdown box, label is {{msg-mw|tinymce-format}}",
 	"tinymce-format-frame": "Option for a dropdown box, label is {{msg-mw|tinymce-format}}\n{{identical|Frame}}",
 	"tinymce-format-frameless": "Option for a dropdown box, label is {{msg-mw|tinymce-format}}",
@@ -99,7 +100,7 @@
 	"tinymce-upload-horizontalalign-none-text": "Used as option. Used with javascript.",
 	"tinymce-upload-format-label": "Used as label. Used with javascript.",
 	"tinymce-upload-format-tooltip": "Used as toolip. Used with javascript.",
-	"tinymce-upload-format-thumb-text": "Used as option. Used with javascript.",
+	"tinymce-upload-format-thumb-text": "Used as option. Used with javascript.\n\n{{Identical|Thumb}}",
 	"tinymce-upload-format-border-text": "Used as option. Used with javascript.",
 	"tinymce-upload-format-frame-text": "Used as option. Used with javascript.",
 	"tinymce-upload-format-frameless-text": "Used as option. Used with javascript.",
