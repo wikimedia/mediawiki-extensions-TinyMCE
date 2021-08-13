@@ -164,8 +164,8 @@
 	"tinymce-empty-reference": "Used as placeholder for empty reference.  Used with javascript.",
 	"tinymce-reference-alert-not-allowed": "Used as error message. Used with javascript.",
 	"tinymce-pre-alert-only-plain-text": "Used as error message. Used with javascript.",
-	"tinymce-yes": "Used as label. Used with javascript.",
-	"tinymce-no": "Used as label. Used with javascript.",
-	"tinymce-ok": "Used as label. Used with javascript.",
+	"tinymce-yes": "Used as label. Used with javascript.\n\n{{Identical|Yes}}",
+	"tinymce-no": "Used as label. Used with javascript.\n\n{{Identical|No}*",
+	"tinymce-ok": "Used as label. Used with javascript.\n\n{{Identical|OK}}",
 	"tinymce-cancel": "Used as label. Used with javascript."
 }
