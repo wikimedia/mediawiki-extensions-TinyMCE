@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Gebu",
-			"Kareyac"
+			"Kareyac",
+			"Zabe"
 		]
 	},
 	"tinymce-upload-link": "Link",
@@ -11,6 +12,7 @@
 	"tinymce-horizontal-align-left": "Links",
 	"tinymce-horizontal-align-centre": "Mitte",
 	"tinymce-horizontal-align-right": "Rechts",
+	"tinymce-horizontal-align-none": "Keine",
 	"tinymce-vertical-align-middle": "Mitte",
 	"tinymce-vertical-align-top": "oben",
 	"tinymce-vertical-align-bottom": "unten",
@@ -25,6 +27,7 @@
 	"tinymce-wikimagic-title": "Wikitext betrachten und bearbeiten",
 	"tinymce-upload-type-label-wiki": "Datei in diesem Wiki",
 	"tinymce-upload-source-label": "Quelle",
+	"tinymce-upload-summary-label": "Zusammenfassung",
 	"tinymce-upload-link-label": "Link zu",
 	"tinymce-upload-vertalign-middle-text": "Mitte",
 	"tinymce-upload-vertalign-top-text": "Oben",
@@ -32,10 +35,12 @@
 	"tinymce-upload-horizontalalign-left-text": "Links",
 	"tinymce-upload-horizontalalign-centre-text": "Mitte",
 	"tinymce-upload-horizontalalign-right-text": "Rechts",
+	"tinymce-upload-horizontalalign-none-text": "Keine",
 	"tinymce-upload-format-label": "Format",
 	"tinymce-upload-format-border-text": "Umrandung",
 	"tinymce-upload-format-frame-text": "Rahmen",
 	"tinymce-upload-format-frameless-text": "Rahmenlos",
+	"tinymce-upload-format-none-text": "Keine",
 	"tinymce-upload-button-label-overwrite": "Überschreiben",
 	"tinymce-upload-button-label-rename": "Umbenennen",
 	"tinymce-upload-alert-other-warning": "Du hast die Warnung $1 erhalten.",
@@ -46,11 +51,13 @@
 	"tinymce-link-title-label": "Titel",
 	"tinymce-link-display-text-label": "Anzuzeigender Text",
 	"tinymce-link-link-list-label": "Linkliste",
+	"tinymce-link-target-none": "Keine",
 	"tinymce-link-target-new-window": "Neues Fenster",
 	"tinymce-link-target-label": "Ziel",
 	"tinymce-link-type-external": "Extern",
 	"tinymce-link-type-internal": "Intern",
 	"tinymce-link-type-label": "Typ",
+	"tinymce-link-link-list-none": "Keine",
 	"tinymce-link-page-not-found": "(Seite nicht vorhanden)",
 	"tinymce-link-link-button-tooltip": "Link einfügen / bearbeiten",
 	"tinymce-link-link-remove-button-tooltip": "Link entfernen",
