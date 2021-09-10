@@ -4266,7 +4266,8 @@
 	 * @param {tinymce.ContentEvent} e
 	 */
 	function _onGetContent(e) {
-		var text = e.content;
+		var text = e.content,
+			isInTemplate;
 		
 		debug( editor, "anteOnGetContent", _mwtDebugFlags.anteOnGetContent, text );
 
@@ -4485,7 +4486,8 @@
 	 * @param {tinymce.DblclickEvent} e
 	 */
 	function _onDblClick(evt) {
-		var selectedNode=evt.target,
+		var editor = tinymce.activeEditor,
+			selectedNode=evt.target,
 			classList,
 			targetFound = false;
 
@@ -4524,7 +4526,7 @@
 
 		function executeDbleClick( aNode ) {
 			var classList = [];
-				
+
 			// exit if nothing selected
 			if ( aNode == null ) return ;
 			
@@ -4801,7 +4803,15 @@ function wikiparser( editor ) {
 				isInTemplate = true;
 			}
 		});
-		
+
+		// Elements of id pf_free_text are in page forms templates
+		// but not assigned to the template class so we put this
+		// here as a failsafe - must check with Yaron if a change
+		// is also needed in PF?
+		if ( $(editor.targetElm.id == 'pf_free_text') ) {
+			isInTemplate = true;
+		}
+
 		_pipeText = isInTemplate ? '{{!}}' : '|';
 		
 		// stash common placeholders
@@ -4911,11 +4921,10 @@ function wikiparser( editor ) {
 	//
 	// setup minimising menubar when field not selected in pageforms
 	//
-	var minimizeOnBlur = $(editor.getElement()).hasClass( 'mceMinimizeOnBlur' );
+/*	var minimizeOnBlur = $(editor.getElement()).hasClass( 'mceMinimizeOnBlur' );
 		if ( minimizeOnBlur ) {
 			editor.on('focus', function(e) {
 //0207			tinyMCE.activeEditor.on('focus', function(e) {
-debugger;
 //0207				var mcePane = $("textarea#" + e.target.id).prev();
 				var mcePane = $("textarea#" + e.target.id).css( "background-color", "red" );
 				mcePane.find(".tox-toolbar__primary").css("height", "");
@@ -4924,14 +4933,14 @@ debugger;
 			});
 			editor.on('blur', function(e) {
 //0207			tinyMCE.activeEditor.on('blur', function(e) {
-debugger;
+
 //0207				var mcePane = $("textarea#" + e.target.id).prev();
 				var mcePane = $("textarea#" + e.target.id).css( "background-color", "green" );
 				// Keep a little sliver of the toolbar so that users see it.
 				mcePane.find(".tox-toolbar__primary").css("height", "10px");
 				mcePane.find(".tox-toolbar__primary .tox-flow-layout").hide("medium");
 			});
-		}
+		}*/
 	};
 	this.getInfo = function() {
 		var info = {

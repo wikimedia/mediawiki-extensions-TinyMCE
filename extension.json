@@ -1,7 +1,7 @@
 {
 	"@Note": "When updating this file please also update TinyMCE.php with the same changes.",
 	"name": "TinyMCE",
-	"version": "1.1",
+	"version": "1.1.1",
 	"author": [
 		"Ephox",
 		"Hallo Welt",
@@ -179,6 +179,7 @@
 		"SkinTemplateNavigation::Universal": "TinyMCEAction::displayTabAndModifyAddTopicLink",
 		"SkinEditSectionLinks": "TinyMCEHooks::addEditSectionLink",
 		"AlternateEdit": "TinyMCEHooks::determineIfTinyMCEIsEnabled",
+		"EditPageBeforeEditToolbar": "TinyMCEHooks::removeDefaultToolbar",
 		"EditPage::showEditForm:initial": "TinyMCEHooks::addToEditPage",
 		"WikiEditorDisable": "TinyMCEHooks::disableWikiEditor",
 		"GetPreferences": "TinyMCEHooks::addPreference",

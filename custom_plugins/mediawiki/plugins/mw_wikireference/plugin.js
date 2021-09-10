@@ -109,10 +109,15 @@
 	var toggleRefText = function ( editor ) {
 		var selection = editor.selection.getNode(),
 			id = editor.dom.getAttrib( selection, 'data-mwt-ref' ) ?  editor.dom.getAttrib( selection, 'data-mwt-ref' ): '' ;
-			
+
 		if ( id ) {
 			selection = editor.selection.select( editor.dom.select('#' + id )[0] );
-			editor.dom.toggleClass( editor.dom.select('#' + id )[0], 'mwt-showReference' );
+/*			editor.dom.toggleClass( editor.dom.select('#' + id )[0], 'mwt-showReference' );
+			editor.selection.setCursorLocation( editor.selection.getNode());
+			editor.selection.collapse( false );
+*/
+			editor.dom.toggleClass( selection, 'mwt-showReference' );
+			editor.nodeChanged();
 			editor.selection.setCursorLocation( editor.selection.getNode());
 			editor.selection.collapse( false );
 		}

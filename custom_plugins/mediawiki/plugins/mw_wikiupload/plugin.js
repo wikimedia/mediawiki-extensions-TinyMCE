@@ -4,14 +4,16 @@
  * Released under LGPL License.
  * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
  *
- * License: http://www.tinymce.com/license
- * Contributing: http://www.tinymce.com/contributing
+ * Copyright (c) Aoxomoxoa Limited. All rights reserved.
+ * Author: Duncan Crane, duncan.crane@aoxomoxoa.co.uk
+ * Licensed under the LGPL or a commercial license.
+ * For LGPL see License.txt in the project root for license information.
  *
- * Modified to work with Mediawiki
- * Duncan Crane duncan.crane@aoxomoxoa.co.uk
+ * Version: 1.1.1 (2021-09-10)
  */
+var wikiupload = function (editor) {
 
-tinymce.PluginManager.add('wikiupload', function(editor) {
+    'use strict';
 
 	var	editor = tinymce.activeEditor;
 
@@ -84,9 +86,10 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 		}
 
 	_userThumbsize = _thumbsizes[ mw.user ? mw.user.options.get('thumbsize') : 3 ];
-	
-	function showWikiUploadDialog(dialogData) {
-		var format, 
+
+	var upload = function ( editor ) {
+		var dialogData,
+			format, 
 			pclass, 
 			win, 
 			data = {}, 
@@ -447,9 +450,9 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 			 * @returns {String}
 			 */
 			function getFileDetailsFromWiki(fileName) {
-				var fileDetails = false;
+				var fileDetails = false,
+					queryData = new FormData();
 
-				queryData = new FormData();
 				queryData.append("action", "query");
 				queryData.append("prop", "imageinfo");
 				queryData.append("iiprop", "url");
@@ -508,7 +511,7 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 
 				var dialogData = api.getData(),
 					type = dialogData.type,
-					srcURL = dialogData.urlSrc
+					srcURL = dialogData.urlSrc,
 					destURL = dialogData.dest,
 					destinationFile = _mwtFileNamespace + ':' + destURL,
 					destinationFileDetails = getFileDetailsFromWiki(destinationFile);
@@ -828,7 +831,9 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 			function overwriteExistingFile( api ) {
 				var dialogData = _savedOverWriteInput,
 					ignoreWarnings = true,
-					uploadDetails;
+					uploadDetails,
+					result;
+					
 				dialogData.type = 'File';
 				fileContent = _srccontent;
 				fileType = dialogData.type;
@@ -1143,8 +1148,10 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 				var dialogData = api.getData(),
 					srcURL = dialogData.wikiSrc,
 					figureElm,
+					result,
 					uploadDetails,
 					uploadResult,
+					uploadPage,
 					fileType,
 					fileContent,
 					fileName,
@@ -1311,25 +1318,39 @@ tinymce.PluginManager.add('wikiupload', function(editor) {
 
 		//display and process upload form
 		displayUploadForm(dialogData, imgElm);
+	};
 
-		return;
+	var registerCommands = function ( editor ) {
+		editor.addCommand('wikiupload', function () {
+			upload( editor );
+		});
 	}
-
-	editor.ui.registry.addButton('wikiupload', {
-		icon: 'image',
-		tooltip: translate("tinymce-upload-menu-item-text"),
-		onAction: showWikiUploadDialog,
-		stateSelector: '.mwt-image'
-	});
-
-	editor.ui.registry.addMenuItem('wikiupload', {
-		icon: 'image',
-		text: translate("tinymce-upload-menu-item-text"),
-		onAction: showWikiUploadDialog,
-		context: 'upload',
-		prependToContext: true
-	});
-
-	editor.addCommand('wikiupload', showWikiUploadDialog);
 	
-});
+	var registerKeys = function ( editor ) {
+		editor.ui.registry.addButton('wikiupload', {
+			icon: 'image',
+			tooltip: translate("tinymce-upload-menu-item-text"),
+			onAction: function () {
+				return upload( editor );
+			},
+			stateSelector: '.mwt-image'
+		});
+	
+		editor.ui.registry.addMenuItem('wikiupload', {
+			icon: 'image',
+			text: translate("tinymce-upload-menu-item-text"),
+			onAction: function () {
+				return upload( editor );
+			},
+			context: 'upload',
+			prependToContext: true
+		});
+	};
+
+	this.init = function(editor) {
+		registerCommands ( editor );
+		registerKeys ( editor );
+	}
+};
+
+tinymce.PluginManager.add('wikiupload', wikiupload);

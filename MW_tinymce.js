@@ -77,7 +77,7 @@
 			'br', 'hr', 'link', 'meta', 'wbr', // these are html tags too
 		],
 		mw_extensionSingleOnly = [
-			'references', 
+			'references', 'ref',
 		],
 		mw_htmlNestable = [
 			'bdo', 'big', 
@@ -477,6 +477,9 @@
 			wiki_template_classes: [
 				'mcePartOfTemplate',
 			],
+			mediawikiTemplateClasses: [
+				'mcePartOfTemplate',			
+			],
 			// ws tools flag to deco9de html enities on input
 			decodeHtmlEntitiesOnInput: false,
 			//
@@ -559,7 +562,7 @@
 			// apply in a correct manner. This may be dangerous.
 			body_id: 'bodyContent',
 			// Allowable file types for file picker
-			file_picker_types: 'file image media',
+//			file_picker_types: 'file image media',
 			// Enable/disable options in upload popup
 			image_description: true,
 			image_title: true,
