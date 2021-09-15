@@ -2,18 +2,23 @@
 	"@metadata": {
 		"authors": [
 			"Mainframe98",
-			"McDutchie"
+			"McDutchie",
+			"Romaine"
 		]
 	},
 	"tinymce-editsource": "Brontekst bewerken",
 	"tinymce-editsectionsource": "brontekst bewerken",
 	"tinymce-upload-alternate-text": "Alternatieve tekst",
+	"tinymce-upload-caption": "Onderschrift",
 	"tinymce-upload-link": "Koppeling",
 	"tinymce-upload-width": "Breedte",
 	"tinymce-upload-height": "Hoogte",
+	"tinymce-horizontal-align": "Horizontale uitlijning",
 	"tinymce-horizontal-align-left": "Links",
+	"tinymce-horizontal-align-centre": "Centreren",
 	"tinymce-horizontal-align-right": "Rechts",
 	"tinymce-horizontal-align-none": "Geen",
+	"tinymce-vertical-align": "Verticale uitlijning",
 	"tinymce-vertical-align-middle": "midden",
 	"tinymce-vertical-align-top": "bovenaan",
 	"tinymce-vertical-align-bottom": "onderaan",
@@ -41,8 +46,17 @@
 	"tinymce-link-target-none": "Geen",
 	"tinymce-link-target-new-window": "Nieuw venster",
 	"tinymce-link-target-label": "Doel",
+	"tinymce-link-type-external": "Extern",
+	"tinymce-link-type-internal": "Intern",
 	"tinymce-link-type-label": "Type",
 	"tinymce-link-link-list-none": "Geen",
 	"tinymce-link-page-not-found": "(de pagina bestaat niet)",
-	"tinymce-link": "Koppeling"
+	"tinymce-link-link-button-tooltip": "Link toevoegen of bewerken",
+	"tinymce-link-link-remove-button-tooltip": "Link verwijderen",
+	"tinymce-link-open-link": "Open link",
+	"tinymce-link": "Koppeling",
+	"tinymce-yes": "Ja",
+	"tinymce-no": "Nee",
+	"tinymce-ok": "OK",
+	"tinymce-cancel": "Annuleren"
 }
