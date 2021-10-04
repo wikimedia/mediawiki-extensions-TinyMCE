@@ -4808,7 +4808,7 @@ function wikiparser( editor ) {
 		// but not assigned to the template class so we put this
 		// here as a failsafe - must check with Yaron if a change
 		// is also needed in PF?
-		if ( $(editor.targetElm.id == 'pf_free_text') ) {
+		if ( editor.targetElm.id == 'pf_free_text' ) {
 			isInTemplate = true;
 		}
 
