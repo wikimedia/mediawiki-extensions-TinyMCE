@@ -25,7 +25,7 @@ if ( version_compare( $GLOBALS['wgVersion'], '1.31', '>' ) ) {
 			'Please use wfLoadExtension instead, ' .
 			'see https://www.mediawiki.org/wiki/Extension_registration for more details.'
 		); */
-		return; 
+		return;
 	}
 }
 
@@ -247,10 +247,10 @@ $wgDefaultUserOptions['tinymce-use'] = 1;
 // $pathfix = $IP . $GLOBALS['wgTinyMCEScriptPath'];
 
 $GLOBALS['wgTinyMCEEnabled'] = false;
-$GLOBALS['wgTinyMCETemplates'] = array();  
-$GLOBALS['wgTinyMCEDefaultTags'] = array();  
-$GLOBALS['wgTinyMCEExtensionTags'] = array();  
-$GLOBALS['wgTinyMCEPreservedTags'] = array();  
+$GLOBALS['wgTinyMCETemplates'] = array();
+$GLOBALS['wgTinyMCEDefaultTags'] = array();
+$GLOBALS['wgTinyMCEExtensionTags'] = array();
+$GLOBALS['wgTinyMCEPreservedTags'] = array();
 $GLOBALS['wgTinyMCEDisabledNamespaces'] = array( NS_MEDIAWIKI, NS_TEMPLATE );
 $GLOBALS['wgTinyMCEUnhandledStrings'] = array();
 $GLOBALS['wgTinyMCELoadOnView'] = false;
