@@ -66,7 +66,6 @@
 
 		editor.selection.setRng( fix_selection( editor.selection.getRng() ));
 
-		
 		if ( type == 'reference' ) {
 			if ( classList.includes( "mwt-reference" )) {
 				alert( translate( "tinymce-reference-alert-not-allowed" ));
@@ -75,7 +74,7 @@
 				refHtml = getSelection( editor, {format : 'html', convert2wiki : false});
 			}
 			if ( refHtml == '') refHtml = translate( "tinymce-reference-enterReferenceContent" );
-			reference = '<ref>' + '<span class="mwt-dummyReference" id="' + id + '">' + refHtml + '</span></ref>';
+			reference = '<ref>' + '<span class="mwt-dummyReference" contenteditable="true" id="' + id + '">' + refHtml + '</span></ref>';
 	  
 		} else if ( type = 'comment' ) {
 			// comments are plain text so convert the content to wikitext
@@ -85,7 +84,7 @@
 			// create inner span that contains the content of the comment
 			refHtml = 
 				'<span class="mwt-editable mwt-reference mwt-comment'  
-				+ '" id="' + id
+//				+ '" id="' + id
 				+ '" data-mwt-type="comment"'
 				+ '" draggable="false" contenteditable="true">' 
 				+ refHtml

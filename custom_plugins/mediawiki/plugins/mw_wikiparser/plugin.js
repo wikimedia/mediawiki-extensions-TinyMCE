@@ -1316,35 +1316,33 @@
 				if ( $1 == 'ref' ) {
 					// $1 = content of the comment
 					var refHtml,
-						showRef = '',
 						id = 'R' + createUniqueNumber();
 
-					if ( $3.includes( "mwt-dummyReference" )) showRef = " mwt-showReference";
+					if ( !$3.includes( "mwt-dummyReference" )) {
+						$3 = '<span class="mwt-hideReference mwt-reference" contenteditable="true" id="' + id + '">'
+						+ $3 + '</span>';
+					}
+
 					refHtml = $3.replace(/\n/gm, '{@@@ENL:0@@@}');
 					refHtml = refHtml.replace(/([^}])\{@@@ENL:0@@@}\{@@@ENL:0@@@}/gmi, '$1{@@@ELF:0@@@}');
 					refHtml = _convertWiki2Html( $.trim( $3 ), "inline" );
+
+					if ( refHtml.includes( "mwt-dummyReference" )) {
+						refHtml = refHtml.replace(/mwt-dummyReference/, 'mwt-reference mwt-showReference' );
+						refHtml = refHtml.replace(/\>/, ' id="' + id + '">');
+					}
 					
 					if ( refHtml == '' ) {
 						refHtml = ' ' + translate( 'tinymce-empty-reference' );
 					}
 					
 					// create inner span that contains the content of the reference
-					refHtml = 
-						'<span class="mwt-editable mwt-reference' + showRef
-						+ '" id="' + id
-						+ '" data-mwt-type="reference"'
-						+ '" draggable="false" contenteditable="true">' 
-						+ refHtml
-						+ '</span>';
-					
-					// create outer span that contains the visible comment placeholder
-					refHtml = '<span class="mwt-placeHolder mwt-referenceHolder " title="' 
-						+ translate( 'tinymce-editreference' ) 
+					refHtml = '<span class="mwt-placeHolder mwt-referenceHolder mwt-editable'
+						+ '" title="' + translate( 'tinymce-editreference' ) 
 						+ '" data-mwt-type="reference" contenteditable="false" draggable="true" data-mwt-ref="' 
 						+ id + '"> ' 
 						+ refHtml 
 						+ ' </span>';
-					  
 					return _getPlaceHolder4Html(match, refHtml, 'reference', 'editable')	
 				} else {
 					return _getPlaceHolder4Html(match, 'toParse', $1, 'nonEditable');
@@ -4118,7 +4116,7 @@
 		// if the content left over from browser back event
 		if ( e.content.match(/^<div class="tinywrapper">/)
 			|| e.content.match(/^<p class="mwt-notParagraph">/)
-			|| e.content.match(/\sclass=('|")[^\1]*?mwt-[^\1]*?\1/) ) {
+			|| e.content.match(/\sclass=('|")[^\1]*?mwt-[^\1]/) ) {
 			e.convert2html = false;
 		}
 
