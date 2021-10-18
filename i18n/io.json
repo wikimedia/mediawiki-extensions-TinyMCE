@@ -1,10 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
+			"JSantos",
 			"Joao Xavier"
 		]
 	},
+	"tinymce-upload-caption": "Deskripto-texto",
 	"tinymce-format-thumb": "miniaturo",
+	"tinymce-yes": "Yes",
+	"tinymce-no": "No",
 	"tinymce-ok": "O.K.",
 	"tinymce-cancel": "Nuligar"
 }
