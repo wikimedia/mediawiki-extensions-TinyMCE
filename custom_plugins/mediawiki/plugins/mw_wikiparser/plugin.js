@@ -4115,7 +4115,6 @@
 
 		// if the content left over from browser back event
 		if ( e.content.match(/^<div class="tinywrapper">/)
-			|| e.content.match(/^<p class="mwt-notParagraph">/)
 			|| e.content.match(/\sclass=('|")[^\1]*?mwt-[^\1]/) ) {
 			e.convert2html = false;
 		}
