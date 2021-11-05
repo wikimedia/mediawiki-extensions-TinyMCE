@@ -210,7 +210,7 @@ class TinyMCEHooks {
 		}
 		$vars['wgTinyMCEUserMayUploadFromURL'] = $userMayUploadFromURL;
 
-		if ($user->isBlocked()) {
+		if ( $user->getBlock() ) {
 			$userIsBlocked = true;
 		} else {
 			$userIsBlocked = false;
