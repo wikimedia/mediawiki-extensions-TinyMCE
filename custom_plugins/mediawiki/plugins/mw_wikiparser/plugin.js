@@ -4683,16 +4683,22 @@
 			// content results in an empty paragraph being added
 			var cursorLocation = getCursorOffset();
 
-			//if previous node is not null, carry on 
-			if ( cursorLocation.previousNode != null ) return;
+			//if not at start of editor content carry on 
+			if ( cursorLocation.cursor != 0 ) return;
 
+			//if previous node is not null, select and carry on 
 			_cursorOnDown = cursorLocation.cursor;
 			_cursorOnDownPreviousNode = cursorLocation.previousNode;
-			if (( _cursorOnDown == 0) && ( _cursorOnDownPreviousNode == null ))  {
+			if ( _cursorOnDownPreviousNode == null )  {
 				// we are already at start of text
 				var el = editor.dom.create( 'p', { 'class' : 'mwt-notParagraph' }, '<br class="mwt-emptyline">' );
 				editor.getBody().insertBefore(el, editor.getBody().firstChild);
 				editor.selection.setCursorLocation();
+				evt.preventDefault();
+				evt.stopImmediatePropagation();
+				evt.stopPropagation();
+			} else {
+				editor.selection.select( _cursorOnDownPreviousNode );
 				evt.preventDefault();
 				evt.stopImmediatePropagation();
 				evt.stopPropagation();
@@ -4718,6 +4724,7 @@
 					var el = editor.dom.create( 'p', { 'class' : 'mwt-paragraph' }, '<br class="mwt-emptyline">' );
 					$(el).insertAfter(editor.getBody().lastChild);;
 					editor.selection.select( el );
+            				editor.selection.scrollIntoView();
 					editor.selection.collapse();
 					evt.preventDefault();
 					evt.stopImmediatePropagation();
