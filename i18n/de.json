@@ -3,9 +3,13 @@
 		"authors": [
 			"Gebu",
 			"Kareyac",
-			"Zabe"
+			"Zabe",
+			"Umlaut"
 		]
 	},
+	"tinymce-editsource": "Quelltext bearbeiten",
+	"tinymce-editsectionsource": "Quelltext bearbeiten",
+	"tinymce-upload-caption": "Überschrift",
 	"tinymce-upload-link": "Link",
 	"tinymce-upload-width": "Breite",
 	"tinymce-upload-height": "Höhe",
@@ -25,10 +29,13 @@
 	"tinymce-openlink": "Link öffnen",
 	"tinymce-wikimagic": "Wikitext betrachten und bearbeiten",
 	"tinymce-wikimagic-title": "Wikitext betrachten und bearbeiten",
+	"tinymce-wikisourcecode-title": "Wiki Quellcode",
 	"tinymce-upload-type-label-wiki": "Datei in diesem Wiki",
 	"tinymce-upload-source-label": "Quelle",
+	"tinymce-upload-title-label": "Titel/Überschrift",
 	"tinymce-upload-summary-label": "Zusammenfassung",
 	"tinymce-upload-link-label": "Link zu",
+	"tinymce-upload-alttext-label": "Alternativtext",
 	"tinymce-upload-vertalign-middle-text": "Mitte",
 	"tinymce-upload-vertalign-top-text": "Oben",
 	"tinymce-upload-vertalign-bottom-text": "Unten",

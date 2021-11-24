@@ -1,9 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Zhang8569"
+			"Zhang8569",
+			")8"
 		]
 	},
 	"tinymce-reference-enterReferenceContent": "空白参考文献",
-	"tinymce-empty-reference": "空白参考文献"
+	"tinymce-empty-reference": "空白参考文献",
+	"tinymce-yes": "是",
+	"tinymce-no": "否",
+	"tinymce-ok": "确定",
+	"tinymce-cancel": "取消"
 }
