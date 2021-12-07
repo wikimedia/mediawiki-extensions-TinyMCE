@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajeje Brazorf"
+		]
+	},
+	"tinymce-upload-title-general": "Dittagghî dû file",
+	"tinymce-upload-dimensions-height-label": "a",
+	"tinymce-link-title-label": "Tìtulu",
+	"tinymce-link-type-label": "Tipu",
+	"tinymce-link-page-not-found": "(la pàggina nun esisti)",
+	"tinymce-yes": "Sì",
+	"tinymce-no": "No",
+	"tinymce-ok": "OK",
+	"tinymce-cancel": "Annulla"
+}
