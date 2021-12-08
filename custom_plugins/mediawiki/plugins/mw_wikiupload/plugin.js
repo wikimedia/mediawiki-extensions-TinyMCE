@@ -459,7 +459,7 @@ var wikiupload = function (editor) {
 				queryData.append("iiurlwidth", _userThumbsize);
 				queryData.append("titles", fileName);
 				queryData.append("format", "json");
-				
+
 				//as we now have created the data to send, we send it...
 				$.ajax( { 
 					url: _mwtWikiApi,
@@ -469,6 +469,8 @@ var wikiupload = function (editor) {
 					data: queryData,//the queryData object we created above
 					async: false,
 					success:function(data){
+						var imageURL;
+
 						if (typeof data.query == "undefined") {
 							fileDetails = JSON.parse(data)
 						} else if (typeof data.query.pages != "undefined") {
@@ -514,7 +516,8 @@ var wikiupload = function (editor) {
 					srcURL = dialogData.urlSrc,
 					destURL = dialogData.dest,
 					destinationFile = _mwtFileNamespace + ':' + destURL,
-					destinationFileDetails = getFileDetailsFromWiki(destinationFile);
+					destinationFileDetails = getFileDetailsFromWiki(destinationFile),
+					ignoreWarnings;
 
 				var file,
 					extension,
