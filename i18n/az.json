@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"NMW03"
+		]
+	},
+	"tinymce-format": "Format",
+	"tinymce-format-thumb": "kiçik şəkil",
+	"tinymce-format-frame": "çərçivə",
+	"tinymce-format-frameless": "çərçivəsiz"
+}

@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Abijeet Patro",
+			"Roovinn"
+		]
+	},
+	"tinymce-horizontal-align-left": "बाएँ ओर",
+	"tinymce-horizontal-align-right": "दाएँ ओर",
+	"tinymce-upload-link": "लिंक",
+	"tinymce-upload-summary-label": "सारांश",
+	"tinymce-upload-vertalign-middle-text": "मध्य",
+	"tinymce-upload-horizontalalign-left-text": "बाएँ ओर",
+	"tinymce-link-title-label": "शीर्षक",
+	"tinymce-link-target-label": "लक्ष्य",
+	"tinymce-link-type-label": "प्रकार",
+	"tinymce-link-link-list-none": "कोई नहीं"
+}

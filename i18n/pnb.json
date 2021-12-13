@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Abbas dhothar"
+		]
+	},
+	"tinymce-horizontal-align-left": "کھبے",
+	"tinymce-horizontal-align-right": "سجے",
+	"tinymce-horizontal-align-none": "کوئی نئیں",
+	"tinymce-format-thumb": "تھمب",
+	"tinymce-format-frame": "فریم",
+	"tinymce-format-frameless": "بغیر فریم",
+	"tinymce-upload-type-label": "اپلوڈ قسم",
+	"tinymce-upload-horizontalalign-left-text": "کھبے",
+	"tinymce-upload-horizontalalign-right-text": "سجے",
+	"tinymce-upload-horizontalalign-none-text": "کوئی نئیں",
+	"tinymce-upload-format-thumb-text": "تھمب",
+	"tinymce-upload-format-frame-text": "فریم",
+	"tinymce-upload-format-frameless-text": "بغیر فریم",
+	"tinymce-upload-format-none-text": "کوئی نئیں",
+	"tinymce-link-target-none": "کوئی نئیں",
+	"tinymce-link-link-list-none": "کوئی نئیں"
+}

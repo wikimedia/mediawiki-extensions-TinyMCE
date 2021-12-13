@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fitoschido",
+			"Mguix"
+		]
+	},
+	"tinymce-upload-alternate-text": "Text alternatiu",
+	"tinymce-upload-link": "Enllaç",
+	"tinymce-upload-width": "Amplada",
+	"tinymce-upload-height": "Alçada",
+	"tinymce-upload-type-label-file": "Fitxer local",
+	"tinymce-upload-type-label-url": "URL",
+	"tinymce-upload-type-label-wiki": "Fitxer en aquest wiki",
+	"tinymce-upload-summary-label": "Resum",
+	"tinymce-upload-alttext-label": "Text alternatiu",
+	"tinymce-upload-dimensions-label": "Dimensions",
+	"tinymce-upload-dimensions-constrain-text": "Fixa les proporcions",
+	"tinymce-upload-dimensions-width-label": "↔",
+	"tinymce-upload-dimensions-height-label": "↕",
+	"tinymce-upload-horizontalalign-none-text": "Cap",
+	"tinymce-upload-format-none-text": "Cap",
+	"tinymce-link-title-label": "Títol",
+	"tinymce-link-target-none": "Cap",
+	"tinymce-link-target-new-window": "Finestra nova",
+	"tinymce-link-type-label": "Tipus",
+	"tinymce-link-link-list-none": "Cap",
+	"tinymce-link-page-not-found": "(la pàgina no existeix)"
+}
