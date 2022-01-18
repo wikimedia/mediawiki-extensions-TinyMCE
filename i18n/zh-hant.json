@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kly"
+			"Kly",
+			"Tranve"
 		]
 	},
 	"tinymce-desc": "TinyMCE WYSIWYG 編輯器",
@@ -43,8 +44,8 @@
 	"tinymce-upload": "上傳/插入 Wiki 圖片",
 	"tooltip-tinymce-upload": "開始上傳/插入檔案",
 	"tinymce-openlink": "開啟連結",
-	"tinymce-wikimagic": "查看並編輯 wiki 語法",
-	"tinymce-wikimagic-title": "查看並編輯 wiki 語法",
+	"tinymce-wikimagic": "查看並編輯 wikitext",
+	"tinymce-wikimagic-title": "查看並編輯 wikitext",
 	"tinymce-browsercontextmenu": "您可以透過按下 Ctrl 鍵-滑鼠右鍵點擊來存取瀏覽器的上下文選單。要關閉 TinyMCE 上下文選單，請點擊「是」。",
 	"tinymce-browsercontextmenu-title": "瀏覽器上下文選單",
 	"tinymce-wikisourcecode": "查看並編輯 Wiki 原始碼",
@@ -126,7 +127,7 @@
 	"tinymce-wikicode-alert-image-request-invalid": "在此 Wiki 上請求查找頁面$1無效",
 	"tinymce-wikicode-alert-image-request-unknown-error": "嘗試在此 Wiki 上查找頁面$1時發生錯誤",
 	"tinymce-wikicode-alert-infinte-loop": "很抱歉，發生無限迴圈狀況。編輯器必須關閉。\n請檢查您的 Wiki 頁面是否有錯誤。",
-	"tinymce-wikicode-alert-mw-parser-fail": "在解析維基語法時出現錯誤：\n\n$1\n\n. 維基語法會插入到編輯視窗裡的不可編輯方框，以用於修正",
+	"tinymce-wikicode-alert-mw-parser-fail": "在解析wikitext時出現錯誤：\n\n$1\n\n. wikitext會插入到編輯視窗裡的不可編輯方框，以用於修正",
 	"tinymce-wikicode-non-rendering-single-linebreak": "不顯示單行換行字元",
 	"tinymce-link-title": "插入/編輯連結",
 	"tinymce-link-title-label": "標題",
