@@ -503,6 +503,7 @@
 			},
 			browser_spellcheck: true,
 			visual: false,
+			nonbreaking_force_tab: true,
 			nonbreaking_wrap: false,
 			wikimagic_context_toolbar: true,
 			browsercontextmenu_context_toolbar: true,
@@ -637,7 +638,7 @@
 						}
 					}
 				});
-	  		editor.on('ScriptsLoaded', function(e) {
+	  		editor.on('SkinLoaded', function(e) {
 	  			var _toolbarResizeFactor = tinymce.activeEditor.getParam("toolbarResize");
 			
 				  /**
@@ -650,75 +651,54 @@
 				   * @published 2016
 				   */
 					
-	  			var returnStyleSheetRules = (function (){  
-					  if(!document.styleSheets[0]){
-						  // Create the <style> tag
-						  var style = document.createElement("style");
-						  // WebKit hack :(
-						  style.appendChild(document.createTextNode(""));
-						  // Add the <style> element to the page
-						  document.head.appendChild(style);
-						
-					  }
-					  if(document.styleSheets[0].cssRules){
-						  return function (item) {return  item.cssRules;}
-					  } else if (document.styleSheets[0].rules) {
-						  return function (item) {return  item.rules;}
-					  }
-				  })();
+	  			function getStyleSheetRules( styleSheet ) {  
+						if ( styleSheet.cssRules && styleSheet.cssRules.length > 0 ) {
+							return styleSheet.cssRules;
+						} else if ( styleSheet.rules && styleSheet.ruleslength > 0 ) {
+							return styleSheet.rules;
+						} else {
+							return [];
+						}
+					}
 					
-				  function getCSSRule(search, returnArray) {  
-					  let styleSheets = [].map.call(document.styleSheets, function(item) {
-						  return [].slice.call(returnStyleSheetRules(item));
-					  });
-			
-					  let rule = null;
-					  let rules = [];
-					  styleSheets.forEach(function(thisSheet){
-						  let findTheRule = thisSheet.filter(function(rule) {
-							  if(rule.selectorText){
-								  if(rule.selectorText == search){
-									  return rule.selectorText.indexOf(search)>=0;	
-								  }else return false;
-							  }
-						  });
-						
-						  if(findTheRule.length){
-								rules = rules.concat(findTheRule);
-								rule = findTheRule[findTheRule.length-1];    //findTheRule will contain all rules that reference the selector. findTheRule[findTheRule.length-1] contains the last rule.
-						  }
-					  });
-	  
-					  if (rule){
-						  if(returnArray){
-							  return rules;
-						  }else{
-							  return rule;
-						  }
-					  }else{
-						  let sheet = document.styleSheets[0];   //if the rule we are looking for doesn't exist, we create it
-						  var pos = sheet.cssRules.length;
-						  rule = search + "{  }";
-						  sheet.insertRule( rule ,pos );
-						  rule = sheet.cssRules[pos];
-					  }
-		  
-					  if(returnArray){
-						  returnStyleSheetRules(document.styleSheets[0]);
-						  return rules = rules.concat(rule);
-					  }else{
-						  returnStyleSheetRules(document.styleSheets[0])[pos];
-						  return rule;
-					  }
-				  }
-	  
-				  var myRules  = getCSSRule('.tox-tbtn', true);
+				function getCSSRules( selector, returnArray) {  
+					var styleSheetRules = [];
 
-				  myRules.forEach(function(thisRule){
-					  thisRule.style.transform = "scale(" + _toolbarResizeFactor + ")";
-					  thisRule.style.setProperty ("height", 34 * _toolbarResizeFactor + "px", "important");
-					  thisRule.style.setProperty ("width", "auto", "important");
-				  });
+					let styleSheets = Array.from( document.styleSheets ).filter(
+							( styleSheet ) => {
+								return !styleSheet.href || styleSheet.href.startsWith(window.location.origin);
+							}
+						)
+
+					if( !styleSheets[0] ){
+						// Create the <style> tag
+						var style = document.createElement( "style" );
+						// WebKit hack :(
+						style.appendChild( document.createTextNode( "" ));
+						// Add the <style> element to the page
+						document.head.appendChild( style );
+					}
+
+					let targetStyleSheetsRules = [];
+
+					styleSheets.forEach( function( styleSheet ) {
+						styleSheetRules = getStyleSheetRules( styleSheet );
+						for ( var x = 0; x < styleSheetRules.length; x++ ) {        
+							if ( styleSheetRules[x].selectorText == selector ) {
+								targetStyleSheetsRules = targetStyleSheetsRules.concat( styleSheetRules[x] );
+							}         
+						}
+					});
+					return targetStyleSheetsRules;
+				}
+	  
+				var myRules  = getCSSRules( '.tox-tbtn', true );
+
+				myRules.forEach( function( thisRule ){
+					thisRule.style.transform = "scale(" + _toolbarResizeFactor + ")";
+					thisRule.style.setProperty ( "height", 34 * _toolbarResizeFactor + "px", "important" );
+					thisRule.style.setProperty ( "width", "auto", "important" );
+				});
 			  });
 			},
 			init_instance_callback: function (instance) {
@@ -753,10 +733,28 @@
 		};
 	};
 
-	var mwTinyMCEInit = function( tinyMCESelector, settings ) {
-		var customSettings = updateSettings( tinyMCESelector, settings );
+	window.mwTinyMCEInit = function( tinyMCESelector, settings ) {
+		var customSettings = updateSettings( tinyMCESelector, settings ),
+			target = tinymce.DOM.get( tinyMCESelector.substring( 1 ) ),
+			editor = '';
 
-		window.tinymce.init( customSettings );
+		//remove the minimize on blur class as this throws PF multiple fields
+		// remove any existing editor on the element first otherwise may not
+		// work when initialising PageForms multiple fields
+		if( target && target.nextSibling && target.nextSibling.classList.contains( 'tox-tinymce' )) {
+			editor = tinymce.get( target.id );
+			if ( !editor ) {
+				target.nextSibling.remove();
+			}
+		}
+		if ( !editor ) {
+			tinymce.init( customSettings ).then( function(editors) {
+				if( target && target.nextSibling && target.nextSibling.classList.contains( 'tox-tinymce' )) {
+					tinymce.DOM.show( target.nextSibling );
+				}
+			});
+
+		}
 	};
 
 	var updateSettings = function( tinyMCESelector, settings ) {
@@ -835,7 +833,7 @@
 	};
 
 	Object.keys( tinyMCESettings ).forEach( function(selector, index) {
-			mwTinyMCEInit( selector, this[selector] );
+			window.mwTinyMCEInit( selector, this[selector] );
 		}, tinyMCESettings );
 
 	// Let others know we're done here
