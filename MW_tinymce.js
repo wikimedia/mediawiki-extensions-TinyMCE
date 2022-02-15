@@ -19,7 +19,7 @@
 		tinyMCETagList = mw.config.get( 'wgTinyMCETagList' ),
 		tinyMCELanguage = mw.config.get( 'wgTinyMCELanguage' ),
 		tinyMCEDirectionality = mw.config.get( 'wgTinyMCEDirectionality' ),
-		tinyMCESettings = mw.config.get( 'wgTinyMCESettings' ) ? mw.config.get( 'wgTinyMCESettings' ) : { "#wpTextbox1": [] },
+		tinyMCESettings = mw.config.get( 'wgTinyMCESettings' ) ? mw.config.get( 'wgTinyMCESettings' ) : { ".tinymce, #wpTextbox1": [] },
 		tinyMCEVersion = mw.config.get( 'wgTinyMCEVersion' ),
 		tinyMCELangURL = null,
 		mw_skin = mw.config.get( 'skin' ),

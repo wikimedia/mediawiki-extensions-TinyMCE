@@ -459,7 +459,7 @@ var wikiupload = function (editor) {
 				queryData.append("iiurlwidth", _userThumbsize);
 				queryData.append("titles", fileName);
 				queryData.append("format", "json");
-				
+
 				//as we now have created the data to send, we send it...
 				$.ajax( { 
 					url: _mwtWikiApi,
