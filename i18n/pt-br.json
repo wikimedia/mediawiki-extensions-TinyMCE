@@ -3,7 +3,8 @@
 		"authors": [
 			"Eduardo Addad de Oliveira",
 			"Eduardoaddad",
-			"Stanglavine"
+			"Stanglavine",
+			"TheEduGobi"
 		]
 	},
 	"tinymce-desc": "O editor TinyMCE WYSIWYG",
@@ -117,7 +118,7 @@
 	"tinymce-upload-alert-correct-and-try-again": "Corrija os erros e tente novamente",
 	"tinymce-upload-alert-destination-filename-needed": "Desculpe, você deve fornecer um nome de arquivo de destino. Se o gerado estiver OK, pressione Enviar novamente ou altere-o",
 	"tinymce-upload-alert-source-or-destination-undefined": "Sinto muito, há um problema com a origem ou o destino indefinidos. Por favor verifique e tente novamente",
-	"tinymce-upload-alert-file-source-empty": "Você deve fornecer o arquivo de origem da imagem na guia Detalhes do arquivo antes de acessar suas propriedades",
+	"tinymce-upload-alert-file-source-empty": "Você deve fornecer o arquivo de origem da imagem na aba “Detalhes do arquivo”",
 	"tinymce-upload-confirm-file-already-exists": "<p>O nome do arquivo fonte já existe na wiki ou a fonte é uma duplicata de um arquivo na wiki. Selecione uma das seguintes ações:<ul><li><b>sobrescrever</b> para sobrescrever o arquivo existente na wiki</li><li><b>usar</b> para usar o arquivo existente na wiki </li><li><b>renomear</b> para retornar à caixa de diálogo e renomear a fonte</li></ul></p>",
 	"tinymce-upload-confirm-file-name-already-exists": "<p>O nome do arquivo fonte já existe na wiki ou a fonte é uma duplicata de um arquivo na wiki. Selecione uma das seguintes ações:<ul><li><b>sobrescrever</b> para sobrescrever o arquivo existente na wiki</li><li><b>usar</b> para usar o arquivo existente na wiki </li><li><b>renomear</b> para retornar à caixa de diálogo e renomear a fonte</li></ul></p>",
 	"tinymce-upload-confirm-file-is-duplicate": "O arquivo $1 é uma duplicata do arquivo $2 nessa wiki. Selecione Sim se desejar usar o arquivo existente ou selecione Não e escolha um arquivo diferente para este upload",
