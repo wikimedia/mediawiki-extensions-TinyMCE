@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Amire80",
 			"YaronSh"
 		]
 	},
@@ -9,6 +10,7 @@
 	"tinymce-upload-source-label": "מקור",
 	"tinymce-upload-button-label-overwrite": "שכתוב",
 	"tinymce-upload-button-label-rename": "שינוי שם",
+	"tinymce-upload-alert-file-source-empty": "חובה לספק קובץ מקור לתמונה בלשונית ״פרטי הקובץ״.",
 	"tinymce-link-type-external": "חיצוני",
 	"tinymce-link-type-internal": "פנימי",
 	"tinymce-yes": "כן",
