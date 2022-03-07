@@ -6,7 +6,8 @@
 			"MuratTheTurkish",
 			"Pols12",
 			"Robby",
-			"Umherirrender"
+			"Umherirrender",
+			"Amire80"
 		]
 	},
 	"tinymce-desc": "{{desc|name=TinyMCE|url=https://www.mediawiki.org/wiki/Extension:TinyMCE}}",
@@ -66,7 +67,7 @@
 	"tinymce-upload-alttext-label": "Used as label. Used with javascript.",
 	"tinymce-upload-alttext-tooltip": "Used as toolip. Used with javascript.",
 	"tinymce-upload-dimensions-label": "Used as label. Used with javascript.",
-	"tinymce-upload-dimensions-tooltip": "Used as toolip. Used with javascript.",
+	"tinymce-upload-dimensions-tooltip": "Used as tooltip. Used with javascript.",
 	"tinymce-upload-dimensions-constrain-text": "Used as option. Used with javascript.",
 	"tinymce-upload-dimensions-width-label": "Used as label. Used with javascript. The abbreviation is \"width\".",
 	"tinymce-upload-dimensions-height-label": "Used as label. Used with javascript. The abbreviation is \"height\".",
