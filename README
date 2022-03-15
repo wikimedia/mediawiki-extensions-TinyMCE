@@ -76,10 +76,6 @@ higher, add the following line to your LocalSettings.php file:
 
 	wfLoadExtension( 'TinyMCE' );
 
-For earlier versions, you should call the following instead:
-
-	require_once "$IP/extensions/TinyMCE/TinyMCE.php";
-
 == Configuration ==
 
 The TinyMCE extension comes with a default configuration. You can run the
