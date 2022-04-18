@@ -3,8 +3,12 @@
 		"authors": [
 			"FarsiNevis",
 			"Jeeputer",
-			"Saadat"
+			"Saadat",
+			"Mohammad ebz"
 		]
 	},
-	"tinymce-desc": "ویرایشگر ویزی‌ویگ تاینی‌ام‌سی‌ای"
+	"tinymce-desc": "ویرایشگر ویزی‌ویگ تاینی‌ام‌سی‌ای",
+	"tinymce-editsource": "ویرایش مبدأ",
+	"tinymce-editsectionsource": "ویرایش مبدأ",
+	"tinymce-link-link-list-label": "فهرست پیوند"
 }
