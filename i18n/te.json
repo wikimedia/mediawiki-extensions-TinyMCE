@@ -6,6 +6,7 @@
 		]
 	},
 	"tinymce-upload-title-image": "బొమ్మ లక్షణాలు",
+	"tinymce-wikicode-alert-mw-parser-fail": "వికీటెక్స్టును పార్సు చెయ్యడంలో ఏదో లోపం జరిగింది: \n\n$1\n\n. ఆ వికీటెక్స్టును సరిచేసేందుకు, దిద్దుబాటు చేసే వీలు లేని పెట్టెలో చూపిస్తాం",
 	"tinymce-link-title": "లింకును చేర్చండి/సవరించండి",
 	"tinymce-link-link-button-tooltip": "లింకును చేర్చండి/సవరించండి"
 }

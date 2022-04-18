@@ -132,7 +132,7 @@
 	"tinymce-wikicode-alert-image-request-invalid": "La requête pour trouver la page $1 sur ce wiki est incorrecte",
 	"tinymce-wikicode-alert-image-request-unknown-error": "Une erreur a été rencontrée en essayant de trouver la page $1 sur ce wiki",
 	"tinymce-wikicode-alert-infinte-loop": "Désolé, une boucle infinie a eu lieu. L’éditeur a dû se fermer.\nVeuillez vérifier les erreurs dans votre page wiki.",
-	"tinymce-wikicode-alert-mw-parser-fail": "Quelque chose s’est mal passé en analysant le texte du wiki :\n\n$1\n\nLe wikicode sera inséré dans un champ non modifiable sur la fenêtre de modification pour correction",
+	"tinymce-wikicode-alert-mw-parser-fail": "Quelque chose s’est mal passé en analysant le wikicode :\n\n$1\n\nLe wikicode sera inséré dans un champ non modifiable de la fenêtre de modification pour correction.",
 	"tinymce-wikicode-non-rendering-single-linebreak": "Saut de ligne unique non affiché",
 	"tinymce-link-title": "Insérer / modifier le lien",
 	"tinymce-link-title-label": "Titre",
