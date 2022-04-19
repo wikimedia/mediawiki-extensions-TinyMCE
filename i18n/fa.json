@@ -2,16 +2,21 @@
 	"@metadata": {
 		"authors": [
 			"FarsiNevis",
-			"Saadat"
+			"Saadat",
+			"Jeeputer",
+			"Mohammad ebz"
 		]
 	},
 	"tinymce-desc": "ویرایشگر ویزی‌ویگ تاینی‌ام‌سی‌ای",
+	"tinymce-editsource": "ویرایش مبدأ",
+	"tinymce-editsectionsource": "ویرایش مبدأ",
 	"tinymce-upload-caption": "عنوان",
 	"tinymce-upload-title-general": "جزئیات پرونده",
 	"tinymce-upload-title-image": "ویژگی‌های تصویر",
 	"tinymce-upload-source-label": "منبع",
 	"tinymce-upload-button-label-use": "استفاده",
 	"tinymce-upload-button-label-rename": "تغییر نام",
+	"tinymce-link-link-list-label": "فهرست پیوند",
 	"tinymce-link-type-external": "بیرونی",
 	"tinymce-link-type-internal": "درونی",
 	"tinymce-yes": "بله",
