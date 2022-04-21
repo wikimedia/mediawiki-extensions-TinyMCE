@@ -3,7 +3,8 @@
 		"authors": [
 			"Kareyac",
 			"Rivka Silinsky",
-			"Rubin16"
+			"Rubin16",
+			"Kaganer"
 		]
 	},
 	"tinymce-editcomment": "Комментарий, дважды щелкните для редактирования",
@@ -15,8 +16,8 @@
 	"tinymce-format": "Формат",
 	"tinymce-format-frame": "рамка",
 	"tinymce-format-frameless": "без рамки",
-	"tinymce-wikimagic": "Просмотр и редактирование викитекста",
-	"tinymce-wikimagic-title": "Просмотр и редактирование викитекста",
+	"tinymce-wikimagic": "Просмотр и редактирование вики-текста",
+	"tinymce-wikimagic-title": "Просмотр и редактирование вики-текста",
 	"tinymce-browsercontextmenu": "Вы можете получить доступ к контекстному меню браузера, нажав ctrl и правую кнопку мыши. Чтобы отключить контекстное меню TinyMCE, нажмите Да",
 	"tinymce-insert-linebreak": "Вставить неотображаемый одинарный разрыв строки в текущее положение",
 	"tinymce-upload-title-general": "Детали файла",
