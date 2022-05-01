@@ -1919,7 +1919,7 @@
 //0125			text = text.replace(/(^|\n)(\{\|[^\n]*?)(\n+)/gmi, function(match, $1, $2, $3) {
 			text = text.replace(/(^|\n)(\{\|[^\n]*?)(\n+)/i, function(match, $1, $2, $3) { //0125
 				// $1 = start of page or new line before table defiunition
-				// $2 = the first line of the table defintion 
+				// $2 = the first line of the table definition 
 				// $3 = the empty new lines immediately following the table definition
 				var tableStart;
 
