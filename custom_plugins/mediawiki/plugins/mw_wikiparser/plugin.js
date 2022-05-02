@@ -1024,7 +1024,7 @@
 			// and send it to be parsed, then split out the parsed code and replace it 
 			// within the text
 			if (parserTable.length > 0) {
-				// we need to wrap the seperator {@@@@} with two '\n's because
+				// we need to wrap the separator {@@@@} with two '\n's because
 				// of the way pre and pseudo pre tags are handled in the wiki parser
 
 				// add trailing separator in case last item parses as nothing
