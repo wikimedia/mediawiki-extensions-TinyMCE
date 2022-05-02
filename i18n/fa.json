@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Beginneruser",
 			"FarsiNevis",
 			"Jeeputer",
 			"Mohammad ebz",
@@ -10,7 +11,7 @@
 	"tinymce-desc": "ویرایشگر ویزی‌ویگ تاینی‌ام‌سی‌ای",
 	"tinymce-editsource": "ویرایش مبدأ",
 	"tinymce-editsectionsource": "ویرایش مبدأ",
-	"tinymce-upload-caption": "عنوان",
+	"tinymce-upload-caption": "برنگاشت",
 	"tinymce-upload-title-general": "جزئیات پرونده",
 	"tinymce-upload-title-image": "ویژگی‌های تصویر",
 	"tinymce-upload-source-label": "منبع",
