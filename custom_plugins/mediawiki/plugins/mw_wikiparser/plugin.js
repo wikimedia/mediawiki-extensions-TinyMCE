@@ -2712,7 +2712,7 @@
 						// $3 = any non-excluded text following the single new line 
 	
 						// if the line preceding the single new line doesn't end with any of the
-						// folowing characters in a line or start with others then render as a new line
+						// following characters in a line or start with others then render as a new line
 						if ($1.match(matcher2)){
 							// ignore if the first line following starts with a block tag
 							return match;
