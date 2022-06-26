@@ -429,7 +429,12 @@ class TinyMCEHooks {
 		}
 
 		if ( !empty( $wgTinyMCEUnhandledStrings ) ) {
-			$wikiPage = new WikiPage( $title );
+			if ( method_exists( MediaWikiServices::class, 'getWikiPageFactory' ) ) {
+				// MW 1.36+
+				$wikiPage = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
+			} else {
+				$wikiPage = new WikiPage( $title );
+			}
 			$content = $wikiPage->getContent();
 			if ( $content != null ) {
 				$pageText = $content->getText();
