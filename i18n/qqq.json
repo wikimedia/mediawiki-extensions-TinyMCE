@@ -7,12 +7,13 @@
 			"MuratTheTurkish",
 			"Pols12",
 			"Robby",
-			"Umherirrender"
+			"Umherirrender",
+			"Verdy p"
 		]
 	},
 	"tinymce-desc": "{{desc|name=TinyMCE|url=https://www.mediawiki.org/wiki/Extension:TinyMCE}}",
-	"tinymce-editsource": "Used as description for an edit tab",
-	"tinymce-editsectionsource": "Used as description for an edit tab",
+	"tinymce-editsource": "Used as description for an edit tab.\n{{Identical/Edit source}}",
+	"tinymce-editsectionsource": "Used as description for an edit tab.\n{{Identical/Edit source}}",
 	"tinymce-editcomment": "Used as title for an element",
 	"tinymce-editreference": "Used as title for an element",
 	"tinymce-notice": "{{notranslate}}\nUsed as notice message on edit page",
