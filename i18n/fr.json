@@ -10,8 +10,8 @@
 		]
 	},
 	"tinymce-desc": "L’éditeur WYSIWYG TinyMCE",
-	"tinymce-editsource": "Modifier la source",
-	"tinymce-editsectionsource": "modifier la source",
+	"tinymce-editsource": "Modifier le wikicode",
+	"tinymce-editsectionsource": "modifier le wikicode",
 	"upload-displayparams": "Afficher les paramètres",
 	"tinymce-horizontal-align": "Alignement horizontal",
 	"tinymce-horizontal-align-left": "À gauche",
