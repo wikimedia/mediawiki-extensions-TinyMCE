@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Mim.saitkilic",
-			"MuratTheTurkish"
+			"MuratTheTurkish",
+			"SaldırganSincap"
 		]
 	},
 	"tinymce-desc": "TinyMCE WYSIWYG editörü",
@@ -116,7 +117,7 @@
 	"tinymce-upload-alert-correct-and-try-again": "Lütfen hataları düzeltip tekrar deneyin",
 	"tinymce-upload-alert-destination-filename-needed": "Üzgünüm, bir hedef dosya adı sağlamanız gerekiyor. Oluşturulan tamamsa, tekrar Gönder'e basın veya değiştirin",
 	"tinymce-upload-alert-source-or-destination-undefined": "Maalesef kaynak veya hedefin tanımlanmamış olmasıyla ilgili bir sorun var. Lütfen kontrol edip tekrar deneyin",
-	"tinymce-upload-alert-file-source-empty": "Resim özelliklerine erişmeden önce Dosya ayrıntıları sekmesinde bir resim kaynak dosyası sağlamalısınız",
+	"tinymce-upload-alert-file-source-empty": "Dosya ayrıntıları sekmesinde bir resim kaynak dosyası sağlamalısınız",
 	"tinymce-upload-confirm-file-already-exists": "<p>Kaynak dosya adı vikide zaten var veya kaynak vikideki bir dosyanın kopyası. Aşağıdaki eylemlerden birini seçin:<ul><li>vikideki mevcut dosyanın üzerine yazmak için <b>üzerine yazın</b></li><li>vikideki mevcut dosyayı kullanmak için <b>kullanın</b> </li><li>iletişim kutusuna dönmek ve kaynağı yeniden adlandırmak için <b>yeniden adlandırın</b></li></ul></p>",
 	"tinymce-upload-confirm-file-name-already-exists": "<p>Kaynak dosya adı vikide zaten var veya kaynak wikideki bir dosyanın kopyası. Aşağıdaki eylemlerden birini seçin:<ul><li>vikideki mevcut dosyanın üzerine yazmak için <b>üzerine yazın</b></li><li>vikideki mevcut dosyayı kullanmak için <b>kullanın</b> </li><li>iletişim kutusuna dönmek ve kaynağı yeniden adlandırmak için <b>yeniden adlandırın</b></li></ul></p>",
 	"tinymce-upload-confirm-file-is-duplicate": "$1 dosyası, bu vikideki $2 dosyasının kopyasıdır. Mevcut dosyayı kullanmak istiyorsanız Evet'i seçin veya Hayır'ı seçin ve bu yükleme için farklı bir dosya seçin",
@@ -127,7 +128,7 @@
 	"tinymce-wikicode-alert-image-request-invalid": "Bu vikideki $1 sayfasını bulma isteği geçersiz",
 	"tinymce-wikicode-alert-image-request-unknown-error": "Bu vikide ki sayfa $1 bulunmaya çalışılırken hata ile karşılaşıldı",
 	"tinymce-wikicode-alert-infinte-loop": "Üzgünüz, sonsuz bir döngü oluştu. Editör kapanmak zorunda kaldı.\nLütfen hatalar için viki sayfanızı kontrol edin.",
-	"tinymce-wikicode-alert-mw-parser-fail": "Viki metni incelenirken bir sorun oluştu: \n\n$1\n\n. Vikimetin, düzeltme için pencereyi düzenlerken düzenlenemez bir kutuya eklenecektir.",
+	"tinymce-wikicode-alert-mw-parser-fail": "Viki metni incelenirken bir sorun oluştu: \n\n$1\n\n. Vikimetin, düzeltme için düzenleme penceresindeki düzenlenemez bir kutuya eklenecektir.",
 	"tinymce-wikicode-non-rendering-single-linebreak": "Görüntülenmeyen tek satır sonu",
 	"tinymce-link-title": "Bağlantı ekle/düzenle",
 	"tinymce-link-title-label": "Başlık",
