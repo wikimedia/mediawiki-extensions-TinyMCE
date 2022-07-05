@@ -10,8 +10,8 @@
 		]
 	},
 	"tinymce-desc": "L’éditeur WYSIWYG TinyMCE",
-	"tinymce-editsource": "Modifier la source",
-	"tinymce-editsectionsource": "modifier la source",
+	"tinymce-editsource": "Modifier le wikicode",
+	"tinymce-editsectionsource": "modifier le wikicode",
 	"tinymce-editcomment": "Commentaire, double-cliquer pour modifier",
 	"tinymce-editreference": "Référence, double-cliquer pour modifier",
 	"upload-displayparams": "Afficher les paramètres",
