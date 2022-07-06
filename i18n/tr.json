@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Mim.saitkilic",
-			"MuratTheTurkish"
+			"MuratTheTurkish",
+			"SaldırganSincap"
 		]
 	},
 	"tinymce-desc": "TinyMCE WYSIWYG editörü",
@@ -116,7 +117,7 @@
 	"tinymce-upload-alert-correct-and-try-again": "Lütfen hataları düzeltip tekrar deneyin",
 	"tinymce-upload-alert-destination-filename-needed": "Üzgünüm, bir hedef dosya adı sağlamanız gerekiyor. Oluşturulan tamamsa, tekrar Gönder'e basın veya değiştirin",
 	"tinymce-upload-alert-source-or-destination-undefined": "Maalesef kaynak veya hedefin tanımlanmamış olmasıyla ilgili bir sorun var. Lütfen kontrol edip tekrar deneyin",
-	"tinymce-upload-alert-file-source-empty": "Resim özelliklerine erişmeden önce Dosya ayrıntıları sekmesinde bir resim kaynak dosyası sağlamalısınız",
+	"tinymce-upload-alert-file-source-empty": "Dosya ayrıntıları sekmesinde bir resim kaynak dosyası sağlamalısınız",
 	"tinymce-upload-confirm-file-already-exists": "<p>Kaynak dosya adı vikide zaten var veya kaynak vikideki bir dosyanın kopyası. Aşağıdaki eylemlerden birini seçin:<ul><li>vikideki mevcut dosyanın üzerine yazmak için <b>üzerine yazın</b></li><li>vikideki mevcut dosyayı kullanmak için <b>kullanın</b> </li><li>iletişim kutusuna dönmek ve kaynağı yeniden adlandırmak için <b>yeniden adlandırın</b></li></ul></p>",
 	"tinymce-upload-confirm-file-name-already-exists": "<p>Kaynak dosya adı vikide zaten var veya kaynak wikideki bir dosyanın kopyası. Aşağıdaki eylemlerden birini seçin:<ul><li>vikideki mevcut dosyanın üzerine yazmak için <b>üzerine yazın</b></li><li>vikideki mevcut dosyayı kullanmak için <b>kullanın</b> </li><li>iletişim kutusuna dönmek ve kaynağı yeniden adlandırmak için <b>yeniden adlandırın</b></li></ul></p>",
 	"tinymce-upload-confirm-file-is-duplicate": "$1 dosyası, bu vikideki $2 dosyasının kopyasıdır. Mevcut dosyayı kullanmak istiyorsanız Evet'i seçin veya Hayır'ı seçin ve bu yükleme için farklı bir dosya seçin",
