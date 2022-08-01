@@ -5,7 +5,12 @@
 		]
 	},
 	"tinymce-wikisourcecode": "Čuäʹjet da muuʹtt wikiprojeeʹkt käivvkood",
+	"tinymce-upload-width": "Kobddâdvuõtt",
+	"tinymce-upload-height": "Õllâdvuõtt",
 	"tinymce-upload-type-label-url": "URL",
 	"tinymce-upload-summary-label": "Õʹhtteǩeässmõš",
+	"tinymce-upload-menu-item-text": "Ruõkk/Muuʹtt teâttõõzz",
+	"tinymce-link-title": "Lââʹzzet/Muuʹtt liiŋk",
+	"tinymce-link-link-button-tooltip": "Lââʹzzet/Muuʹtt liiŋk",
 	"tinymce-link": "Liŋkk"
 }
