@@ -5,6 +5,8 @@
 		]
 	},
 	"tinymce-upload-caption": "Kartt-teʹkstt",
+	"tinymce-upload-width": "Kobddâdvuõtt",
+	"tinymce-upload-height": "Õllâdvuõtt",
 	"tinymce-wikimagic": "Čuäʹjet da muuʹtt wikiteeʹkst",
 	"tinymce-wikimagic-title": "Čuäʹjet da muuʹtt wikiteeʹkst",
 	"tinymce-wikisourcecode": "Čuäʹjet da muuʹtt wikiprojeeʹkt käivvkood",
@@ -12,6 +14,11 @@
 	"tinymce-upload-type-label-url": "URL",
 	"tinymce-upload-source-label": "Teâttkäivv",
 	"tinymce-upload-summary-label": "Õʹhtteǩeässmõš",
+	"tinymce-upload-button-label-use": "Ââʹn",
 	"tinymce-upload-button-label-rename": "Uuʹd ođđ nõõm",
-	"tinymce-link": "Liŋkk"
+	"tinymce-upload-menu-item-text": "Ruõkk/Muuʹtt teâttõõzz",
+	"tinymce-link-title": "Lââʹzzet/Muuʹtt liiŋk",
+	"tinymce-link-link-button-tooltip": "Lââʹzzet/Muuʹtt liiŋk",
+	"tinymce-link": "Liŋkk",
+	"tinymce-reference-insertReference": "Lââʹzzet teâttkääiv"
 }
