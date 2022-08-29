@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Seipinne"
+			"Seipinne",
+			"Yupik"
 		]
 	},
-	"tinymce-ok": "OK"
+	"tinymce-ok": "OK",
+	"tinymce-cancel": "Jooskâ"
 }
