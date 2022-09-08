@@ -424,8 +424,15 @@ class TinyMCEHooks {
 		if ( $context->getRequest()->getCheck( 'undo' ) ) {
 			return $wgTinyMCEUse = false;
 		}
-		if ( !$context->getUser()->getOption( 'tinymce-use' ) ) {
-			return $wgTinyMCEUse = false;
+		if ( method_exists( MediaWikiServices::class, 'getUserOptionsLookup' ) ) {
+			// MW 1.35+
+			if ( !MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption( $context->getUser(), 'tinymce-use' ) ) {
+				return $wgTinyMCEUse = false;
+			}
+		} else {
+			if ( !$context->getUser()->getOption( 'tinymce-use' ) ) {
+				return $wgTinyMCEUse = false;
+			}
 		}
 
 		if ( !empty( $wgTinyMCEUnhandledStrings ) ) {
