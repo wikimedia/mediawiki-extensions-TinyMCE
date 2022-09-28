@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vlad5250"
+		]
+	},
+	"tinymce-editsource": "Uredi kôd",
+	"tinymce-editsectionsource": "uredi kôd",
+	"tinymce-upload-caption": "Opis",
+	"tinymce-upload-link": "Poveznica (link)",
+	"tinymce-upload-width": "Širina",
+	"tinymce-upload-height": "Visina"
+}
