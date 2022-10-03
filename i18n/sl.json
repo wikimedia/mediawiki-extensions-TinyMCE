@@ -4,7 +4,9 @@
 			"Eleassar"
 		]
 	},
-	"tinymce-format": "Oblika",
+	"tinymce-editsource": "Uredi vir",
+	"tinymce-editsectionsource": "uredi vir",
+	"tinymce-format": "Format",
 	"tinymce-upload-summary-label": "Povzetek",
 	"tinymce-link-title": "Vstavi/uredi povezavo",
 	"tinymce-link-type-label": "Vrsta"
