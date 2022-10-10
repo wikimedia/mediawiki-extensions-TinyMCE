@@ -3,12 +3,17 @@
 		"authors": [
 			"Kareyac",
 			"Rivka Silinsky",
-			"Rubin16"
+			"Rubin16",
+			"Kaganer",
+			"Pacha Tchernof",
+			"Soul Train"
 		]
 	},
+	"tinymce-editsource": "Править код",
 	"tinymce-format": "Формат",
 	"tinymce-format-frame": "рамка",
 	"tinymce-format-frameless": "без рамки",
+	"tinymce-preference": "Использовать редактор TinyMCE для редактирования страниц",
 	"tinymce-upload-link": "Ссылка",
 	"tinymce-upload-width": "Ширина",
 	"tinymce-upload-height": "Высота",
