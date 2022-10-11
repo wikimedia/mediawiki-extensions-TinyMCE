@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jon Harald Søby"
+			"Jon Harald Søby",
+			"EdoAug"
 		]
 	},
 	"tinymce-desc": "TinyMCEs WYSIWYG-editor",
@@ -41,7 +42,7 @@
 	"tooltip-tinymce-upload": "Begynn opplasting/sett inn fil",
 	"tinymce-openlink": "Åpne lekne",
 	"tinymce-wikimagic": "Legg til wikimaler, parserfunksjoner og magiske ord",
-	"tinymce-wikimagic-title": "Wikimaler, parserfunksjoner og magiske ord",
+	"tinymce-wikimagic-title": "Vis og rediger wikitekst",
 	"tinymce-browsercontextmenu": "Du kommer til nettleserens kontekstmeny med Ctrl+høyreklikk. Trykk OK for å slå av TinyMCEs kontekstmeny",
 	"tinymce-browsercontextmenu-title": "Nettleserens kontekstmeny",
 	"tinymce-wikisourcecode": "Vis og rediger wikikildekode",
@@ -49,13 +50,13 @@
 	"tinymce-insert-linebreak": "Sett inn et enkelt linjeskift ved nåværende posisjon",
 	"tinymce-preference": "Bruk TinyMCE-editoren for å redigere sider",
 	"tinymce-upload-title": "Last opp og vis fil",
-	"tinymce-upload-title-general": "Generelt",
-	"tinymce-upload-title-image": "Bilde",
+	"tinymce-upload-title-general": "Fildetaljer",
+	"tinymce-upload-title-image": "Bildeegenskaper",
 	"tinymce-upload-type-label": "Opplastingstype",
 	"tinymce-upload-type-label-file": "Lokal fil",
 	"tinymce-upload-type-label-wiki": "Fil på denne wikien",
 	"tinymce-upload-type-tooltip": "Skriv inn typen fil du ønsker å laste opp: En lokal fil som er på enheten din, eller en fil som finnes på en URL på nettet, eller vis en fil på denne siden som allerede er lastet opp på denne wikien",
-	"tinymce-upload-source-label": "Kildefilnavn",
+	"tinymce-upload-source-label": "Kilde",
 	"tinymce-upload-source-tooltip": "Skriv inn filstien til fila du ønsker å laste opp: En lokal fil som er på enheten din, en fil som ligger på en URL på nettet eller en fil som allerede er lastet opp på denne wikien",
 	"tinymce-upload-destination-label": "Målfilnavn",
 	"tinymce-upload-destination-tooltip": "Skriv inn hele filnavnet for å lagre denne fila på denne wikien",
