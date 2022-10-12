@@ -4,9 +4,12 @@
 			"Kareyac",
 			"Rivka Silinsky",
 			"Rubin16",
-			"Kaganer"
+			"Kaganer",
+			"Pacha Tchernof",
+			"Soul Train"
 		]
 	},
+	"tinymce-editsource": "Править код",
 	"tinymce-editcomment": "Комментарий, дважды щелкните для редактирования",
 	"tinymce-editreference": "Ссылка, дважды щелкните для редактирования",
 	"tinymce-upload-caption": "Подпись",
@@ -20,6 +23,7 @@
 	"tinymce-wikimagic-title": "Просмотр и редактирование вики-текста",
 	"tinymce-browsercontextmenu": "Вы можете получить доступ к контекстному меню браузера, нажав ctrl и правую кнопку мыши. Чтобы отключить контекстное меню TinyMCE, нажмите Да",
 	"tinymce-insert-linebreak": "Вставить неотображаемый одинарный разрыв строки в текущее положение",
+	"tinymce-preference": "Использовать редактор TinyMCE для редактирования страниц",
 	"tinymce-upload-title-general": "Детали файла",
 	"tinymce-upload-title-image": "Свойства изображения",
 	"tinymce-upload-type-tooltip": "Укажите тип файла, который вы хотите загрузить: локальный файл, который находится на вашем устройстве, или файл, расположенный по URL-адресу в Интернете, или отобразите на этой странице файл, который уже был загружен в эту вики.",
