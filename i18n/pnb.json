@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Abbas dhothar"
+			"Abbas dhothar",
+			"Bgo eiu"
 		]
 	},
 	"tinymce-upload-caption": "عنوان",
@@ -13,7 +14,7 @@
 	"tinymce-format-frameless": "بغیر فریم",
 	"tinymce-wikimagic-title": "دیکھو تے ویکی ٹیکسٹ نوں اڈیٹ کرو",
 	"tinymce-upload-title-general": "فلٹر تفصیل",
-	"tinymce-upload-type-label": "اپلوڈ قسم",
+	"tinymce-upload-type-label": "چڑھاوݨ دی قسم",
 	"tinymce-upload-source-label": "سورس",
 	"tinymce-upload-horizontalalign-left-text": "کھبے",
 	"tinymce-upload-horizontalalign-right-text": "سجے",
