@@ -9,5 +9,6 @@
 	"tinymce-format": "Format",
 	"tinymce-upload-summary-label": "Povzetek",
 	"tinymce-link-title": "Vstavi/uredi povezavo",
-	"tinymce-link-type-label": "Vrsta"
+	"tinymce-link-type-label": "Vrsta",
+	"tinymce-link": "Povezava"
 }
