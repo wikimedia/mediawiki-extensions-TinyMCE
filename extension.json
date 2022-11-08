@@ -178,6 +178,7 @@
 		"SkinTemplateNavigation::Universal": "TinyMCEAction::displayTabAndModifyAddTopicLink",
 		"SkinEditSectionLinks": "TinyMCEHooks::addEditSectionLink",
 		"AlternateEdit": "TinyMCEHooks::determineIfTinyMCEIsEnabled",
+		"HtmlPageLinkRendererEnd": "TinyMCEHooks::changeRedLink",
 		"EditPageBeforeEditToolbar": "TinyMCEHooks::removeDefaultToolbar",
 		"EditPage::showEditForm:initial": "TinyMCEHooks::addToEditPage",
 		"WikiEditorDisable": "TinyMCEHooks::disableWikiEditor",

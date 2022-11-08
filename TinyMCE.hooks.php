@@ -23,15 +23,6 @@ class TinyMCEHooks {
 
 		$GLOBALS['wgTinyMCEIP'] = dirname( __DIR__ ) . '/../';
 		$GLOBALS['wgTinyMCEUse'] = null;
-
-		// We have to have this hook called here, instead of in
-		// extension.json, because it's conditional.
-		if ( class_exists( 'MediaWiki\Linker\LinkRenderer' ) ) {
-			// MW 1.28+
-			$GLOBALS['wgHooks']['HtmlPageLinkRendererEnd'][] = 'TinyMCEHooks::changeRedLink';
-		} else {
-			$GLOBALS['wgHooks']['LinkEnd'][] = 'TinyMCEHooks::changeRedLinkOld';
-		}
 	}
 
 	/**
@@ -289,49 +280,6 @@ class TinyMCEHooks {
 		}
 		$newLink['query']['action'] = 'tinymceedit';
 		$links = array_merge( [ 'tinymceeditsection' => $newLink ], $links );
-
-		return true;
-	}
-
-	/**
-	 * Sets broken/red links to point to TinyMCE edit page, if they
-	 * haven't been customized already - for MW < 1.28.
-	 *
-	 * @param Linker $linker
-	 * @param Title $target
-	 * @param array $options
-	 * @param string $text
-	 * @param array &$attribs
-	 * @param bool &$ret
-	 * @return true
-	 */
-	static function changeRedLinkOld( $linker, $target, $options, $text, &$attribs, &$ret ) {
-		global $wgTinyMCEUse;
-		global $wgOut;
-
-		// If it's not a broken (red) link, exit.
-		if ( !in_array( 'broken', $options, true ) ) {
-			return true;
-		}
-		// If the link is to a special page, exit.
-		if ( $target->getNamespace() == NS_SPECIAL ) {
-			return true;
-		}
-
-		// This link may have been modified already by Page Forms or
-		// some other extension - if so, leave it as it is.
-		if ( strpos( $attribs['href'], 'action=edit&' ) === false ) {
-			return true;
-		}
-
-		$exWgTinyMCEUse = $wgTinyMCEUse;
-		$context = $wgOut->getContext();
-		if ( !TinyMCEHooks::enableTinyMCE( $title, $context ) ) {
-			return true;
-		}
-		$wgTinyMCEUse = $exWgTinyMCEUse;
-
-		$attribs['href'] = $target->getLinkURL( [ 'action' => 'tinymceedit', 'redlink' => '1' ] );
 
 		return true;
 	}
