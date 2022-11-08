@@ -2299,7 +2299,7 @@
 			function openList2html( lastList, cur, spaces ) {
 				var listTags = '';
 
-				// firstly build list tag for the the overlap with last list if needed
+				// firstly build list tag for the overlap with last list if needed
 				if (lastList !=  cur.slice( 0, lastList.length )) {
 					listTags = continueList2html(  lastList, cur.slice( 0, lastList.length ), spaces );
 				}
