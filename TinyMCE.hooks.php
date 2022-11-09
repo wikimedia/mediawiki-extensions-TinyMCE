@@ -1,7 +1,6 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
-#use MediaWiki\User\UserOptionsManager;
 
 /**
  * Static functions called by various outside hooks, as well as by
@@ -47,7 +46,7 @@ class TinyMCEHooks {
 			return 'en';
 		}
 
-		$tinyMCELanguages = array(
+		$tinyMCELanguages = [
 			'af_ZA',
 			'ar', 'ar_SA',
 			'az',
@@ -121,7 +120,7 @@ class TinyMCEHooks {
 			'uz',
 			'vi', 'vi_VN',
 			'zh_CN', 'zh_CN.GB2312', 'zh_TW',
-		);
+		];
 
 		foreach ( $tinyMCELanguages as $tinyMCELang ) {
 			if ( $mwLang === strtolower( $tinyMCELang ) ||
@@ -174,9 +173,9 @@ class TinyMCEHooks {
 			$specialTags .= $tagName . '|';
 		}
 
-		$defaultTags = array(
+		$defaultTags = [
 			"includeonly", "onlyinclude", "noinclude", "nowiki" //Definitively MediaWiki core
-		);
+		];
 
 		$tinyMCETagList = $specialTags . implode( '|', $defaultTags );
 
@@ -284,7 +283,7 @@ class TinyMCEHooks {
 			}
 		}
 		$newLink['query']['action'] = 'tinymceedit';
-		$links = array_merge( array( 'tinymceeditsection' => $newLink ), $links );
+		$links = array_merge( [ 'tinymceeditsection' => $newLink ], $links );
 
 		return true;
 	}
@@ -327,7 +326,7 @@ class TinyMCEHooks {
 		}
 		$wgTinyMCEUse = $exWgTinyMCEUse;
 
-		$attribs['href'] = $target->getLinkURL( array( 'action' => 'tinymceedit', 'redlink' => '1' ) );
+		$attribs['href'] = $target->getLinkURL( [ 'action' => 'tinymceedit', 'redlink' => '1' ] );
 
 		return true;
 	}
@@ -379,7 +378,7 @@ class TinyMCEHooks {
 			return true;
 		}
 
-		$attribs['href'] = $title->getLinkURL( array( 'action' => 'tinymceedit', 'redlink' => '1' ) );
+		$attribs['href'] = $title->getLinkURL( [ 'action' => 'tinymceedit', 'redlink' => '1' ] );
 
 		return true;
 	}
@@ -457,13 +456,13 @@ class TinyMCEHooks {
 		// page_props table, regardless of the value, disable TinyMCE.
 		$dbr = wfGetDB( DB_REPLICA );
 		$row = $dbr->selectRow( 'page_props',
-			array(
+			[
 				'pp_value'
-			),
-			array(
+			],
+			[
 				'pp_page' => $title->getArticleID(),
 				'pp_propname' => 'notinymce'
-			)
+			]
 		);
 
 		if ( $row ) {
@@ -585,11 +584,11 @@ class TinyMCEHooks {
 	}	
 
 	public static function addPreference( $user, &$preferences ) {
-		$preferences['tinymce-use'] = array(
+		$preferences['tinymce-use'] = [
 			'type' => 'toggle',
 			'label-message' => 'tinymce-preference', // a system message
 			'section' => 'editing/advancedediting',
-		);
+		];
 
 		return true;
 	}
