@@ -343,7 +343,7 @@
 			var print_r = function ( printthis ) {
 				var output = '';
 			
-				if ($.isArray(printthis) || typeof(printthis) == 'object') {
+				if (Array.isArray(printthis) || typeof(printthis) == 'object') {
 					for(var i in printthis) {
 						output += i + ' : ' + printthis[i] + '\n';
 					}
