@@ -3,9 +3,9 @@
  *  Magic words for extension.
  */
 
-$magicWords = array();
+$magicWords = [];
 
 /** English (English) */
-$magicWords['en'] = array(
-	'MAG_NOTINYMCE' => array( 0, '__NOTINYMCE__' ),
-);
+$magicWords['en'] = [
+	'MAG_NOTINYMCE' => [ 0, '__NOTINYMCE__' ],
+];

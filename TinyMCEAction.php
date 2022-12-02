@@ -104,11 +104,11 @@ class TinyMCEAction extends Action {
 		}
 
 		$class_name = ( $wgRequest->getVal( 'action' ) == 'tinymceedit' ) ? 'selected' : '';
-		$tinyMCETab = array(
+		$tinyMCETab = [
 			'class' => $class_name,
 			'text' => wfMessage( 'edit' )->text(),
 			'href' => $title->getLocalURL( 'action=tinymceedit' )
-		);
+		];
 
 		// Find the location of the 'edit' tab, and add 'edit
 		// with form' right before it.
@@ -134,8 +134,8 @@ class TinyMCEAction extends Action {
 			$edit_tab_location = 0;
 		}
 		array_splice( $tab_keys, $edit_tab_location, 0, 'tinymceedit' );
-		array_splice( $tab_values, $edit_tab_location, 0, array( $tinyMCETab ) );
-		$content_actions = array();
+		array_splice( $tab_values, $edit_tab_location, 0, [ $tinyMCETab ] );
+		$content_actions = [];
 		for ( $i = 0; $i < count( $tab_keys ); $i++ ) {
 			$content_actions[$tab_keys[$i]] = $tab_values[$i];
 		}
@@ -148,7 +148,7 @@ class TinyMCEAction extends Action {
 		}
 
 		// Give other extensions a chance to disable TinyMCE for this page.
-		if ( !Hooks::run( 'TinyMCEDisable', array( $title ) ) ) {
+		if ( !Hooks::run( 'TinyMCEDisable', [ $title ] ) ) {
 			unset($links['views']['tinymceedit']);
 		}
 

@@ -3,9 +3,9 @@
  *  Aliases for special pages.
  */
 
-$specialPageAliases = array();
+$specialPageAliases = [];
 
 /** English (English) */
-$specialPageAliases['en'] = array(
-	'TinyMCEUploadWindow' => array( 'TinyMCEUploadWindow' ),
-);
+$specialPageAliases['en'] = [
+	'TinyMCEUploadWindow' => [ 'TinyMCEUploadWindow' ],
+];
