@@ -6,6 +6,9 @@
 		]
 	},
 	"tinymce-format-thumb": "miniaturo",
+	"tinymce-upload-width": "Arkivo-larjeso",
+	"tinymce-upload-height": "Altajo",
+	"tinymce-upload-summary-label": "Rezumo",
 	"tinymce-upload-format-thumb-text": "Miniaturo",
 	"tinymce-link-target-label": "Emo",
 	"tinymce-link": "Ligilo"
