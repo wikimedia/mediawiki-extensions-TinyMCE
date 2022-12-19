@@ -10,6 +10,7 @@
 	"tinymce-format": "Format",
 	"tinymce-upload-summary-label": "Povzetek",
 	"tinymce-upload-button-label-overwrite": "Prepiši",
+	"tinymce-upload-button-label-rename": "Preimenuj",
 	"tinymce-link-title": "Vstavi/uredi povezavo",
 	"tinymce-link-type-external": "Zunanja",
 	"tinymce-link-type-label": "Vrsta",
