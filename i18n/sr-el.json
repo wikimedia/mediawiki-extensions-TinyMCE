@@ -4,5 +4,10 @@
 			"Kareyac"
 		]
 	},
-	"tinymce-yes": "Da"
+	"tinymce-upload-source-label": "Izvor",
+	"tinymce-upload-alttext-label": "Alternativni tekst",
+	"tinymce-yes": "Da",
+	"tinymce-no": "Ne",
+	"tinymce-ok": "U redu",
+	"tinymce-cancel": "Otkaži"
 }
