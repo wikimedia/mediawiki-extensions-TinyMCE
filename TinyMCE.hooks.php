@@ -132,7 +132,12 @@ class TinyMCEHooks {
 		// If there was no match found, see if there's a matching
 		// "fallback language" for the current language - like
 		// 'fr' for 'frc'.
-		$fallbackLangs = Language::getFallbacksFor( $mwLang );
+		if ( method_exists( MediaWikiServices::class, 'getLanguageFallback' ) ) {
+			// MW 1.35+
+			$fallbackLangs = MediaWikiServices::getInstance()->getLanguageFallback()->getAll( $mwLang );
+		} else {
+			$fallbackLangs = Language::getFallbacksFor( $mwLang );
+		}
 		foreach ( $fallbackLangs as $fallbackLang ) {
 			if ( $fallbackLang === 'en' ) {
 				continue;
