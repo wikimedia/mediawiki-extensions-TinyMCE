@@ -20,6 +20,7 @@
 	"tinymce-upload-button-label-rename": "Preimenuj",
 	"tinymce-link-title": "Vstavi/uredi povezavo",
 	"tinymce-link-title-label": "Naslov",
+	"tinymce-link-target-label": "Cilj",
 	"tinymce-link-type-external": "Zunanja",
 	"tinymce-link-type-label": "Vrsta",
 	"tinymce-link": "Povezava",
