@@ -7,8 +7,13 @@
 	"tinymce-editsource": "Uredi vir",
 	"tinymce-editsectionsource": "uredi vir",
 	"tinymce-format": "Format",
+	"tinymce-sideupload-drop-error": "Pri nalaganju $1 neposredno s spletnega mesta je prišlo do težave. Poskusite datoteko prenesti na lokalni disk in uporabite gumb za vstavljanje slike za naložitev od tam.",
+	"tinymce-upload-title-label": "Naslov/napis",
 	"tinymce-upload-summary-label": "Povzetek",
+	"tinymce-upload-dimensions-label": "Mere",
+	"tinymce-upload-dimensions-tooltip": "Vnesite mere za to sliko. Če želite popraviti razmerja, označite polje in vnesite samo višino, sicer počistite kljukico in vnesite tako višino kot širino.",
 	"tinymce-link-title": "Vstavi/uredi povezavo",
+	"tinymce-link-title-label": "Naslov",
 	"tinymce-link-type-label": "Vrsta",
 	"tinymce-link": "Povezava"
 }
