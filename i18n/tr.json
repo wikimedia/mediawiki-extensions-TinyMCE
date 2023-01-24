@@ -3,11 +3,12 @@
 		"authors": [
 			"Mim.saitkilic",
 			"MuratTheTurkish",
+			"Rapsar",
 			"SaldırganSincap"
 		]
 	},
 	"tinymce-desc": "TinyMCE WYSIWYG editörü",
-	"tinymce-editsource": "Kaynağı düzenle",
+	"tinymce-editsource": "Kaynağı değiştir",
 	"tinymce-editsectionsource": "kaynağı düzenle",
 	"tinymce-editcomment": "Yorum, düzenlemek için çift tıklayın",
 	"tinymce-editreference": "Kaynak, düzenlemek için çift tıklayın",
@@ -130,7 +131,7 @@
 	"tinymce-wikicode-alert-infinte-loop": "Üzgünüz, sonsuz bir döngü oluştu. Editör kapanmak zorunda kaldı.\nLütfen hatalar için viki sayfanızı kontrol edin.",
 	"tinymce-wikicode-alert-mw-parser-fail": "Viki metni incelenirken bir sorun oluştu: \n\n$1\n\n. Vikimetin, düzeltme için düzenleme penceresindeki düzenlenemez bir kutuya eklenecektir.",
 	"tinymce-wikicode-non-rendering-single-linebreak": "Görüntülenmeyen tek satır sonu",
-	"tinymce-link-title": "Bağlantı ekle/düzenle",
+	"tinymce-link-title": "Bağlantı ekle/değiştir",
 	"tinymce-link-title-label": "Başlık",
 	"tinymce-link-url-page-label": "URL/sayfa bağlantısı",
 	"tinymce-link-display-text-label": "Görüntülenecek metin",
