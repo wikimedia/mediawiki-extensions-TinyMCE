@@ -2,11 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Mim.saitkilic",
-			"MuratTheTurkish"
+			"MuratTheTurkish",
+			"Rapsar",
+			"SaldırganSincap"
 		]
 	},
 	"tinymce-desc": "TinyMCE WYSIWYG editörü",
-	"tinymce-editsource": "Kaynağı düzenle",
+	"tinymce-editsource": "Kaynağı değiştir",
 	"tinymce-editsectionsource": "kaynağı düzenle",
 	"upload-displayparams": "Parametreleri göster",
 	"tinymce-horizontal-align": "Yatay hizalama",
@@ -101,7 +103,7 @@
 	"tinymce-wikicode-alert-image-request-invalid": "Bu vikideki $1 sayfasını bulma isteği geçersiz",
 	"tinymce-wikicode-alert-image-request-unknown-error": "Bu vikide ki sayfa $1 bulunmaya çalışılırken hata ile karşılaşıldı",
 	"tinymce-wikicode-alert-infinte-loop": "Üzgünüz, sonsuz bir döngü oluştu. Editör kapanmak zorunda kaldı.\nLütfen hatalar için viki sayfanızı kontrol edin.",
-	"tinymce-link-title": "Bağlantı ekle/düzenle",
+	"tinymce-link-title": "Bağlantı ekle/değiştir",
 	"tinymce-link-title-label": "Başlık",
 	"tinymce-link-url-page-label": "URL/sayfa bağlantısı",
 	"tinymce-link-display-text-label": "Görüntülenecek metin",
