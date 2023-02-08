@@ -20,6 +20,8 @@
 	"tinymce-format-frameless": "brez okvirja",
 	"tinymce-sideupload-drop-error": "Pri nalaganju $1 neposredno s spletnega mesta je prišlo do težave. Poskusite datoteko prenesti na lokalni disk in uporabite gumb za vstavljanje slike za naložitev od tam.",
 	"tinymce-openlink": "Odpri povezavo",
+	"tinymce-browsercontextmenu": "Do kontekstnega menija brskalnika lahko dostopate tako, da pritisnete ctrl+desni klik. Za izklop kontekstnega menija TinyMCE kliknite Da.",
+	"tinymce-browsercontextmenu-title": "Kontekstni meni brskalnika",
 	"tinymce-upload-title-image": "Lastnosti slike",
 	"tinymce-upload-title-label": "Naslov/napis",
 	"tinymce-upload-summary-label": "Povzetek",
