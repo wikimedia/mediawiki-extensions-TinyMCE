@@ -14,6 +14,7 @@
 	"tinymce-format-frameless": "brez okvirja",
 	"tinymce-sideupload-drop-error": "Pri nalaganju $1 neposredno s spletnega mesta je prišlo do težave. Poskusite datoteko prenesti na lokalni disk in uporabite gumb za vstavljanje slike za naložitev od tam.",
 	"tinymce-openlink": "Odpri povezavo",
+	"tinymce-browsercontextmenu-title": "Kontekstni meni brskalnika",
 	"tinymce-upload-alternate-text": "Alternativno besedilo",
 	"tinymce-upload-link": "Povezava",
 	"tinymce-upload-width": "Širina",
