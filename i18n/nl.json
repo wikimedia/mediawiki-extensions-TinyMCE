@@ -17,6 +17,7 @@
 	"tinymce-vertical-align-middle": "midden",
 	"tinymce-vertical-align-top": "bovenaan",
 	"tinymce-vertical-align-bottom": "onderaan",
+	"tinymce-format-thumb": "miniatuur",
 	"tinymce-format-border": "rand",
 	"tinymce-format-frame": "frame",
 	"tinymce-format-frameless": "zonder frame",
