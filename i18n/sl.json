@@ -12,6 +12,7 @@
 	"tinymce-vertical-align-text-bottom": "na dnu besedila",
 	"tinymce-format": "Format",
 	"tinymce-format-frameless": "brez okvirja",
+	"tinymce-uploadbtn": "Naloži/vstavi/posodobi datoteko/povezavo",
 	"tinymce-sideupload-drop-error": "Pri nalaganju $1 neposredno s spletnega mesta je prišlo do težave. Poskusite datoteko prenesti na lokalni disk in uporabite gumb za vstavljanje slike za naložitev od tam.",
 	"tinymce-openlink": "Odpri povezavo",
 	"tinymce-browsercontextmenu-title": "Kontekstni meni brskalnika",
