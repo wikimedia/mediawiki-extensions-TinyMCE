@@ -18,6 +18,7 @@
 	"tinymce-vertical-align-text-bottom": "na dnu besedila",
 	"tinymce-format": "Format",
 	"tinymce-format-frameless": "brez okvirja",
+	"tinymce-uploadbtn": "Naloži/vstavi/posodobi datoteko/povezavo",
 	"tinymce-sideupload-drop-error": "Pri nalaganju $1 neposredno s spletnega mesta je prišlo do težave. Poskusite datoteko prenesti na lokalni disk in uporabite gumb za vstavljanje slike za naložitev od tam.",
 	"tinymce-openlink": "Odpri povezavo",
 	"tinymce-browsercontextmenu": "Do kontekstnega menija brskalnika lahko dostopate tako, da pritisnete ctrl+desni klik. Za izklop kontekstnega menija TinyMCE kliknite Da.",
