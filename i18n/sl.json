@@ -32,6 +32,7 @@
 	"tinymce-upload-horizontalalign-left-text": "Levo",
 	"tinymce-upload-format-frameless-text": "Brez okvirja",
 	"tinymce-upload-alert-correct-and-try-again": "Popravite napake in poskusite znova",
+	"tinymce-upload-alert-destination-filename-needed": "Oprostite, navesti morate ime ciljne datoteke. Če je ustvarjeno v redu, znova pritisnite Pošlji, sicer pa ga spremenite.",
 	"tinymce-wikicode-alert-infinte-loop": "Žal se je pojavila neskončna zanka. Urejevalnik se je moral zapreti.\nPreverite svojo viki stran glede napak.",
 	"tinymce-link-title": "Vstavi/uredi povezavo",
 	"tinymce-link-title-label": "Naslov",
