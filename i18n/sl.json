@@ -39,6 +39,7 @@
 	"tinymce-upload-button-label-overwrite": "Prepiši",
 	"tinymce-upload-button-label-rename": "Preimenuj",
 	"tinymce-upload-alert-correct-and-try-again": "Popravite napake in poskusite znova",
+	"tinymce-upload-alert-destination-filename-needed": "Oprostite, navesti morate ime ciljne datoteke. Če je ustvarjeno v redu, znova pritisnite Pošlji, sicer pa ga spremenite.",
 	"tinymce-upload-alert-source-or-destination-undefined": "Oprostite, prišlo je do težave z nedeločenim izvorom ali ciljem. Prosimo, preverite in poskusite znova.",
 	"tinymce-upload-confirm-file-already-exists": "<p>Ime izvorne datoteke v vikiju že obstaja ali pa je vir dvojnik datoteke v vikiju. Izberite eno od naslednjih dejanj:<ul><li> <b>overwrite</b> za prepis obstoječe datoteke v vikiju</li><li><b>use</b> za uporabo obstoječe datoteke v vikiju</li><li><b>rename</b> za vrnitev v pogovorno okno in preimenovanje vira</li></ul></p>",
 	"tinymce-upload-confirm-file-name-already-exists": "<p>Ime izvorne datoteke v vikiju že obstaja ali pa je vir dvojnik datoteke v vikiju. Izberite eno od naslednjih dejanj:<ul><li> <b>overwrite</b> za prepis obstoječe datoteke v vikiju</li><li><b>use</b> za uporabo obstoječe datoteke v vikiju</li><li><b>rename</b> za vrnitev v pogovorno okno in preimenovanje vira</li></ul></p>",
