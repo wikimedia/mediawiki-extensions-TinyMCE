@@ -148,7 +148,7 @@ class TinyMCEAction extends Action {
 		}
 
 		// Give other extensions a chance to disable TinyMCE for this page.
-		if ( !Hooks::run( 'TinyMCEDisable', [ $title ] ) ) {
+		if ( !MediaWikiServices::getInstance()->getHookContainer()->run( 'TinyMCEDisable', [ $title ] ) ) {
 			unset($links['views']['tinymceedit']);
 		}
 
