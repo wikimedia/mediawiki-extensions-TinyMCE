@@ -1,7 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kly"
+			"Kly",
+			"Diskdance",
+			"Lakejason0",
+			"Tranve",
+			"列维劳德"
 		]
 	},
 	"tinymce-desc": "TinyMCE WYSIWYG 編輯器",
@@ -39,7 +43,7 @@
 	"tinymce-browsercontextmenu-title": "瀏覽器上下文選單",
 	"tinymce-wikisourcecode": "查看並編輯 Wiki 原始碼",
 	"tinymce-wikisourcecode-title": "Wiki 原始碼",
-	"tinymce-preference": "使用 TinyMCE 編輯器來編輯此頁面",
+	"tinymce-preference": "使用 TinyMCE 編輯器來編輯頁面",
 	"tinymce-upload-title": "上傳並顯示檔案",
 	"tinymce-upload-alternate-text": "替代文字",
 	"tinymce-upload-link": "連結",
