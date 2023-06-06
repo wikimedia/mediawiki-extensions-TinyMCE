@@ -35,6 +35,8 @@
 	"tinymce-upload-vertalign-texttop-text": "Na vrhu besedila",
 	"tinymce-upload-vertalign-textbottom-text": "Na dnu besedila",
 	"tinymce-upload-horizontalalign-left-text": "Levo",
+	"tinymce-upload-format-label": "Format",
+	"tinymce-upload-format-tooltip": "Izberite format za to sliko",
 	"tinymce-upload-format-frameless-text": "Brez okvirja",
 	"tinymce-upload-button-label-overwrite": "Prepiši",
 	"tinymce-upload-button-label-rename": "Preimenuj",
