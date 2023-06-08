@@ -1,9 +1,26 @@
 {
 	"@metadata": {
 		"authors": [
-			"MITO"
+			"MITO",
+			"Pyscowicz"
 		]
 	},
+	"tinymce-editsource": "Muokkaa wikitekstiä",
+	"tinymce-editsectionsource": "muokkaa wikitekstiä",
+	"tinymce-upload-alternate-text": "Vaihtoehtoinen teksti",
+	"tinymce-upload-caption": "Kuvateksti",
+	"tinymce-upload-link": "Linkki",
+	"tinymce-upload-width": "Leveys",
+	"tinymce-upload-height": "Korkeus",
+	"tinymce-openlink": "Avaa linkki",
+	"tinymce-upload-summary-label": "Yhteenveto",
+	"tinymce-link-target-new-window": "Uusi ikkuna",
+	"tinymce-link-open-link": "Avaa linkki",
+	"tinymce-link": "Linkki",
 	"tinymce-reference-enterReferenceContent": "Tyhjä viite",
-	"tinymce-empty-reference": "Tyhjä viite"
+	"tinymce-empty-reference": "Tyhjä viite",
+	"tinymce-yes": "Kyllä",
+	"tinymce-no": "Ei",
+	"tinymce-ok": "OK",
+	"tinymce-cancel": "Peruuta"
 }
