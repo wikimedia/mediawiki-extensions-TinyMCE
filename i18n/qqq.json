@@ -157,7 +157,6 @@
 	"tinymce-link-link-button-tooltip": "Used as tooltip. Used with javascript.",
 	"tinymce-link-link-remove-button-tooltip": "Used as tooltip. Used with javascript.",
 	"tinymce-link-open-link": "Used as tooltip. Used with javascript.",
-	"tinymce-link-context-menu": "Link to a toolbar. Used with javascript.",
 	"tinymce-link": "Used as tooltip. Used with javascript.\n{{identical|Link}}",
 	"tinymce-toggle-button-toggle-wiki-placeholders": "Used as tooltip. Used with javascript.",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "Used as tooltip. Used with javascript.",
