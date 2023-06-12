@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"MITO",
+			"Pyscowicz"
+		]
+	},
+	"tinymce-editsource": "Muokkaa wikitekstiä",
+	"tinymce-editsectionsource": "muokkaa wikitekstiä",
+	"tinymce-openlink": "Avaa linkki",
+	"tinymce-upload-alternate-text": "Vaihtoehtoinen teksti",
+	"tinymce-upload-link": "Linkki",
+	"tinymce-upload-width": "Leveys",
+	"tinymce-upload-height": "Korkeus",
+	"tinymce-upload-summary-label": "Yhteenveto",
+	"tinymce-link-target-new-window": "Uusi ikkuna",
+	"tinymce-link-open-link": "Avaa linkki",
+	"tinymce-link": "Linkki"
+}
