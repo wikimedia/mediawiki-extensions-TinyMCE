@@ -155,7 +155,6 @@
 	"tinymce-link-link-button-tooltip": "Insérer / modifier le lien",
 	"tinymce-link-link-remove-button-tooltip": "Supprimer le lien",
 	"tinymce-link-open-link": "Ouvrir le lien",
-	"tinymce-link-context-menu": "openlink | lier délier",
 	"tinymce-link": "Lien",
 	"tinymce-toggle-button-toggle-wiki-placeholders": "Basculer les variables substituées du wiki",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "Insérer un espace non sécable",

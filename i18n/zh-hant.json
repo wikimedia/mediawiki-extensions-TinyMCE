@@ -152,7 +152,6 @@
 	"tinymce-link-link-button-tooltip": "插入/編輯連結",
 	"tinymce-link-link-remove-button-tooltip": "移除連結",
 	"tinymce-link-open-link": "開啟連結",
-	"tinymce-link-context-menu": "開啟連結 | 連結 取消連結",
 	"tinymce-link": "連結",
 	"tinymce-toggle-button-toggle-wiki-placeholders": "切換 Wiki 佔位符",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "插入非換行空白",
