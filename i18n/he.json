@@ -149,6 +149,7 @@
 	"tinymce-link-link-remove-button-tooltip": "הסרת קישור",
 	"tinymce-link-open-link": "פתיחת קישור",
 	"tinymce-link": "קישור",
+	"tinymce-toggle-button-toggle-wiki-placeholders": "החלפת מצייני המיקום של הוויקי",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "הוספת רווח שאינו מעביר שורה",
 	"tinymce-reference-insertReference": "הוספת הערת שוליים",
 	"tinymce-reference-enterReferenceContent": "הערת שוליים ריקה",
