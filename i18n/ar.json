@@ -6,6 +6,9 @@
 		]
 	},
 	"tinymce-editsource": "عدل المصدر",
+	"tinymce-horizontal-align-centre": "مركز",
+	"tinymce-horizontal-align-right": "يمين",
+	"tinymce-vertical-align-middle": "وسط",
 	"tinymce-upload-summary-label": "ملخص",
 	"tinymce-upload-alttext-label": "نص بديل",
 	"tinymce-link-type-label": "النوع"

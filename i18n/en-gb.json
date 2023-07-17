@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Piano1forte2"
+		]
+	},
+	"tinymce-upload-alert-error-uploading-to-wiki": "I'm sorry, there seems to be a problem accessing the wiki from this dialogue. If the problem persists, try logging off and on again"
+}
