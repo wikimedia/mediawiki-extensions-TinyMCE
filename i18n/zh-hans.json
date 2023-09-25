@@ -3,6 +3,7 @@
 		"authors": [
 			")8",
 			"Lakejason0",
+			"LittlePaw365",
 			"Zhang8569"
 		]
 	},
@@ -153,8 +154,8 @@
 	"tinymce-toggle-button-toggle-wiki-placeholders": "切换wiki占位符",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "插入不换行空格",
 	"tinymce-reference-insertReference": "插入引用内容",
-	"tinymce-reference-enterReferenceContent": "空白参考文献",
-	"tinymce-empty-reference": "空白参考文献",
+	"tinymce-reference-enterReferenceContent": "空参考",
+	"tinymce-empty-reference": "空参考",
 	"tinymce-reference-alert-not-allowed": "无法在引用内容内插入引用内容",
 	"tinymce-pre-alert-only-plain-text": "此类型的元素内只允许纯文本",
 	"tinymce-yes": "是",
