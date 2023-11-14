@@ -1,9 +1,22 @@
 {
 	"@metadata": {
 		"authors": [
+			"Dstjr",
 			"Kareyac"
 		]
 	},
+	"tinymce-desc": "Edytor TinyMCE WYSIWYG",
+	"tinymce-editsource": "Edytuj źródło",
+	"tinymce-editsectionsource": "edytuj źródło",
+	"tinymce-editcomment": "Komentarz, kliknij dwukrotnie, aby edytować",
+	"tinymce-editreference": "Odniesienie, kliknij dwukrotnie, aby edytować",
+	"upload-displayparams": "Wyświetl parametry",
+	"tinymce-upload-alternate-text": "Alternatywny tekst",
+	"tinymce-upload-caption": "Podpis",
+	"tinymce-upload-link": "Link",
+	"tinymce-upload-width": "Szerokość",
+	"tinymce-upload-height": "Wysokość",
+	"tinymce-horizontal-align": "Wyrównanie poziome",
 	"tinymce-upload-title-image": "Obraz",
 	"tinymce-upload-source-label": "Źródło",
 	"tinymce-upload-button-label-rename": "Zmień nazwę",
