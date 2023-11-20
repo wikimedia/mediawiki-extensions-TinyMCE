@@ -1,8 +1,18 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kareyac"
+			"Kareyac",
+			"Dstjr"
 		]
 	},
+	"tinymce-desc": "Edytor TinyMCE WYSIWYG",
+	"tinymce-editsource": "Edytuj źródło",
+	"tinymce-editsectionsource": "edytuj źródło",
+	"upload-displayparams": "Wyświetl parametry",
+	"tinymce-horizontal-align": "Wyrównanie poziome",
+	"tinymce-upload-alternate-text": "Alternatywny tekst",
+	"tinymce-upload-link": "Link",
+	"tinymce-upload-width": "Szerokość",
+	"tinymce-upload-height": "Wysokość",
 	"tinymce-link-type-label": "Typ"
 }
