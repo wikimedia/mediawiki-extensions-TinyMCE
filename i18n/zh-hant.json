@@ -5,7 +5,8 @@
 			"Kly",
 			"Tranve",
 			"列维劳德",
-			"Lakejason0"
+			"Lakejason0",
+			"Winston Sung"
 		]
 	},
 	"tinymce-desc": "TinyMCE WYSIWYG 編輯器",
@@ -51,8 +52,8 @@
 	"tinymce-wikimagic-title": "查看並編輯 wikitext",
 	"tinymce-browsercontextmenu": "您可以透過按下 Ctrl 鍵-滑鼠右鍵點擊來存取瀏覽器的上下文選單。要關閉 TinyMCE 上下文選單，請點擊「是」。",
 	"tinymce-browsercontextmenu-title": "瀏覽器上下文選單",
-	"tinymce-wikisourcecode": "查看並編輯 Wiki 原始碼",
-	"tinymce-wikisourcecode-title": "Wiki 原始碼",
+	"tinymce-wikisourcecode": "檢視並編輯 wiki 原始碼",
+	"tinymce-wikisourcecode-title": "wiki 原始碼",
 	"tinymce-insert-linebreak": "在目前位置插入不會顯示出的單個換行字元",
 	"tinymce-preference": "使用 TinyMCE 編輯器來編輯頁面",
 	"tinymce-upload-title": "上傳並顯示檔案",
@@ -60,7 +61,7 @@
 	"tinymce-upload-title-image": "圖片屬性",
 	"tinymce-upload-type-label": "上傳類型",
 	"tinymce-upload-type-label-file": "本地檔案",
-	"tinymce-upload-type-label-wiki": "在此 Wiki 中的檔案",
+	"tinymce-upload-type-label-wiki": "在此 wiki 中的檔案",
 	"tinymce-upload-type-tooltip": "輸入您想上傳的檔案類型：儲存於您裝置上的本地檔案，或是位於網際網路裡 URL 上的檔案，或是在此頁面顯示已上傳到此 Wiki 的檔案",
 	"tinymce-upload-source-label": "來源",
 	"tinymce-upload-source-tooltip": "輸入您想上傳的檔案之完整路徑：存在您設備上的本地檔案，或是位在網際網路裡 URL 上的檔案，或著是已上傳到此 Wiki 的檔案",
@@ -154,7 +155,7 @@
 	"tinymce-link-open-link": "開啟連結",
 	"tinymce-link-context-menu": "開啟連結 | 連結 取消連結",
 	"tinymce-link": "連結",
-	"tinymce-toggle-button-toggle-wiki-placeholders": "切換 Wiki 佔位符",
+	"tinymce-toggle-button-toggle-wiki-placeholders": "切換 wiki 占位符",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "插入非換行空白",
 	"tinymce-reference-insertReference": "插入參考資料",
 	"tinymce-reference-enterReferenceContent": "空白參考資料",
