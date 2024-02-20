@@ -4,7 +4,8 @@
 			")8",
 			"Zhang8569",
 			"Lakejason0",
-			"LittlePaw365"
+			"LittlePaw365",
+			"Anterdc99"
 		]
 	},
 	"tinymce-desc": "TinyMCE所见即所得编辑器",
@@ -135,6 +136,7 @@
 	"tinymce-link-title-label": "标题",
 	"tinymce-link-url-page-label": "链接URL/页面",
 	"tinymce-link-display-text-label": "显示文本",
+	"tinymce-link-link-trail-label": "链接轨迹",
 	"tinymce-link-link-list-label": "链接列表",
 	"tinymce-link-target-none": "无",
 	"tinymce-link-target-new-window": "新窗口",
