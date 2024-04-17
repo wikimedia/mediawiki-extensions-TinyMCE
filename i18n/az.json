@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"NMW03"
+			"NMW03",
+			"Turkmen"
 		]
 	},
 	"tinymce-format": "Format",
 	"tinymce-format-thumb": "kiçik şəkil",
 	"tinymce-format-frame": "çərçivə",
-	"tinymce-format-frameless": "çərçivəsiz"
+	"tinymce-format-frameless": "çərçivəsiz",
+	"tinymce-upload-alert-uploads-not-allowed": "Təəssüf ki, bu vikiyə yükləmə icazəniz yoxdur."
 }
