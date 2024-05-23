@@ -7,6 +7,7 @@
 	},
 	"tinymce-upload-source-label": "Извор",
 	"tinymce-upload-alttext-label": "Алтернативни текст",
+	"tinymce-upload-confirm-file-is-duplicate": "Датотека $1 је дупликат датотеке $2 на овом викију. Изаберите Да ако желите користити постојећу датотеку или Не и изаберите другу датотеку за отпремање.",
 	"tinymce-yes": "Да",
 	"tinymce-no": "Не",
 	"tinymce-ok": "У реду",
