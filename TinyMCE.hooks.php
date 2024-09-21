@@ -407,7 +407,7 @@ class TinyMCEHooks {
 
 		// If there's a 'notinymce' property for this page in the
 		// page_props table, regardless of the value, disable TinyMCE.
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$row = $dbr->selectRow( 'page_props',
 			[
 				'pp_value'
