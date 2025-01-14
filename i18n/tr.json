@@ -4,11 +4,12 @@
 			"Mim.saitkilic",
 			"MuratTheTurkish",
 			"Rapsar",
-			"SaldırganSincap"
+			"SaldırganSincap",
+			"Vito Genovese"
 		]
 	},
 	"tinymce-desc": "TinyMCE WYSIWYG editörü",
-	"tinymce-editsource": "Kaynağı değiştir",
+	"tinymce-editsource": "Kaynağı düzenle",
 	"tinymce-editsectionsource": "kaynağı düzenle",
 	"tinymce-editcomment": "Yorum, düzenlemek için çift tıklayın",
 	"tinymce-editreference": "Kaynak, düzenlemek için çift tıklayın",
