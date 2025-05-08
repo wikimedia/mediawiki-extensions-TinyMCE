@@ -61,7 +61,7 @@
 	"tinymce-upload-type-tooltip": "Wprowadź typ pliku, który chcesz przesłać: plik lokalny znajdujący się na twoim urządzeniu, plik znajdujący się pod adresem URL w internecie lub wyświetl plik na tej stronie, który został już przesłany na tę wiki",
 	"tinymce-upload-source-label": "Źródło",
 	"tinymce-upload-source-tooltip": "Wprowadź pełną ścieżkę do pliku, który chcesz przesłać: plik lokalny znajdujący się na twoim urządzeniu, plik znajdujący się pod adresem URL w internecie lub plik, który został już przesłany na tę wiki",
-	"tinymce-upload-destination-label": "Nazwa pliku, pod którą będzie przechowywany na tej wiki",
+	"tinymce-upload-destination-label": "Nazwa pliku przechowywanego na tej wiki",
 	"tinymce-upload-destination-tooltip": "Wprowadź pełną nazwę pliku, pod jaką zostanie zapisany plik na tej wiki",
 	"tinymce-upload-title-label": "Tytuł/podpis",
 	"tinymce-upload-title-tooltip": "Wprowadź tekst, który będzie używany jako tytuł lub podpis dla tego pliku/obrazu",
