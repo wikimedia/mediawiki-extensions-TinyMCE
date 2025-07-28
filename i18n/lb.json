@@ -27,7 +27,8 @@
 	"tinymce-upload-source-label": "Quell",
 	"tinymce-upload-summary-label": "Resumé",
 	"tinymce-upload-link-label": "Link op",
-	"tinymce-upload-alttext-label": "Alternativen Text",
+	"tinymce-upload-alttext-label": "Alternativtext",
+	"tinymce-upload-alttext-tooltip": "Alternativtext fir dëst Bild aginn",
 	"tinymce-upload-dimensions-label": "Dimensiounen",
 	"tinymce-upload-dimensions-width-label": "b",
 	"tinymce-upload-vertalign-baseline-text": "Basis",
@@ -56,7 +57,7 @@
 	"tinymce-link": "Link",
 	"tinymce-reference-insertReference": "Eng Referenz drasetzen",
 	"tinymce-yes": "Jo",
-	"tinymce-no": "Neen",
+	"tinymce-no": "Nee",
 	"tinymce-ok": "OK",
 	"tinymce-cancel": "Ofbriechen"
 }
