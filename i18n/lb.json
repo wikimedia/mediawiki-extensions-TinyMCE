@@ -3,7 +3,8 @@
 		"authors": [
 			"Robby",
 			"Soued031",
-			"Volvox"
+			"Volvox",
+			"GilPe"
 		]
 	},
 	"tinymce-editsource": "Quelltext änneren",
@@ -26,7 +27,7 @@
 	"tinymce-upload-title-image": "Eegenschafte vum Bild",
 	"tinymce-upload-type-label-file": "Lokale Fichier",
 	"tinymce-upload-source-label": "Quell",
-	"tinymce-upload-summary-label": "Resumé",
+	"tinymce-upload-summary-label": "Resümmee",
 	"tinymce-upload-link-label": "Link op",
 	"tinymce-upload-alttext-label": "Alternativtext",
 	"tinymce-upload-alttext-tooltip": "Alternativtext fir dëst Bild aginn",
