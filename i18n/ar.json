@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Meno25",
 			"Sosozozo",
 			"محمد أحمد عبد الفتاح"
 		]
@@ -15,6 +16,6 @@
 	"tinymce-link-type-label": "النوع",
 	"tinymce-yes": "نعم",
 	"tinymce-no": "لا",
-	"tinymce-ok": "حسنا",
+	"tinymce-ok": "موافق",
 	"tinymce-cancel": "إلغاء"
 }
