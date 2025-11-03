@@ -1,6 +1,11 @@
 <?php
 
+use MediaWiki\EditPage\EditPage;
+use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Parser\MagicWord;
+use MediaWiki\Parser\MagicWordFactory;
+use MediaWiki\Title\Title;
 
 /**
  * Static functions called by various outside hooks, as well as by
