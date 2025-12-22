@@ -8,7 +8,9 @@
 			"Pols12",
 			"Robby",
 			"Umherirrender",
-			"Verdy p"
+			"Verdy p",
+			"Tacsipacsi",
+			"Toliño"
 		]
 	},
 	"tinymce-desc": "{{desc|name=TinyMCE|url=https://www.mediawiki.org/wiki/Extension:TinyMCE}}",
@@ -167,7 +169,7 @@
 	"tinymce-reference-alert-not-allowed": "Used as error message. Used with javascript.",
 	"tinymce-pre-alert-only-plain-text": "Used as error message. Used with javascript.",
 	"tinymce-yes": "Used as label. Used with javascript.\n\n{{Identical|Yes}}",
-	"tinymce-no": "Used as label. Used with javascript.\n\n{{Identical|No}*",
+	"tinymce-no": "Used as label. Used with javascript.\n\n{{Identical|No}}",
 	"tinymce-ok": "Used as label. Used with javascript.\n\n{{Identical|OK}}",
 	"tinymce-cancel": "Used as label. Used with javascript."
 }
