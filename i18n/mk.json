@@ -65,7 +65,7 @@
 	"tinymce-upload-title-label": "Наслов/опис",
 	"tinymce-upload-title-tooltip": "Внесете текст наслов/опис за оваа податотека/слика",
 	"tinymce-upload-summary-label": "Краток опис",
-	"tinymce-upload-summary-tooltip": "Внесте текст што ќе се стави на податотечната страница на ова вики",
+	"tinymce-upload-summary-tooltip": "Внесете текст што ќе се стави на податотечната страница на ова вики",
 	"tinymce-upload-link-label": "Врска кон",
 	"tinymce-upload-link-tooltip": "Внесете ја врската кон која ќе води сликава кога ќе се стисне на неа",
 	"tinymce-upload-alttext-label": "Алтернативен текст",
