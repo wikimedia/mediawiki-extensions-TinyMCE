@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kareyac"
+			"Kareyac",
+			"Ucukor"
 		]
 	},
 	"tinymce-upload-source-label": "Крыніца",
@@ -9,5 +10,6 @@
 	"tinymce-upload-button-label-rename": "Перайменаваць",
 	"tinymce-yes": "Так",
 	"tinymce-no": "Не",
-	"tinymce-ok": "Добра"
+	"tinymce-ok": "Добра",
+	"tinymce-cancel": "Скасаваць"
 }
