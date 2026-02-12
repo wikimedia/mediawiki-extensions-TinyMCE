@@ -3,7 +3,8 @@
 		"authors": [
 			"Mainframe98",
 			"McDutchie",
-			"Romaine"
+			"Romaine",
+			"Siebrand"
 		]
 	},
 	"tinymce-desc": "De TinyMCE WYSIWYG-editor",
@@ -147,9 +148,9 @@
 	"tinymce-link-page-not-found": "(de pagina bestaat niet)",
 	"tinymce-link-want-to-link-email": "De URL die u heeft ingevoerd lijkt op een e-mailadres. Wilt u het benodigde mailto:-voorvoegsel toevoegen?",
 	"tinymce-link-want-to-link-external": "De URL die u heeft ingevoerd lijkt niet op een externe koppeling. Wilt u het vereiste //-voorvoegsel toevoegen?",
-	"tinymce-link-link-button-tooltip": "Link toevoegen of bewerken",
-	"tinymce-link-link-remove-button-tooltip": "Link verwijderen",
-	"tinymce-link-open-link": "Open link",
+	"tinymce-link-link-button-tooltip": "Koppeling toevoegen of bewerken",
+	"tinymce-link-link-remove-button-tooltip": "Koppeling verwijderen",
+	"tinymce-link-open-link": "Koppeling openen",
 	"tinymce-link": "Koppeling",
 	"tinymce-toggle-button-toggle-wiki-placeholders": "Tijdelijke aanduidingen voor wiki’s omschakelen",
 	"tinymce-nonbreaking-insertNonBreakingSpace": "Een niet-afbrekende spatie invoeren",
