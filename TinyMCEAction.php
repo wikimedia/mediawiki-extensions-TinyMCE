@@ -83,13 +83,17 @@ class TinyMCEAction extends Action {
 			return true;
 		}
 
+		$nsKey = $obj->supportsMenu( 'namespaces' ) ? 'namespaces' : 'associated-pages';
+		if ( !isset( $links[$nsKey] ) ) {
+			$links[$nsKey] = [];
+		}
 		// change red link to the 'talk' page to use TinyMCE
-		foreach ($links['namespaces'] as $key => $val) {
+		foreach ($links[$nsKey] as $key => $val) {
 			if ($key == 'talk' ) {
-				$talkLink = $links['namespaces']['talk']['href'];
+				$talkLink = $links[$nsKey]['talk']['href'];
 				$talkLink = str_replace( 'action=edit', 'action=tinymceedit', $talkLink );
 					
-				$links['namespaces']['talk']['href'] = $talkLink;
+				$links[$nsKey]['talk']['href'] = $talkLink;
 			}
 		}
 
