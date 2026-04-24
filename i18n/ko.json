@@ -1,12 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"Tensama0415",
 			"Ykhwong"
 		]
 	},
 	"tinymce-desc": "TinyMCE 위지위그 편집기",
 	"tinymce-editsource": "원본 편집",
-	"upload-displayparams": "표시 변수",
+	"upload-displayparams": "표시 매개변수",
 	"tinymce-upload-alternate-text": "대체 텍스트",
 	"tinymce-upload-caption": "캡션",
 	"tinymce-upload-link": "링크",
