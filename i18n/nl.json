@@ -133,7 +133,7 @@
 	"tinymce-wikicode-non-rendering-single-linebreak": "Niet-weergegeven enkel regeleinde",
 	"tinymce-link-title": "Koppeling invoegen/bewerken",
 	"tinymce-link-title-label": "Titel",
-	"tinymce-link-url-page-label": "URL/pagina van de koppeling",
+	"tinymce-link-url-page-label": "Koppelings-url/pagina",
 	"tinymce-link-display-text-label": "Weer te geven tekst",
 	"tinymce-link-link-trail-label": "Koppelingenspoor",
 	"tinymce-link-link-list-label": "Koppelingenlijst",
