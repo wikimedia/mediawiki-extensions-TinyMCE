@@ -127,7 +127,7 @@
 	"tinymce-wikicode-alert-image-request-invalid": "이 위키의 $1 페이지 찾기 요청은 유효하지 않습니다",
 	"tinymce-wikicode-alert-image-request-unknown-error": "이 위키에서 $1 페이지 찾기를 시도하는 중 오류가 발생했습니다",
 	"tinymce-wikicode-alert-infinte-loop": "죄송합니다. 무한 루프가 발생했습니다. 편집기는 종료되어야 했습니다.\n오류에 관해서는 위키 문서를 확인해 주십시오.",
-	"tinymce-wikicode-alert-mw-parser-fail": "위키 텍스트를 구문 분석하는 중 오류가 발생했습니다:\n\n$1 \n\n. 해당 위키 텍스트는 수정을 위해 편집 창의 편집 불가능한 상자에 삽입됩니다.",
+	"tinymce-wikicode-alert-mw-parser-fail": "위키텍스트를 구문 분석하는 중 오류가 발생했습니다:\n\n$1 \n\n. 해당 위키텍스트는 수정을 위해 편집 창의 편집 불가능한 상자에 삽입됩니다.",
 	"tinymce-wikicode-non-rendering-single-linebreak": "표시되지 않는 단일 줄 바꿈",
 	"tinymce-link-title": "링크 넣기/편집",
 	"tinymce-link-title-label": "제목",
