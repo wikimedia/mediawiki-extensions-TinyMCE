@@ -34,5 +34,10 @@
 			"minus-x fix ."
 		]
 	},
-	"license": "GPL-2.0-or-later"
+	"license": "GPL-2.0-or-later",
+	"config": {
+		"audit": {
+			"block-insecure": false
+		}
+	}
 }
