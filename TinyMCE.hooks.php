@@ -128,12 +128,7 @@ class TinyMCEHooks {
 		// If there was no match found, see if there's a matching
 		// "fallback language" for the current language - like
 		// 'fr' for 'frc'.
-		if ( method_exists( MediaWikiServices::class, 'getLanguageFallback' ) ) {
-			// MW 1.35+
-			$fallbackLangs = MediaWikiServices::getInstance()->getLanguageFallback()->getAll( $mwLang );
-		} else {
-			$fallbackLangs = Language::getFallbacksFor( $mwLang );
-		}
+		$fallbackLangs = MediaWikiServices::getInstance()->getLanguageFallback()->getAll( $mwLang );
 		foreach ( $fallbackLangs as $fallbackLang ) {
 			if ( $fallbackLang === 'en' ) {
 				continue;
@@ -236,13 +231,8 @@ class TinyMCEHooks {
 	 * 'NOTINYMCE' magic word in a page
 	 */
 	static function handleMagicWords( &$parser, &$text ) {
-		if ( class_exists( MagicWordFactory::class ) ) {
-			// MW 1.32+
-			$factory = MediaWikiServices::getInstance()->getMagicWordFactory();
-			$magicWord = $factory->get( 'MAG_NOTINYMCE' );
-		} else {
-			$magicWord = MagicWord::get( 'MAG_NOTINYMCE' );
-		}
+		$factory = MediaWikiServices::getInstance()->getMagicWordFactory();
+		$magicWord = $factory->get( 'MAG_NOTINYMCE' );
 		if ( $magicWord->matchAndRemove( $text ) ) {
 			$parser->mOutput->setProperty( 'notinymce', 'y' );
 		}
@@ -261,13 +251,9 @@ class TinyMCEHooks {
 		
 		$wgTinyMCEUse =  TinyMCEHooks::enableTinyMCE( $title, $context );
 
-/*		if ( method_exists( 'MediaWiki\Permissions\PermissionManager', 'userCan' ) ) {
-			// MW 1.33+
-			$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
-			$userCanEdit = $permissionManager->userCan( 'edit', $user, $title );
-		} else {
-			$userCanEdit = $title->userCan( 'edit', $user ) && $user->isAllowed( 'edit' );
-		}
+/*
+		$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
+		$userCanEdit = $permissionManager->userCan( 'edit', $user, $title );
 
 		if ( !isset( $title ) || !$userCanEdit ) {
 			return true;
@@ -362,13 +348,8 @@ class TinyMCEHooks {
 		if ( $wgTinyMCEUse !== null) return $wgTinyMCEUse;
 
 		// if the user isn't allowed to edit this page then won't need TinyMCE!
-		if ( method_exists( 'MediaWiki\Permissions\PermissionManager', 'userCan' ) ) {
-			// MW 1.33+
-			$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
-			$userCanEdit = $permissionManager->userCan( 'edit', $user, $title );
-		} else {
-			$userCanEdit = $title->userCan( 'edit', $user ) && $user->isAllowed( 'edit' );
-		}
+		$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
+		$userCanEdit = $permissionManager->userCan( 'edit', $user, $title );
 
 		if ( !isset( $title ) || !$userCanEdit ) {
 			return $wgTinyMCEUse = false;
@@ -381,24 +362,12 @@ class TinyMCEHooks {
 		if ( $context->getRequest()->getCheck( 'undo' ) ) {
 			return $wgTinyMCEUse = false;
 		}
-		if ( method_exists( MediaWikiServices::class, 'getUserOptionsLookup' ) ) {
-			// MW 1.35+
-			if ( !MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption( $context->getUser(), 'tinymce-use' ) ) {
-				return $wgTinyMCEUse = false;
-			}
-		} else {
-			if ( !$context->getUser()->getOption( 'tinymce-use' ) ) {
-				return $wgTinyMCEUse = false;
-			}
+		if ( !MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption( $context->getUser(), 'tinymce-use' ) ) {
+			return $wgTinyMCEUse = false;
 		}
 
 		if ( !empty( $wgTinyMCEUnhandledStrings ) ) {
-			if ( method_exists( MediaWikiServices::class, 'getWikiPageFactory' ) ) {
-				// MW 1.36+
-				$wikiPage = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
-			} else {
-				$wikiPage = new WikiPage( $title );
-			}
+			$wikiPage = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $title );
 			$content = $wikiPage->getContent();
 			if ( $content != null ) {
 				$pageText = $content->getText();

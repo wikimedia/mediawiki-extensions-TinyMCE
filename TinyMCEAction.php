@@ -67,13 +67,8 @@ class TinyMCEAction extends Action {
 			return true;
 		}
 
-		if ( method_exists( 'MediaWiki\Permissions\PermissionManager', 'userCan' ) ) {
-			// MW 1.33+
-			$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
-			$userCanEdit = $permissionManager->userCan( 'edit', $user, $title );
-		} else {
-			$userCanEdit = $title->userCan( 'edit', $user ) && $user->isAllowed( 'edit' );
-		}
+		$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
+		$userCanEdit = $permissionManager->userCan( 'edit', $user, $title );
 
 		if ( !$userCanEdit ) {
 			return true;
