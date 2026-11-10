@@ -59,6 +59,8 @@
 	"tinymce-link-open-link": "Link opmaachen",
 	"tinymce-link": "Link",
 	"tinymce-reference-insertReference": "Eng Referenz drasetzen",
+	"tinymce-reference-enterReferenceContent": " Eidel Referenz",
+	"tinymce-empty-reference": "Eidel Referenz",
 	"tinymce-yes": "Jo",
 	"tinymce-no": "Nee",
 	"tinymce-ok": "OK",
