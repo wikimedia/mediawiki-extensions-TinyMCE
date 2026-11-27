@@ -25,6 +25,7 @@
 	"tinymce-browsercontextmenu": "Do kontekstnega menija brskalnika lahko dostopate tako, da pritisnete ctrl+desni klik. Za izklop kontekstnega menija TinyMCE kliknite Da.",
 	"tinymce-browsercontextmenu-title": "Kontekstni meni brskalnika",
 	"tinymce-upload-title-image": "Lastnosti slike",
+	"tinymce-upload-type-label-wiki": "Datoteka v tem vikiju",
 	"tinymce-upload-title-label": "Naslov/napis",
 	"tinymce-upload-summary-label": "Povzetek",
 	"tinymce-upload-link-label": "Poveži z",
